@@ -3,9 +3,9 @@
 ## Checker Framework Live Demo
 
 To experience the
-http://checkerframework.org/[Checker Framework]
+[http://checkerframework.org/](Checker Framework)
 from within your browser, see our
-http://eisop.uwaterloo.ca/live/[Checker Framework Live Demo].
+[Checker Framework Live Demo](http://eisop.uwaterloo.ca/live/).
 
 
 ## Contact
