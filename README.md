@@ -3,7 +3,7 @@
 ## Checker Framework Live Demo
 
 To experience the
-[http://checkerframework.org/](Checker Framework)
+[Checker Framework](http://checkerframework.org/)
 from within your browser, see our
 [Checker Framework Live Demo](http://eisop.uwaterloo.ca/live/).
 
@@ -11,5 +11,5 @@ from within your browser, see our
 ## Contact
 
 Please address your questions and comments to
-https://ece.uwaterloo.ca/~wdietl/contact.html[Werner Dietl].
+[Werner Dietl](https://ece.uwaterloo.ca/~wdietl/contact.html).
 
