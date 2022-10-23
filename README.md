@@ -1,12 +1,7 @@
 # Enforcing, Inferring, and Synthesizing Optional Properties (EISOP)
 
-## Checker Framework Live Demo
-
-To experience the
-[Checker Framework](http://checkerframework.org/)
-from within your browser, see our
-[Checker Framework Live Demo](http://eisop.uwaterloo.ca/live/).
-
+The [Enforcing, Inferring, and Synthesizing Optional Properties (EISOP) Framework](https://eisop.uwaterloo.ca/) project
+aims to provide a unified framework for optional properties in Java.
 
 ## Contact
 
