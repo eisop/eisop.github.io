@@ -23,3 +23,12 @@ layout: default
   <p><strong>Page not found :(</strong></p>
   <p>The requested page could not be found.</p>
 </div>
+
+<script type="text/javascript">
+  if (location.pathname === '/cf/manual/') {
+    location.replace('/cf/manual/manual.html');
+  }
+  if (location.pathname === '/afu/') {
+    location.replace('/afu/annotation-file-utilities.html');
+  }
+</script>

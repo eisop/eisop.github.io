@@ -25,7 +25,7 @@ More research results can be found on a
 The [javac diagnostics wrapper](https://github.com/eisopux/javac-diagnostics-wrapper)
 is a wrapper around javac to output diagnostics in an easily-configurable way.
 
-[Checker Framework Manual](/cf/index.html)
+[Checker Framework Manual](/cf/index.md)
 
 
 ## IDE Extensions
