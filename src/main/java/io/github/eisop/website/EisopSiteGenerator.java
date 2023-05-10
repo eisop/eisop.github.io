@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Main {
+public class EisopSiteGenerator {
 
     public static void main(String[] args) throws IOException {
 

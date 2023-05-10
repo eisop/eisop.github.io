@@ -15,17 +15,17 @@ The focus in this fork is on soundness and usability.
 One (closed-source) user of the EISOP Dataflow Framework reported a 10 percent
 reduction in false positives compared to the typetools Dataflow Framework.
 
+[Checker Framework Manual](/cf/)
+
 Releases can be downloaded from
 [GitHub](https://github.com/eisop/checker-framework/releases) and
-[Maven Central](https://central.sonatype.dev/namespace/io.github.eisop).
+[Maven Central](https://central.sonatype.com/namespace/io.github.eisop).
 
 More research results can be found on a
 [separate page](https://opprop.github.io/).
 
 The [javac diagnostics wrapper](https://github.com/eisopux/javac-diagnostics-wrapper)
 is a wrapper around javac to output diagnostics in an easily-configurable way.
-
-[Checker Framework Manual](/cf/index.md)
 
 
 ## IDE Extensions
