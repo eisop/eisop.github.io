@@ -5,8 +5,8 @@
 
 title: The EISOP Framework
 email: wdietl@uwaterloo.ca
-description: >- # this means to ignore newlines until "baseurl:"
-  The Enforcing, Inferring, and Synthesizing Optional Properties (EISOP) Framework project aims to provide a unified framework for optional properties in Java.
+  # description: >- # this means to ignore newlines until "baseurl:"
+  # The Enforcing, Inferring, and Synthesizing Optional Properties (EISOP) Framework project aims to provide a unified framework for optional properties in Java.
 #baseurl: ""
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
