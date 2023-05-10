@@ -9,17 +9,20 @@ layout: default
 The Enforcing, Inferring, and Synthesizing Optional Properties (EISOP) Framework project
 aims to provide a unified framework for optional properties in Java.
 
-Development occurs in the
-[Checker Framework eisop fork](https://github.com/eisop/checker-framework).
-The focus in this fork is on soundness and usability.
-One (closed-source) user of the EISOP Dataflow Framework reported a 10 percent
-reduction in false positives compared to the typetools Dataflow Framework.
-
-[Checker Framework Manual](/cf/)
+Documentation can be found on the [EISOP Checker Framework](/cf/) homepage.
 
 Releases can be downloaded from
 [GitHub](https://github.com/eisop/checker-framework/releases) and
 [Maven Central](https://central.sonatype.com/namespace/io.github.eisop).
+
+Development occurs in the
+[EISOP Checker Framework GitHub project](https://github.com/eisop/checker-framework).
+The focus in this fork is on soundness and usability.
+One (closed-source) user of the EISOP Dataflow Framework reported a 10 percent
+reduction in false positives compared to the typetools Dataflow Framework.
+
+
+## Related projects and tools
 
 More research results can be found on a
 [separate page](https://opprop.github.io/).
