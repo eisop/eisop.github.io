@@ -3,7 +3,7 @@
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 
-title: The EISOP Framework
+title: EISOP Framework
 email: wdietl@uwaterloo.ca
   # description: >- # this means to ignore newlines until "baseurl:"
   # The Enforcing, Inferring, and Synthesizing Optional Properties (EISOP) Framework project aims to provide a unified framework for optional properties in Java.
