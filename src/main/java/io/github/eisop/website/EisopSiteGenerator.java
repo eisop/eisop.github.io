@@ -161,6 +161,9 @@ public class EisopSiteGenerator {
                 e.printStackTrace();
             }
 
+            File releaseOrg = new File(String.valueOf(javadocFolder) + "/checker-javadoc/org");
+            FileUtils.copyDirectoryToDirectory(releaseOrg, javadocFolder);
+
             // Move index.html
             //            File releaseHTML = new File(String.valueOf(releaseFolder) +
             // "/docs/tutorial/index.html");
@@ -304,6 +307,11 @@ public class EisopSiteGenerator {
         FileUtils.copyDirectory(latestJavadoc, newJavadoc);
 
         System.out.println("Latest release: " + String.valueOf(latestRelease));
+
+        // Copy CFLogo.png to cf/
+        File cfLogo = new File(String.valueOf(latestRelease) + "/tutorial/CFLogo.png");
+        File newCFLogo = new File(System.getProperty("user.dir") + "/cf/CFLogo.png");
+        FileUtils.copyFile(cfLogo, newCFLogo);
 
         getAFU();
     }
