@@ -308,6 +308,11 @@ public class EisopSiteGenerator {
 
         System.out.println("Latest release: " + String.valueOf(latestRelease));
 
+        // Rename cf/manual/manual.pdf to cf/manual/checker-framework-manual.pdf
+        File manualPDF = new File(String.valueOf(directoryPath) + "/manual/manual.pdf");
+        File checkerFrameworkManualPDF = new File(String.valueOf(directoryPath) + "/manual/checker-framework-manual.pdf");
+        FileUtils.copyFile(manualPDF, checkerFrameworkManualPDF);
+
         // Copy CFLogo.png to cf/
         File cfLogo = new File(String.valueOf(latestRelease) + "/tutorial/CFLogo.png");
         File newCFLogo = new File(System.getProperty("user.dir") + "/cf/CFLogo.png");
