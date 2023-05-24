@@ -162,7 +162,7 @@ public class EisopSiteGenerator {
             }
 
             File releaseOrg = new File(String.valueOf(javadocFolder) + "/checker-javadoc/org");
-            FileUtils.copyDirectoryToDirectory(releaseOrg, javadocFolder);
+            FileUtils.moveDirectoryToDirectory(releaseOrg, javadocFolder, false);
 
             // Move index.html
             //            File releaseHTML = new File(String.valueOf(releaseFolder) +
