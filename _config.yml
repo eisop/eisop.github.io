@@ -3,14 +3,14 @@
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 
-title: EISOP Framework
+title: EISOP Checker Framework
 email: wdietl@uwaterloo.ca
   # description: >- # this means to ignore newlines until "baseurl:"
   # The Enforcing, Inferring, and Synthesizing Optional Properties (EISOP) Framework project aims to provide a unified framework for optional properties in Java.
 #baseurl: ""
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+url: "https://eisop.github.io/"
+twitter_username: wmdietl
+github_username:  wmdietl
 
 # Build settings
 #theme: minima

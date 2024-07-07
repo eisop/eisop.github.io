@@ -5,10 +5,8 @@
 layout: default
 ---
 
- The Checker Framework  ![Checker Framework logo](CFLogo.png)
-
-The Checker Framework
-=====================
+The EISOP Checker Framework  ![Checker Framework logo](CFLogo.png)
+===========================
 
 Are you tired of null pointer exceptions, unintended side effects, SQL injections, concurrency errors, mistaken equality tests, and other run-time errors that appear during testing or in the field?
 
