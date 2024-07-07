@@ -5,6 +5,13 @@ title: Releases
 ![Checker Framework logo](../CFLogo.png)
 Previous Checker Framework Releases
 =====================
+[checker-framework-3.42.0-eisop3](../checker-framework-3.42.0-eisop3/index.html)
+[checker-framework-3.42.0-eisop2](../checker-framework-3.42.0-eisop2/index.html)
+[checker-framework-3.42.0-eisop1](../checker-framework-3.42.0-eisop1/index.html)
+[checker-framework-3.41.0-eisop1](../checker-framework-3.41.0-eisop1/index.html)
+[checker-framework-3.40.0-eisop2](../checker-framework-3.40.0-eisop2/index.html)
+[checker-framework-3.40.0-eisop1](../checker-framework-3.40.0-eisop1/index.html)
+[checker-framework-3.39.0-eisop1](../checker-framework-3.39.0-eisop1/index.html)
 [checker-framework-3.34.0-eisop1](../checker-framework-3.34.0-eisop1/index.html)
 [checker-framework-3.32.0-eisop1](../checker-framework-3.32.0-eisop1/index.html)
 [checker-framework-3.28.0-eisop1](../checker-framework-3.28.0-eisop1/index.html)
