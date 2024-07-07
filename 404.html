@@ -26,9 +26,9 @@ layout: default
 
 <script type="text/javascript">
   if (location.pathname === '/cf/manual/') {
-    location.replace('/cf/manual/', '/cf/manual/manual.html');
+    location.replace(location.href.replace('/cf/manual/', '/cf/manual/manual.html'));
   }
   if (location.pathname === '/afu/') {
-    location.replace('/afu/', '/afu/annotation-file-utilities.html');
+    location.replace(location.href.replace('/afu/', '/afu/annotation-file-utilities.html'));
   }
 </script>
