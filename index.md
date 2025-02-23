@@ -48,7 +48,6 @@ To experience the Checker Framework from within your browser, see our
 [Source Code](https://github.com/eisop/webserver/).
 
 
-## Contact
+## Student
 
-Please address your questions and comments to
-[Werner Dietl](https://ece.uwaterloo.ca/~wdietl/contact.html).
+[Student List](https://ece.uwaterloo.ca/~wdietl/students/)
