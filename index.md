@@ -47,7 +47,9 @@ To experience the Checker Framework from within your browser, see our
 [Checker Framework Live Demo](http://eisop.uwaterloo.ca/live/).
 [Source Code](https://github.com/eisop/webserver/).
 
+
 ## Contact
+
 Please address your questions and comments to
 [Werner Dietl](https://ece.uwaterloo.ca/~wdietl/contact.html).
 
