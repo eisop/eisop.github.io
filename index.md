@@ -52,3 +52,7 @@ To experience the Checker Framework from within your browser, see our
 
 Please address your questions and comments to
 [Werner Dietl](https://ece.uwaterloo.ca/~wdietl/contact.html).
+
+## Students
+
+[Student List](https://ece.uwaterloo.ca/~wdietl/students/)
