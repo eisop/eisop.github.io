@@ -66,12 +66,12 @@ Installation
 
 The following instructions assume either a Linux or Windows system using a command-line environment.
 
-The current release is Annotation File Utilities version 3.42.0, December 20, 2024.
+The current release is Annotation File Utilities version 3.49.3, May 06, 2025.
 
-1.  Download [annotation-tools-3.42.0-eisop5.zip](annotation-tools-3.42.0-eisop5.zip).
+1.  Download [annotation-tools-3.49.3-eisop1.zip](annotation-tools-3.49.3-eisop1.zip).
 2.  Create a directory named `annotation-tools` by unpacking the distribution zipfile. (You will typically make `annotation-tools/` a sibling of `checker-framework/`.)
     
-        unzip annotation-tools-3.42.0.zip
+        unzip annotation-tools-3.49.3.zip
     
 3.  Add the `annotation-file-utilities` directory to your path.
     *   For **Unix** (including Linux and MacOS), add the directory to your PATH environment variable. If your shell is sh or bash, add to your `~/.bashrc` or `~/.bash_profile` file:
