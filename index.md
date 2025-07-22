@@ -53,6 +53,8 @@ To experience the Checker Framework from within your browser, see our
 Please address your questions and comments to
 [Werner Dietl](https://ece.uwaterloo.ca/~wdietl/contact.html).
 
-## Students
+## Contributors
 
-[Student List](https://ece.uwaterloo.ca/~wdietl/students/)
+- [Credits](https://eisop.github.io/cf/manual/#credits)
+- [Project members](https://github.com/orgs/eisop/people)
+- [Student list](https://ece.uwaterloo.ca/~wdietl/students/)
