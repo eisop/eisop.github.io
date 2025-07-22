@@ -55,6 +55,6 @@ Please address your questions and comments to
 
 ## Contributors
 
-- [Credits](https://eisop.github.io/cf/manual/#credits)
+- [Credits](https://eisop.github.io/cf/manual/manual.html#credits)
 - [Project members](https://github.com/orgs/eisop/people)
 - [Student list](https://ece.uwaterloo.ca/~wdietl/students/)
