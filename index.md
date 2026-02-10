@@ -48,6 +48,13 @@ To experience the Checker Framework from within your browser, see our
 [Source Code](https://github.com/eisop/webserver/).
 
 
+## Contributors
+
+- [Credits](https://eisop.github.io/cf/manual/#credits)
+- [Project members](https://github.com/orgs/eisop/people)
+- [Student list](https://ece.uwaterloo.ca/~wdietl/students/)
+
+
 ## Contact
 
 Please address your questions and comments to
