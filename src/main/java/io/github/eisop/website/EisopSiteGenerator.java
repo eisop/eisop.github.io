@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class EisopSiteGenerator {
@@ -474,30 +476,10 @@ public class EisopSiteGenerator {
 
         System.out.println("Latest release: " + String.valueOf(latestRelease));
 
-        // Re-generate cf/index.html with latest release
-        File newHTML = new File(System.getProperty("user.dir") + "/cf/index.md");
-
-        String htmlString = FileUtils.readFileToString(newHTML, StandardCharsets.UTF_8);
-
-        // $LatestAnnotationFileUtilitiesReleaseDownloadLink,
-        // $LatestAnnotationFileUtilitiesReleaseZip, $LatestAnnotationFileUtilitiesReleaseDate
-
-        String LatestAnnotationFileUtilitiesReleaseZip =
-                String.valueOf(latestRelease)
-                                .split("/", 0)[
-                                String.valueOf(latestRelease).split("/", 0).length - 1]
-                        + ".zip";
-        htmlString =
-                htmlString.replace(
-                        "$LatestAnnotationFileUtilitiesReleaseZip",
-                        LatestAnnotationFileUtilitiesReleaseZip);
+        String LatestAnnotationFileUtilitiesReleaseZip = latestReleaseName + ".zip";
 
         String LatestAnnotationFileUtilitiesReleaseDownloadLink =
                 "/afu/" + LatestAnnotationFileUtilitiesReleaseZip;
-        htmlString =
-                htmlString.replace(
-                        "$LatestAnnotationFileUtilitiesReleaseDownloadLink",
-                        LatestAnnotationFileUtilitiesReleaseDownloadLink);
 
         String LatestAnnotationFileUtilitiesReleaseDate =
                 String.valueOf(
@@ -509,15 +491,12 @@ public class EisopSiteGenerator {
                                 .get("created_at"));
         LatestAnnotationFileUtilitiesReleaseDate =
                 getReadableDate(LatestAnnotationFileUtilitiesReleaseDate);
-        htmlString =
-                htmlString.replace(
-                        "$LatestAnnotationFileUtilitiesReleaseDate",
-                        LatestAnnotationFileUtilitiesReleaseDate);
 
-        if (newHTML.exists()) {
-            FileUtils.forceDelete(newHTML);
-        }
-        FileUtils.writeStringToFile(newHTML, htmlString, StandardCharsets.UTF_8);
+        substituteAfuPlaceholders(
+                new File(System.getProperty("user.dir") + "/cf"),
+                LatestAnnotationFileUtilitiesReleaseZip,
+                LatestAnnotationFileUtilitiesReleaseDownloadLink,
+                LatestAnnotationFileUtilitiesReleaseDate);
 
         // Re-generate afu/annotation-file-utilities.md with latest release
         File afuTemplate = new File(System.getProperty("user.dir") + "/afu-template.md");
@@ -539,6 +518,61 @@ public class EisopSiteGenerator {
         newMD.createNewFile();
         FileUtils.writeStringToFile(newMD, mdString, StandardCharsets.UTF_8);
 
+    }
+
+    /**
+     * Fills in the Annotation File Utilities placeholders on every page generated from
+     * cf-template.md.
+     *
+     * <p>That template is expanded in two passes: main() substitutes the Checker Framework values
+     * as it writes each release's page, and the AFU values are known only later, once the AFU
+     * releases have been read. This pass therefore has to reach every page the first pass wrote --
+     * the per-release pages and their copies in the release archive, not just cf/index.md -- or
+     * those pages show readers the literal placeholder text.
+     *
+     * <p>Substitution is idempotent, so pages written by an earlier run are repaired too.
+     *
+     * @param cfDir the website's cf directory
+     * @param zip the file name of the latest AFU release's zip
+     * @param downloadLink the site-relative download link for that zip
+     * @param date the human-readable date of that release
+     * @throws IOException if a page cannot be read or written
+     */
+    static void substituteAfuPlaceholders(File cfDir, String zip, String downloadLink, String date)
+            throws IOException {
+        List<File> pages = new ArrayList<>();
+        pages.add(new File(cfDir, "index.md"));
+        File[] releaseDirs = cfDir.listFiles(File::isDirectory);
+        if (releaseDirs != null) {
+            for (File releaseDir : releaseDirs) {
+                pages.add(new File(releaseDir, "index.md"));
+            }
+        }
+        File[] archived = new File(cfDir, "releases").listFiles();
+        if (archived != null) {
+            for (File archivedPage : archived) {
+                if (archivedPage.getName().endsWith(".html")) {
+                    pages.add(archivedPage);
+                }
+            }
+        }
+
+        for (File page : pages) {
+            if (!page.isFile()) {
+                continue;
+            }
+            String content = FileUtils.readFileToString(page, StandardCharsets.UTF_8);
+            String substituted =
+                    content.replace("$LatestAnnotationFileUtilitiesReleaseZip", zip)
+                            .replace(
+                                    "$LatestAnnotationFileUtilitiesReleaseDownloadLink",
+                                    downloadLink)
+                            .replace("$LatestAnnotationFileUtilitiesReleaseDate", date);
+            if (!substituted.equals(content)) {
+                FileUtils.writeStringToFile(page, substituted, StandardCharsets.UTF_8);
+                System.out.println("Filled in AFU release info in " + page);
+            }
+        }
     }
 
     static String getReadableDate(String autoDate) {
