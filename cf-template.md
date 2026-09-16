@@ -12,7 +12,7 @@ Are you tired of null pointer exceptions, unintended side effects, SQL injection
 
 The Checker Framework enhances Java's type system to make it more powerful and useful. This lets software developers detect and prevent errors in their Java programs. The Checker Framework includes compiler plug-ins ("checkers") that find bugs or verify their absence. It also permits you to write your own compiler plug-ins.
 
-*   Quick start: see the [**Installation instructions and tutorial**](manual/manual.html#installation).
+*   Quick start: see the [**quick start guide**](quick-start.html), or the [**installation instructions and tutorial**](manual/manual.html#installation).
 *   Download: [$LatestCheckerFrameworkReleaseZip]($LatestCheckerFrameworkReleaseDownloadLink) ($LatestCheckerFrameworkReleaseDate); includes source, platform-independent binary, tests, and documentation.  
     Then, see the [**installation instructions and tutorial**](manual/manual.html#installation).
 *   Documentation:
@@ -25,6 +25,7 @@ The Checker Framework enhances Java's type system to make it more powerful and u
     *   [FAQ (Frequently Asked Questions with answers)](manual/manual.html#faq)
     *   [Javadoc](api/checker-javadoc/) API documentation
     *   [Changelog](CHANGELOG.md)
+    *   [Quick start guide](quick-start.html)
 *   Source code repository (at GitHub): [https://github.com/eisop/checker-framework/](https://github.com/eisop/checker-framework/)  
     The Checker Framework Manual contains [instructions on building from source](manual/manual.html#build-source).  
     Also see the [Developer manual](https://htmlpreview.github.io/?https://github.com/eisop/checker-framework/master/docs/developer/developer-manual.html).
@@ -34,6 +35,7 @@ The Checker Framework enhances Java's type system to make it more powerful and u
         *   [$LatestAnnotationFileUtilitiesReleaseZip]($LatestAnnotationFileUtilitiesReleaseDownloadLink) ($LatestAnnotationFileUtilitiesReleaseDate)
         *   [source code repository](https://github.com/eisop/annotation-tools/)
         *   [Documentation](../afu/annotation-file-utilities.html) is included in the zip archive and in the repository.
+    *   The [**Dataflow Framework**](manual/checker-framework-dataflow-manual.pdf) is an industrial-strength dataflow framework for Java. The Dataflow Framework is used in the Checker Framework, Google’s Error Prone, Uber’s NullAway, Meta’s Nullsafe, and in other contexts. It is distributed with the Checker Framework.
 *   [Archive of previous releases](releases/releases.html) of the Checker Framework
 *   Research papers: See the [Checker Framework manual](manual/manual.html#publications)
 
