@@ -12,6 +12,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -177,8 +178,7 @@ public class EisopSiteGenerator {
                 FileUtils.forceDelete(newHTML);
             }
 
-            File htmlTemplateFile = new File(System.getProperty("user.dir") + "/cf-template.md");
-            String htmlString = FileUtils.readFileToString(htmlTemplateFile, StandardCharsets.UTF_8);
+            String htmlString = readTemplate("cf-template.md");
             // $LatestCheckerFrameworkReleaseDownloadLink, $LatestCheckerFrameworkReleaseZip,
             // $LatestCheckerFrameworkReleaseDate
 
@@ -499,9 +499,8 @@ public class EisopSiteGenerator {
                 LatestAnnotationFileUtilitiesReleaseDate);
 
         // Re-generate afu/annotation-file-utilities.md with latest release
-        File afuTemplate = new File(System.getProperty("user.dir") + "/afu-template.md");
         File newMD = new File(System.getProperty("user.dir") + "/afu/annotation-file-utilities.md");
-        String mdString = FileUtils.readFileToString(afuTemplate, StandardCharsets.UTF_8);
+        String mdString = readTemplate("afu-template.md");
 
         String LatestAnnotationFileUtilitiesRelease =
                 latestReleaseName.split("-")[latestReleaseName.split("-").length - 2];
@@ -572,6 +571,30 @@ public class EisopSiteGenerator {
                 FileUtils.writeStringToFile(page, substituted, StandardCharsets.UTF_8);
                 System.out.println("Filled in AFU release info in " + page);
             }
+        }
+    }
+
+    /**
+     * Reads a page template packaged in this tool's own jar.
+     *
+     * <p>The templates are classpath resources rather than files in the working directory because
+     * the generator is run from a gh-pages checkout, which carries its own copies of the source
+     * files. Reading them from disk there used whichever template that branch happened to hold,
+     * not the one built alongside this code, so editing a template on master had no effect until
+     * someone remembered to copy it across. Being resources also keeps them out of Jekyll's input,
+     * which was publishing them as /cf-template.html and /afu-template.html with their
+     * placeholders unfilled.
+     *
+     * @param name the resource file name, such as "cf-template.md"
+     * @return the contents of that template
+     * @throws IOException if the resource is missing or cannot be read
+     */
+    static String readTemplate(String name) throws IOException {
+        try (InputStream in = EisopSiteGenerator.class.getResourceAsStream("/" + name)) {
+            if (in == null) {
+                throw new IOException("Template is not on the classpath: " + name);
+            }
+            return new String(in.readAllBytes(), StandardCharsets.UTF_8);
         }
     }
 

@@ -1,0 +1,90 @@
+# Rebuilds the published site on the gh-pages branch: downloads any Checker Framework or
+# Annotation File Utilities release that is not on the site yet, regenerates the pages from
+# the templates in src/main/resources, and pushes the result.
+#
+# Run it from the Actions tab. It defaults to a dry run, which does everything except push,
+# so you can read the summary first and then re-run with the dry-run box unchecked.
+
+name: Publish website
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Generate and report, but do not push"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out master, which holds the generator and the templates
+        uses: actions/checkout@v6
+        with:
+          ref: master
+          path: generator
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: "21"
+          distribution: temurin
+          cache: maven
+
+      - name: Build the generator
+        run: mvn -B -q package --file generator/pom.xml
+
+      - name: Check out gh-pages, the published site
+        uses: actions/checkout@v6
+        with:
+          ref: gh-pages
+          path: site
+          # The site carries every past release, so fetch only the current tree.
+          fetch-depth: 1
+
+      - name: Generate the site
+        working-directory: site
+        run: |
+          java -cp ../generator/target/eisop.github.io-1.0-SNAPSHOT-jar-with-dependencies.jar \
+            io.github.eisop.website.EisopSiteGenerator
+
+      - name: Drop template copies that predate them being packaged in the jar
+        working-directory: site
+        run: |
+          for stale in cf-template.md afu-template.md; do
+            if [ -e "$stale" ]; then
+              git rm -q "$stale"
+              echo "Removed stale $stale; the generator reads its own packaged copy."
+            fi
+          done
+
+      - name: Summarize the changes
+        working-directory: site
+        run: |
+          {
+            echo "### Site changes"
+            echo
+            echo '```'
+            git status --short | head -60
+            echo '```'
+            echo
+            git diff --shortstat
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit and push
+        if: ${{ !inputs.dry_run }}
+        working-directory: site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A afu cf
+          if git diff --cached --quiet; then
+            echo "Nothing to publish; the site is already up to date."
+            exit 0
+          fi
+          git commit -q -m "Regenerate the website"
+          git push
