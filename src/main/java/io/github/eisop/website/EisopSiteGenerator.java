@@ -236,6 +236,10 @@ public class EisopSiteGenerator {
             File tutorialDirectory = new File(tutorialString);
             String changeLogString = String.valueOf(releaseFolder) + "/docs/CHANGELOG.md";
             File changelogFile = new File(changeLogString);
+            File quickStartFile =
+                    new File(
+                            String.valueOf(releaseFolder)
+                                    + "/docs/checker-framework-quick-start.html");
             String logoString = String.valueOf(releaseFolder) + "/tutorial/CFLogo.png";
             File logoFile = new File(logoString);
 
@@ -251,6 +255,10 @@ public class EisopSiteGenerator {
             }
             if (changelogFile.exists()) {
                 FileUtils.moveFileToDirectory(changelogFile, releaseFolder, true);
+            }
+            // Releases before the quick-start guide was added to the distribution do not have it.
+            if (quickStartFile.exists()) {
+                FileUtils.moveFile(quickStartFile, new File(releaseFolder, "quick-start.html"));
             }
             if (logoFile.exists()) {
                 FileUtils.copyFileToDirectory(logoFile, releaseFolder);
@@ -292,6 +300,10 @@ public class EisopSiteGenerator {
         if (newChangelog.exists()) {
             FileUtils.forceDelete(newChangelog);
         }
+        File newQuickStart = new File(System.getProperty("user.dir") + "/cf/quick-start.html");
+        if (newQuickStart.exists()) {
+            FileUtils.forceDelete(newQuickStart);
+        }
         File newJavadoc = new File(System.getProperty("user.dir") + "/cf/api");
         if (newJavadoc.exists()) {
             FileUtils.forceDelete(newJavadoc);
@@ -307,6 +319,10 @@ public class EisopSiteGenerator {
         FileUtils.copyDirectory(latestManual, newManual);
         FileUtils.copyDirectory(latestTutorial, newTutorial);
         FileUtils.copyFile(latestChangelog, newChangelog);
+        File latestQuickStart = new File(String.valueOf(latestRelease) + "/quick-start.html");
+        if (latestQuickStart.exists()) {
+            FileUtils.copyFile(latestQuickStart, newQuickStart);
+        }
         FileUtils.copyDirectory(latestJavadoc, newJavadoc);
 
         System.out.println("Latest release: " + String.valueOf(latestRelease));
@@ -597,7 +613,6 @@ public class EisopSiteGenerator {
             return new String(in.readAllBytes(), StandardCharsets.UTF_8);
         }
     }
-
     static String getReadableDate(String autoDate) {
         String[] splitDate = autoDate.split("-", 0);
         String[] months = {
