@@ -1,20 +1,32 @@
 # EISOP Checker Framework website
 
-## Build and deployment instructions
+## Publishing the website
 
-- Check out `master` branch: `git checkout master`
+Run the **Publish website** workflow from the Actions tab. It checks out
+`master` for the generator, builds it, checks out `gh-pages`, downloads any
+Checker Framework or Annotation File Utilities release that is not on the site
+yet, regenerates the pages, and pushes.
 
-- Build project: `mvn package`
+It defaults to a dry run: everything except the push, with the resulting
+`git status` in the run summary. Read that, then run it again with the dry-run
+box unchecked to publish.
 
-- Check out `gh-pages` branch: `git checkout gh-pages`
+### Doing it by hand
 
-- (Re-)build the website: `java -cp ./target/eisop.github.io-1.0-SNAPSHOT-jar-with-dependencies.jar io/github/eisop/website/EisopSiteGenerator`
+```
+git checkout master
+mvn package
+git checkout gh-pages
+java -cp ./target/eisop.github.io-1.0-SNAPSHOT-jar-with-dependencies.jar \
+  io.github.eisop.website.EisopSiteGenerator
+git status && git diff                 # review
+git add afu/ cf/ && git commit
+git push origin gh-pages
+```
 
-- Review changes: `git status` and `git diff`
-
-- Add and commit them: `git add afu/ cf/` and `git commit`
-
-- Push website changes to `gh-pages` branch: `git push origin gh-pages`
+The page templates live in `src/main/resources/` and are packaged into the jar,
+so the generator always uses the templates belonging to the code you built.
+Nothing on `gh-pages` needs to be kept in sync with `master`.
 
 
 ## Development notes
