@@ -351,6 +351,11 @@ public class EisopSiteGenerator {
         HttpURLConnection conn = (HttpURLConnection) APIURL.openConnection();
         try {
             conn.setRequestMethod("GET");
+            conn.setRequestProperty("User-Agent", "eisop-website-generator");
+            String token = System.getenv("GITHUB_TOKEN");
+            if (token != null && !token.trim().isEmpty()) {
+                conn.setRequestProperty("Authorization", "Bearer " + token.trim());
+            }
             int responseCode = conn.getResponseCode();
             if (responseCode != 200) {
                 throw new IOException("GET " + APIURL + " returned HTTP " + responseCode);
@@ -606,7 +611,8 @@ public class EisopSiteGenerator {
      * @throws IOException if the resource is missing or cannot be read
      */
     static String readTemplate(String name) throws IOException {
-        try (InputStream in = EisopSiteGenerator.class.getResourceAsStream("/" + name)) {
+        String path = name.startsWith("/") ? name : "/" + name;
+        try (InputStream in = EisopSiteGenerator.class.getResourceAsStream(path)) {
             if (in == null) {
                 throw new IOException("Template is not on the classpath: " + name);
             }
