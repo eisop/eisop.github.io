@@ -2,12 +2,15 @@
 # Annotation File Utilities release that is not on the site yet, regenerates the pages from
 # the templates in src/main/resources, and pushes the result.
 #
-# Run it from the Actions tab. It defaults to a dry run, which does everything except push,
-# so you can read the summary first and then re-run with the dry-run box unchecked.
+# It runs daily on a schedule (checking if new releases exist before checking out gh-pages),
+# or can be run manually from the Actions tab. Manual runs default to a dry run.
 
 name: Publish website
 
 on:
+  schedule:
+    # Run daily at 06:00 UTC
+    - cron: '0 6 * * *'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -19,7 +22,46 @@ permissions:
   contents: write
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      should_publish: ${{ steps.check.outputs.should_publish }}
+      dry_run: ${{ steps.check.outputs.dry_run }}
+    steps:
+      - id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "should_publish=true" >> "$GITHUB_OUTPUT"
+            echo "dry_run=${{ inputs.dry_run }}" >> "$GITHUB_OUTPUT"
+            echo "Manual run requested (dry_run=${{ inputs.dry_run }})."
+            exit 0
+          fi
+
+          # Scheduled run: check if latest releases are already published on the site
+          CF_TAG=$(gh api repos/eisop/checker-framework/releases --jq '.[0].tag_name')
+          AFU_ZIP=$(gh api repos/eisop/annotation-tools/releases --jq '.[0].assets[0].name')
+
+          CF_STATUS=$(curl -s -o /dev/null -w '%{http_code}' "https://eisop.github.io/cf/${CF_TAG}/index.html")
+          AFU_STATUS=$(curl -s -o /dev/null -w '%{http_code}' "https://eisop.github.io/afu/${AFU_ZIP}")
+
+          echo "Latest CF release: $CF_TAG (HTTP $CF_STATUS on site)"
+          echo "Latest AFU release: $AFU_ZIP (HTTP $AFU_STATUS on site)"
+
+          if [ "$CF_STATUS" != "200" ] || [ "$AFU_STATUS" != "200" ]; then
+            echo "New release detected that is not yet on the site. Triggering publish."
+            echo "should_publish=true" >> "$GITHUB_OUTPUT"
+            echo "dry_run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Site is already up to date with latest releases. Skipping checkout and publish."
+            echo "should_publish=false" >> "$GITHUB_OUTPUT"
+            echo "dry_run=false" >> "$GITHUB_OUTPUT"
+          fi
+
   publish:
+    needs: check
+    if: needs.check.outputs.should_publish == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Check out master, which holds the generator and the templates
@@ -82,7 +124,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Commit and push
-        if: ${{ !inputs.dry_run }}
+        if: ${{ needs.check.outputs.dry_run != 'true' }}
         working-directory: site
         run: |
           git config user.name "github-actions[bot]"
