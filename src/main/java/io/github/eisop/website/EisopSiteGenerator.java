@@ -8,12 +8,15 @@ import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class EisopSiteGenerator {
@@ -33,8 +36,9 @@ public class EisopSiteGenerator {
 
         // Get list of framework releases
         URL listReleasesURL =
-                new URL("https://api.github.com/repos/eisop/checker-framework/releases");
-        JSONArray frameworkReleases = getAPIResponse(listReleasesURL, "GET");
+                new URL(
+                        "https://api.github.com/repos/eisop/checker-framework/releases?per_page=100");
+        JSONArray frameworkReleases = getAPIResponse(listReleasesURL);
 
         File releaseFile = new File(System.getProperty("user.dir") + "/cf/releases/releases.md");
         String releaseFileHTML =
@@ -65,7 +69,6 @@ public class EisopSiteGenerator {
                                     .get(0)));
             int CONNECT_TIMEOUT = 0;
             int READ_TIMEOUT = 0;
-            String assetID = (String.valueOf(LatestAssetsData.get("id")));
             String FILE_URL_STRING = (String.valueOf(LatestAssetsData.get("browser_download_url")));
             URL FILE_URL = new URL(FILE_URL_STRING);
             File FILE_TEST = new File(String.valueOf(LatestAssetsData.get("name")));
@@ -175,7 +178,7 @@ public class EisopSiteGenerator {
             }
 
             File htmlTemplateFile = new File(System.getProperty("user.dir") + "/cf-template.md");
-            String htmlString = FileUtils.readFileToString(htmlTemplateFile);
+            String htmlString = FileUtils.readFileToString(htmlTemplateFile, StandardCharsets.UTF_8);
             // $LatestCheckerFrameworkReleaseDownloadLink, $LatestCheckerFrameworkReleaseZip,
             // $LatestCheckerFrameworkReleaseDate
 
@@ -209,7 +212,7 @@ public class EisopSiteGenerator {
                             "$LatestCheckerFrameworkReleaseDate",
                             LatestCheckerFrameworkReleaseDate);
 
-            FileUtils.writeStringToFile(newHTML, htmlString);
+            FileUtils.writeStringToFile(newHTML, htmlString, StandardCharsets.UTF_8);
 
             File releaseArchiveHTML =
                     new File(
@@ -255,7 +258,7 @@ public class EisopSiteGenerator {
         }
 
         // Write HTML to releases/releases.md
-        FileUtils.writeStringToFile(releaseFile, releaseFileHTML);
+        FileUtils.writeStringToFile(releaseFile, releaseFileHTML, StandardCharsets.UTF_8);
 
         // Re-generate cf/index.html with latest release
         File globalIndexHTML = new File(String.valueOf(directoryPath) + "/index.md");
@@ -321,47 +324,37 @@ public class EisopSiteGenerator {
         getAFU();
     }
 
-    static JSONArray getAPIResponse(URL APIURL, String RequestMethod) {
+    /**
+     * Fetches the given API URL and parses the response as a JSON array.
+     *
+     * @param APIURL the URL to fetch
+     * @return the parsed response
+     * @throws IOException if the request fails or the response cannot be parsed
+     */
+    static JSONArray getAPIResponse(URL APIURL) throws IOException {
+        HttpURLConnection conn = (HttpURLConnection) APIURL.openConnection();
         try {
-            // URL listReleasesURL = new
-            // URL("https://api.github.com/repos/eisop/checker-framework/releases");
-            // URL listAssetURL = new
-            // URL("https://api.github.com/repos/eisop/checker-framework/releases/85376204/assets");
-
-            HttpURLConnection conn = (HttpURLConnection) APIURL.openConnection();
             conn.setRequestMethod("GET");
-            conn.connect();
-
-            // Check if connect is made
             int responseCode = conn.getResponseCode();
-            conn.disconnect();
-
-            // 200 OK
             if (responseCode != 200) {
-                throw new RuntimeException("HttpResponseCode: " + responseCode);
-            } else {
+                throw new IOException("GET " + APIURL + " returned HTTP " + responseCode);
+            }
 
-                StringBuilder informationString = new StringBuilder();
-                Scanner scanner = new Scanner(APIURL.openStream());
-
-                while (scanner.hasNext()) {
+            StringBuilder informationString = new StringBuilder();
+            try (Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8)) {
+                while (scanner.hasNextLine()) {
                     informationString.append(scanner.nextLine());
                 }
-                // Close the scanner
-                scanner.close();
-
-                // System.out.println(informationString);
-
-                // JSON simple library Setup with Maven is used to convert strings to JSON
-                JSONParser parse = new JSONParser();
-                JSONArray dataObject = (JSONArray) parse.parse(String.valueOf(informationString));
-
-                return dataObject;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+            // JSON simple library Setup with Maven is used to convert strings to JSON
+            JSONParser parse = new JSONParser();
+            return (JSONArray) parse.parse(String.valueOf(informationString));
+        } catch (ParseException e) {
+            throw new IOException("Could not parse the response from " + APIURL, e);
+        } finally {
+            conn.disconnect();
         }
-        return null;
     }
 
     static void getAFU() throws IOException {
@@ -378,8 +371,9 @@ public class EisopSiteGenerator {
 
         // Get list of framework releases
         URL listReleasesURL =
-                new URL("https://api.github.com/repos/eisop/annotation-tools/releases");
-        JSONArray frameworkReleases = getAPIResponse(listReleasesURL, "GET");
+                new URL(
+                        "https://api.github.com/repos/eisop/annotation-tools/releases?per_page=100");
+        JSONArray frameworkReleases = getAPIResponse(listReleasesURL);
 
         // Loop through list of framework releases
         for (int i = 0; i < frameworkReleases.size(); i++) {
@@ -393,7 +387,6 @@ public class EisopSiteGenerator {
                                     .get(0)));
             int CONNECT_TIMEOUT = 0;
             int READ_TIMEOUT = 0;
-            String assetID = (String.valueOf(LatestAssetsData.get("id")));
             String FILE_URL_STRING = (String.valueOf(LatestAssetsData.get("browser_download_url")));
             URL FILE_URL = new URL(FILE_URL_STRING);
             File FILE_TEST = new File(String.valueOf(LatestAssetsData.get("name")));
@@ -403,7 +396,7 @@ public class EisopSiteGenerator {
             // Check if we've already downloaded this release
             String contents[] = directoryPath.list();
             boolean alreadyDownloaded = false;
-            for (int j = 0; j < contents.length; j++) {
+            for (int j = 0; contents != null && j < contents.length; j++) {
                 // System.out.println(contents[j]);
                 if (String.valueOf(contents[j]).equals(String.valueOf(FILE_TEST))) {
                     alreadyDownloaded = true;
@@ -453,16 +446,16 @@ public class EisopSiteGenerator {
         if (globalIndexHTML.exists()) {
             FileUtils.forceDelete(globalIndexHTML);
         }
-        File[] files = directoryPath.listFiles();
-        Arrays.sort(files);
-        File latestRelease =
-                new File(
-                        String.valueOf(files[files.length - 1])
-                                .substring(
-                                        0,
-                                        String.valueOf(String.valueOf(files[files.length - 1]))
-                                                        .length()
-                                                - 4));
+        String latestReleaseZipName =
+                String.valueOf(
+                        ((JSONObject)
+                                        ((JSONArray) ((JSONObject) frameworkReleases.get(0))
+                                                        .get("assets"))
+                                                .get(0))
+                                .get("name"));
+        String latestReleaseName =
+                latestReleaseZipName.substring(0, latestReleaseZipName.length() - 4);
+        File latestRelease = new File(directoryPath, latestReleaseName);
 //        File latestReleaseHTML =
 //                new File(
 //                        String.valueOf(latestRelease)
@@ -483,30 +476,10 @@ public class EisopSiteGenerator {
 
         System.out.println("Latest release: " + String.valueOf(latestRelease));
 
-        // Re-generate cf/index.html with latest release
-        File newHTML = new File(System.getProperty("user.dir") + "/cf/index.md");
-
-        String htmlString = FileUtils.readFileToString(newHTML);
-
-        // $LatestAnnotationFileUtilitiesReleaseDownloadLink,
-        // $LatestAnnotationFileUtilitiesReleaseZip, $LatestAnnotationFileUtilitiesReleaseDate
-
-        String LatestAnnotationFileUtilitiesReleaseZip =
-                String.valueOf(latestRelease)
-                                .split("/", 0)[
-                                String.valueOf(latestRelease).split("/", 0).length - 1]
-                        + ".zip";
-        htmlString =
-                htmlString.replace(
-                        "$LatestAnnotationFileUtilitiesReleaseZip",
-                        LatestAnnotationFileUtilitiesReleaseZip);
+        String LatestAnnotationFileUtilitiesReleaseZip = latestReleaseName + ".zip";
 
         String LatestAnnotationFileUtilitiesReleaseDownloadLink =
                 "/afu/" + LatestAnnotationFileUtilitiesReleaseZip;
-        htmlString =
-                htmlString.replace(
-                        "$LatestAnnotationFileUtilitiesReleaseDownloadLink",
-                        LatestAnnotationFileUtilitiesReleaseDownloadLink);
 
         String LatestAnnotationFileUtilitiesReleaseDate =
                 String.valueOf(
@@ -518,22 +491,20 @@ public class EisopSiteGenerator {
                                 .get("created_at"));
         LatestAnnotationFileUtilitiesReleaseDate =
                 getReadableDate(LatestAnnotationFileUtilitiesReleaseDate);
-        htmlString =
-                htmlString.replace(
-                        "$LatestAnnotationFileUtilitiesReleaseDate",
-                        LatestAnnotationFileUtilitiesReleaseDate);
 
-        if (newHTML.exists()) {
-            FileUtils.forceDelete(newHTML);
-        }
-        FileUtils.writeStringToFile(newHTML, htmlString);
+        substituteAfuPlaceholders(
+                new File(System.getProperty("user.dir") + "/cf"),
+                LatestAnnotationFileUtilitiesReleaseZip,
+                LatestAnnotationFileUtilitiesReleaseDownloadLink,
+                LatestAnnotationFileUtilitiesReleaseDate);
 
         // Re-generate afu/annotation-file-utilities.md with latest release
         File afuTemplate = new File(System.getProperty("user.dir") + "/afu-template.md");
         File newMD = new File(System.getProperty("user.dir") + "/afu/annotation-file-utilities.md");
-        String mdString = FileUtils.readFileToString(afuTemplate);
+        String mdString = FileUtils.readFileToString(afuTemplate, StandardCharsets.UTF_8);
 
-        String LatestAnnotationFileUtilitiesRelease = String.valueOf(latestRelease).split("-")[String.valueOf(latestRelease).split("-").length - 2];
+        String LatestAnnotationFileUtilitiesRelease =
+                latestReleaseName.split("-")[latestReleaseName.split("-").length - 2];
 
 
         mdString = mdString.replace("$LatestAnnotationFileUtilitiesReleaseDate", LatestAnnotationFileUtilitiesReleaseDate);
@@ -545,8 +516,63 @@ public class EisopSiteGenerator {
             FileUtils.forceDelete(newMD);
         }
         newMD.createNewFile();
-        FileUtils.writeStringToFile(newMD, mdString);
+        FileUtils.writeStringToFile(newMD, mdString, StandardCharsets.UTF_8);
 
+    }
+
+    /**
+     * Fills in the Annotation File Utilities placeholders on every page generated from
+     * cf-template.md.
+     *
+     * <p>That template is expanded in two passes: main() substitutes the Checker Framework values
+     * as it writes each release's page, and the AFU values are known only later, once the AFU
+     * releases have been read. This pass therefore has to reach every page the first pass wrote --
+     * the per-release pages and their copies in the release archive, not just cf/index.md -- or
+     * those pages show readers the literal placeholder text.
+     *
+     * <p>Substitution is idempotent, so pages written by an earlier run are repaired too.
+     *
+     * @param cfDir the website's cf directory
+     * @param zip the file name of the latest AFU release's zip
+     * @param downloadLink the site-relative download link for that zip
+     * @param date the human-readable date of that release
+     * @throws IOException if a page cannot be read or written
+     */
+    static void substituteAfuPlaceholders(File cfDir, String zip, String downloadLink, String date)
+            throws IOException {
+        List<File> pages = new ArrayList<>();
+        pages.add(new File(cfDir, "index.md"));
+        File[] releaseDirs = cfDir.listFiles(File::isDirectory);
+        if (releaseDirs != null) {
+            for (File releaseDir : releaseDirs) {
+                pages.add(new File(releaseDir, "index.md"));
+            }
+        }
+        File[] archived = new File(cfDir, "releases").listFiles();
+        if (archived != null) {
+            for (File archivedPage : archived) {
+                if (archivedPage.getName().endsWith(".html")) {
+                    pages.add(archivedPage);
+                }
+            }
+        }
+
+        for (File page : pages) {
+            if (!page.isFile()) {
+                continue;
+            }
+            String content = FileUtils.readFileToString(page, StandardCharsets.UTF_8);
+            String substituted =
+                    content.replace("$LatestAnnotationFileUtilitiesReleaseZip", zip)
+                            .replace(
+                                    "$LatestAnnotationFileUtilitiesReleaseDownloadLink",
+                                    downloadLink)
+                            .replace("$LatestAnnotationFileUtilitiesReleaseDate", date);
+            if (!substituted.equals(content)) {
+                FileUtils.writeStringToFile(page, substituted, StandardCharsets.UTF_8);
+                System.out.println("Filled in AFU release info in " + page);
+            }
+        }
     }
 
     static String getReadableDate(String autoDate) {
