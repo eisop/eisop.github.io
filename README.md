@@ -2,12 +2,15 @@
 
 ## Publishing the website
 
-Run the **Publish website** workflow from the Actions tab. It checks out
-`master` for the generator, builds it, checks out `gh-pages`, downloads any
-Checker Framework or Annotation File Utilities release that is not on the site
-yet, regenerates the pages, and pushes.
+The website is updated automatically via a daily GitHub Actions schedule that
+checks if new Checker Framework or Annotation File Utilities releases have been
+published. If new releases exist, it generates and publishes the pages.
 
-It defaults to a dry run: everything except the push, with the resulting
+You can also run the **Publish website** workflow manually from the Actions tab.
+It checks out `master` for the generator, builds it, checks out `gh-pages`,
+downloads any release that is not on the site yet, regenerates the pages, and pushes.
+
+Manual runs default to a dry run: everything except the push, with the resulting
 `git status` in the run summary. Read that, then run it again with the dry-run
 box unchecked to publish.
 
