@@ -144,88 +144,47 @@ public class EisopSiteGenerator {
 
             File releaseFolder =
                     new File(String.valueOf(directoryPath) + "/" + String.valueOf(unzippedFile));
-            // System.out.println(String.valueOf(releaseFolder));
-
-            // Move javadoc.jar to /api and unzip
-            File releaseJavadoc =
-                    new File(String.valueOf(releaseFolder) + "/checker/dist/checker-javadoc.jar");
-            File javadocFolder = new File(String.valueOf(releaseFolder) + "/api");
-            FileUtils.forceMkdir(javadocFolder);
-            FileUtils.moveFileToDirectory(releaseJavadoc, javadocFolder, false);
-
-            File unzippedJavadoc =
-                    new File(String.valueOf(releaseFolder) + "/api/checker-javadoc.jar");
-            try {
-                ZipFile zipFile = new ZipFile(unzippedJavadoc);
-                if (zipFile.isEncrypted()) {
-                    // zipFile.setPassword();
-                }
-                zipFile.extractAll(String.valueOf(releaseFolder) + "/api/checker-javadoc");
-            } catch (ZipException e) {
-                e.printStackTrace();
-            }
-
-            File releaseOrg = new File(String.valueOf(javadocFolder) + "/checker-javadoc/org");
-            FileUtils.moveDirectoryToDirectory(releaseOrg, javadocFolder, false);
-
-            // Move index.html
-            //            File releaseHTML = new File(String.valueOf(releaseFolder) +
-            // "/docs/tutorial/index.html");
-            //            FileUtils.moveFileToDirectory(releaseHTML, releaseFolder, false);
-
-            File newHTML = new File(releaseFolder + "/index.md");
-            if (newHTML.exists()) {
-                FileUtils.forceDelete(newHTML);
-            }
-
-            String htmlString = readTemplate("cf-template.md");
-            // $LatestCheckerFrameworkReleaseDownloadLink, $LatestCheckerFrameworkReleaseZip,
-            // $LatestCheckerFrameworkReleaseDate
-
-            String LatestCheckerFrameworkReleaseZip =
+            String releaseZipName =
                     String.valueOf(releaseFolder)
                                     .split("/", 0)[
                                     String.valueOf(releaseFolder).split("/", 0).length - 1]
                             + ".zip";
-            htmlString =
-                    htmlString.replace(
-                            "$LatestCheckerFrameworkReleaseZip", LatestCheckerFrameworkReleaseZip);
 
-            String LatestCheckerFrameworkReleaseDownloadLink =
-                    "/cf/" + LatestCheckerFrameworkReleaseZip;
-            htmlString =
-                    htmlString.replace(
-                            "$LatestCheckerFrameworkReleaseDownloadLink",
-                            LatestCheckerFrameworkReleaseDownloadLink);
+            // Move javadoc.jar to /api and unzip for latest release, or write stub for older releases
+            File releaseJavadoc =
+                    new File(String.valueOf(releaseFolder) + "/checker/dist/checker-javadoc.jar");
+            File javadocFolder = new File(String.valueOf(releaseFolder) + "/api");
+            FileUtils.forceMkdir(javadocFolder);
 
-            String LatestCheckerFrameworkReleaseDate =
-                    String.valueOf(
-                            ((JSONObject)
-                                            ((((JSONArray)
-                                                            ((JSONObject) frameworkReleases.get(i))
-                                                                    .get("assets"))
-                                                    .get(0))))
-                                    .get("created_at"));
-            LatestCheckerFrameworkReleaseDate = getReadableDate(LatestCheckerFrameworkReleaseDate);
-            htmlString =
-                    htmlString.replace(
-                            "$LatestCheckerFrameworkReleaseDate",
-                            LatestCheckerFrameworkReleaseDate);
-
-            FileUtils.writeStringToFile(newHTML, htmlString, StandardCharsets.UTF_8);
-
-            File releaseArchiveHTML =
-                    new File(
-                            System.getProperty("user.dir")
-                                    + "/cf/releases/"
-                                    + String.valueOf(releaseFolder)
-                                            .split("/", 0)[
-                                            String.valueOf(releaseFolder).split("/", 0).length - 1]
-                                    + ".html");
-            FileUtils.copyFile(newHTML, releaseArchiveHTML);
-
-            //            // Set the path to the directory to search
-            //            String directoryPath = "/path/to/directory";
+            if (i == 0) {
+                // Keep full javadoc only for the latest release
+                if (releaseJavadoc.exists()) {
+                    FileUtils.moveFileToDirectory(releaseJavadoc, javadocFolder, false);
+                    File unzippedJavadoc =
+                            new File(String.valueOf(releaseFolder) + "/api/checker-javadoc.jar");
+                    try {
+                        ZipFile zipFile = new ZipFile(unzippedJavadoc);
+                        zipFile.extractAll(String.valueOf(releaseFolder) + "/api/checker-javadoc");
+                    } catch (ZipException e) {
+                        e.printStackTrace();
+                    }
+                    FileUtils.forceDelete(unzippedJavadoc);
+                }
+            } else {
+                // For older releases, write a stub redirecting to the release zip
+                File stubDir = new File(javadocFolder, "checker-javadoc");
+                FileUtils.forceMkdir(stubDir);
+                File stubIndex = new File(stubDir, "index.html");
+                String stubContent =
+                        "---\n"
+                                + "layout: default\n"
+                                + "title: Javadoc\n"
+                                + "---\n"
+                                + "<p>Javadoc for this archived release is available in <a href=\"/cf/"
+                                + releaseZipName
+                                + "\">the release zip</a>.</p>\n";
+                FileUtils.writeStringToFile(stubIndex, stubContent, StandardCharsets.UTF_8);
+            }
 
             // Find the subdirectories and files to move
             String examplesString = String.valueOf(releaseFolder) + "/docs/examples";
@@ -240,6 +199,14 @@ public class EisopSiteGenerator {
                     new File(
                             String.valueOf(releaseFolder)
                                     + "/docs/checker-framework-quick-start.html");
+            File shippedWebpage =
+                    new File(
+                            String.valueOf(releaseFolder)
+                                    + "/docs/checker-framework-webpage.html");
+            File shippedFavicon =
+                    new File(
+                            String.valueOf(releaseFolder)
+                                    + "/docs/favicon-checkerframework.png");
             String logoString = String.valueOf(releaseFolder) + "/tutorial/CFLogo.png";
             File logoFile = new File(logoString);
 
@@ -263,25 +230,95 @@ public class EisopSiteGenerator {
             if (logoFile.exists()) {
                 FileUtils.copyFileToDirectory(logoFile, releaseFolder);
             }
+
+            // Generate release front page: use shipped page if present, else fall back to template
+            File indexHTML = new File(releaseFolder, "index.html");
+            File indexMD = new File(releaseFolder, "index.md");
+            if (indexHTML.exists()) {
+                FileUtils.forceDelete(indexHTML);
+            }
+            if (indexMD.exists()) {
+                FileUtils.forceDelete(indexMD);
+            }
+
+            if (shippedWebpage.exists()) {
+                String rawHtml = FileUtils.readFileToString(shippedWebpage, StandardCharsets.UTF_8);
+                String themedHtml = themeShippedPage(rawHtml);
+                FileUtils.writeStringToFile(indexHTML, themedHtml, StandardCharsets.UTF_8);
+                if (shippedFavicon.exists()) {
+                    FileUtils.moveFile(shippedFavicon, new File(releaseFolder, "favicon-checkerframework.png"));
+                }
+            } else {
+                String htmlString = readTemplate("cf-template.md");
+                htmlString =
+                        htmlString.replace(
+                                "$LatestCheckerFrameworkReleaseZip", releaseZipName);
+
+                String LatestCheckerFrameworkReleaseDownloadLink =
+                        "/cf/" + releaseZipName;
+                htmlString =
+                        htmlString.replace(
+                                "$LatestCheckerFrameworkReleaseDownloadLink",
+                                LatestCheckerFrameworkReleaseDownloadLink);
+
+                String LatestCheckerFrameworkReleaseDate =
+                        String.valueOf(
+                                ((JSONObject)
+                                                ((((JSONArray)
+                                                                ((JSONObject) frameworkReleases.get(i))
+                                                                        .get("assets"))
+                                                        .get(0))))
+                                        .get("created_at"));
+                LatestCheckerFrameworkReleaseDate = getReadableDate(LatestCheckerFrameworkReleaseDate);
+                htmlString =
+                        htmlString.replace(
+                                "$LatestCheckerFrameworkReleaseDate",
+                                LatestCheckerFrameworkReleaseDate);
+
+                FileUtils.writeStringToFile(indexMD, htmlString, StandardCharsets.UTF_8);
+            }
+
+            // Remove checker/ and docs/ to avoid keeping redundant build jars and files
+            File checkerDir = new File(releaseFolder, "checker");
+            if (checkerDir.exists()) {
+                FileUtils.deleteDirectory(checkerDir);
+            }
+            File docsDir = new File(releaseFolder, "docs");
+            if (docsDir.exists()) {
+                FileUtils.deleteDirectory(docsDir);
+            }
         }
 
         // Write HTML to releases/releases.md
         FileUtils.writeStringToFile(releaseFile, releaseFileHTML, StandardCharsets.UTF_8);
 
-        // Re-generate cf/index.html with latest release
-        File globalIndexHTML = new File(String.valueOf(directoryPath) + "/index.md");
+        // Re-generate cf/index.html or cf/index.md with latest release
+        File globalIndexHTML = new File(directoryPath, "index.html");
         if (globalIndexHTML.exists()) {
             FileUtils.forceDelete(globalIndexHTML);
+        }
+        File globalIndexMD = new File(directoryPath, "index.md");
+        if (globalIndexMD.exists()) {
+            FileUtils.forceDelete(globalIndexMD);
         }
 
         File latestRelease =
                 new File(
-                        String.valueOf(System.getProperty("user.dir"))
-                                + "/cf/"
-                                + String.valueOf(
-                                        ((JSONObject) frameworkReleases.get(0)).get("tag_name")));
-        File latestReleaseHTML = new File(String.valueOf(latestRelease) + "/index.md");
-        FileUtils.copyFileToDirectory(latestReleaseHTML, directoryPath);
+                        directoryPath,
+                        String.valueOf(
+                                ((JSONObject) frameworkReleases.get(0)).get("tag_name")));
+        File latestReleaseHTML = new File(latestRelease, "index.html");
+        File latestReleaseMD = new File(latestRelease, "index.md");
+        if (latestReleaseHTML.exists()) {
+            FileUtils.copyFileToDirectory(latestReleaseHTML, directoryPath);
+        } else if (latestReleaseMD.exists()) {
+            FileUtils.copyFileToDirectory(latestReleaseMD, directoryPath);
+        }
+
+        File latestFavicon = new File(latestRelease, "favicon-checkerframework.png");
+        if (latestFavicon.exists()) {
+            FileUtils.copyFileToDirectory(latestFavicon, directoryPath);
+        }
 
         // Get folders from latest release
         File newExamples = new File(System.getProperty("user.dir") + "/cf/examples");
@@ -329,13 +366,21 @@ public class EisopSiteGenerator {
 
         // Rename cf/manual/manual.pdf to cf/manual/checker-framework-manual.pdf
         File manualPDF = new File(String.valueOf(directoryPath) + "/manual/manual.pdf");
-        File checkerFrameworkManualPDF = new File(String.valueOf(directoryPath) + "/manual/checker-framework-manual.pdf");
-        FileUtils.copyFile(manualPDF, checkerFrameworkManualPDF);
+        if (manualPDF.exists()) {
+            File checkerFrameworkManualPDF =
+                    new File(String.valueOf(directoryPath) + "/manual/checker-framework-manual.pdf");
+            FileUtils.copyFile(manualPDF, checkerFrameworkManualPDF);
+        }
 
         // Copy CFLogo.png to cf/
-        File cfLogo = new File(String.valueOf(latestRelease) + "/tutorial/CFLogo.png");
-        File newCFLogo = new File(System.getProperty("user.dir") + "/cf/CFLogo.png");
-        FileUtils.copyFile(cfLogo, newCFLogo);
+        File cfLogo = new File(String.valueOf(latestRelease) + "/CFLogo.png");
+        if (!cfLogo.exists()) {
+            cfLogo = new File(String.valueOf(latestRelease) + "/tutorial/CFLogo.png");
+        }
+        if (cfLogo.exists()) {
+            File newCFLogo = new File(System.getProperty("user.dir") + "/cf/CFLogo.png");
+            FileUtils.copyFile(cfLogo, newCFLogo);
+        }
 
         getAFU();
     }
@@ -436,32 +481,11 @@ public class EisopSiteGenerator {
             System.out.println("Downloading " + String.valueOf(FILE_TEST));
             System.out.println("");
 
-            // Unzip downloaded assets, move them to /cf
-            File unzippedFile =
-                    new File(
-                            String.valueOf(LatestAssetsData.get("name"))
-                                    .substring(
-                                            0,
-                                            String.valueOf(LatestAssetsData.get("name")).length()
-                                                    - 4));
-            try {
-                ZipFile zipFile = new ZipFile(FILE_TEST);
-                if (zipFile.isEncrypted()) {
-                    // zipFile.setPassword();
-                }
-                zipFile.extractAll(
-                        String.valueOf(LatestAssetsData.get("name"))
-                                .substring(
-                                        0,
-                                        String.valueOf(LatestAssetsData.get("name")).length() - 4));
-            } catch (ZipException e) {
-                e.printStackTrace();
-            }
+            // Move the zip to afu/ without extracting the source tree
             FileUtils.moveFileToDirectory(FILE_TEST, directoryPath, false);
-            FileUtils.moveDirectoryToDirectory(unzippedFile, directoryPath, false);
         }
 
-        // Re-generate cf/annotation-file-utilities.html with latest release
+        // Re-generate afu/annotation-file-utilities.html with latest release
         File globalIndexHTML =
                 new File(String.valueOf(directoryPath) + "/annotation-file-utilities.html");
         if (globalIndexHTML.exists()) {
@@ -476,26 +500,44 @@ public class EisopSiteGenerator {
                                 .get("name"));
         String latestReleaseName =
                 latestReleaseZipName.substring(0, latestReleaseZipName.length() - 4);
-        File latestRelease = new File(directoryPath, latestReleaseName);
-//        File latestReleaseHTML =
-//                new File(
-//                        String.valueOf(latestRelease)
-//                                + "/annotation-file-utilities/annotation-file-utilities.html");
-//        FileUtils.copyFileToDirectory(latestReleaseHTML, directoryPath);
 
-        File latestFormatHTML =
-                new File(
-                        String.valueOf(latestRelease)
-                                + "/annotation-file-utilities/annotation-file-format.html");
-        FileUtils.copyFileToDirectory(latestFormatHTML, directoryPath);
+        // Extract format documentation from the latest AFU release zip if not already present
+        File latestFormatHTML = new File(directoryPath, "annotation-file-format.html");
+        File latestFormatPDF = new File(directoryPath, "annotation-file-format.pdf");
+        if (!latestFormatHTML.exists() || !latestFormatPDF.exists()) {
+            File latestZip = new File(directoryPath, latestReleaseZipName);
+            if (latestZip.exists()) {
+                File tempDir = File.createTempFile("afu-extract", "");
+                tempDir.delete();
+                tempDir.mkdirs();
+                try {
+                    ZipFile zipFile = new ZipFile(latestZip);
+                    zipFile.extractAll(tempDir.getAbsolutePath());
+                    File formatHTML =
+                            new File(
+                                    tempDir,
+                                    latestReleaseName
+                                            + "/annotation-file-utilities/annotation-file-format.html");
+                    if (formatHTML.exists()) {
+                        FileUtils.copyFileToDirectory(formatHTML, directoryPath);
+                    }
+                    File formatPDF =
+                            new File(
+                                    tempDir,
+                                    latestReleaseName
+                                            + "/annotation-file-utilities/annotation-file-format.pdf");
+                    if (formatPDF.exists()) {
+                        FileUtils.copyFileToDirectory(formatPDF, directoryPath);
+                    }
+                } catch (ZipException e) {
+                    e.printStackTrace();
+                } finally {
+                    FileUtils.deleteQuietly(tempDir);
+                }
+            }
+        }
 
-        File latestFormatPDF =
-                new File(
-                        String.valueOf(latestRelease)
-                                + "/annotation-file-utilities/annotation-file-format.pdf");
-        FileUtils.copyFileToDirectory(latestFormatPDF, directoryPath);
-
-        System.out.println("Latest release: " + String.valueOf(latestRelease));
+        System.out.println("Latest release: " + latestReleaseName);
 
         String LatestAnnotationFileUtilitiesReleaseZip = latestReleaseName + ".zip";
 
@@ -526,7 +568,6 @@ public class EisopSiteGenerator {
         String LatestAnnotationFileUtilitiesRelease =
                 latestReleaseName.split("-")[latestReleaseName.split("-").length - 2];
 
-
         mdString = mdString.replace("$LatestAnnotationFileUtilitiesReleaseDate", LatestAnnotationFileUtilitiesReleaseDate);
         mdString = mdString.replace("$LatestAnnotationFileUtilitiesReleaseZip", LatestAnnotationFileUtilitiesReleaseZip);
         mdString = mdString.replace("$LatestAnnotationFileUtilitiesReleaseDownloadLink", LatestAnnotationFileUtilitiesReleaseZip);
@@ -547,8 +588,8 @@ public class EisopSiteGenerator {
      * <p>That template is expanded in two passes: main() substitutes the Checker Framework values
      * as it writes each release's page, and the AFU values are known only later, once the AFU
      * releases have been read. This pass therefore has to reach every page the first pass wrote --
-     * the per-release pages and their copies in the release archive, not just cf/index.md -- or
-     * those pages show readers the literal placeholder text.
+     * the per-release pages, not just cf/index.md -- or those pages show readers the literal
+     * placeholder text.
      *
      * <p>Substitution is idempotent, so pages written by an earlier run are repaired too.
      *
@@ -561,18 +602,16 @@ public class EisopSiteGenerator {
     static void substituteAfuPlaceholders(File cfDir, String zip, String downloadLink, String date)
             throws IOException {
         List<File> pages = new ArrayList<>();
-        pages.add(new File(cfDir, "index.md"));
+        File cfIndexMd = new File(cfDir, "index.md");
+        if (cfIndexMd.exists()) {
+            pages.add(cfIndexMd);
+        }
         File[] releaseDirs = cfDir.listFiles(File::isDirectory);
         if (releaseDirs != null) {
             for (File releaseDir : releaseDirs) {
-                pages.add(new File(releaseDir, "index.md"));
-            }
-        }
-        File[] archived = new File(cfDir, "releases").listFiles();
-        if (archived != null) {
-            for (File archivedPage : archived) {
-                if (archivedPage.getName().endsWith(".html")) {
-                    pages.add(archivedPage);
+                File page = new File(releaseDir, "index.md");
+                if (page.exists()) {
+                    pages.add(page);
                 }
             }
         }
@@ -593,6 +632,29 @@ public class EisopSiteGenerator {
                 System.out.println("Filled in AFU release info in " + page);
             }
         }
+    }
+
+    /**
+     * Converts a standalone HTML page shipped in a release zip into a Jekyll-compatible page
+     * using the default layout.
+     *
+     * @param html the full HTML content
+     * @return the body content with Jekyll front matter prepended
+     */
+    static String themeShippedPage(String html) {
+        String body = html;
+        int bodyStart = html.indexOf("<body");
+        if (bodyStart != -1) {
+            bodyStart = html.indexOf('>', bodyStart);
+            if (bodyStart != -1) {
+                body = html.substring(bodyStart + 1);
+            }
+        }
+        int bodyEnd = body.indexOf("</body>");
+        if (bodyEnd != -1) {
+            body = body.substring(0, bodyEnd);
+        }
+        return "---\nlayout: default\n---\n" + body.trim() + "\n";
     }
 
     /**
