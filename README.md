@@ -45,6 +45,17 @@ java -cp ./target/eisop.github.io-1.0-SNAPSHOT-jar-with-dependencies.jar \
 - `--local-release <zip>`: Substitutes the local zip file as the newest release entry, extracting its version from the file name.
 - `--only-latest`: Builds only the newest release's folder and the `cf/` top level, skipping downloads of past release archives.
 
+To inspect and link-check the output, serve the site root with a local HTTP server (site-absolute links like `/cf/...` require a server root and cannot be checked via `file://`):
+
+```bash
+# Serve the working directory (site root)
+python3 -m http.server 8000
+
+# Validate both depths with a link checker:
+lychee http://localhost:8000/cf/index.html
+lychee http://localhost:8000/cf/<release>/index.html
+```
+
 
 ## Development notes
 
