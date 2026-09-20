@@ -6,8 +6,6 @@ layout: default
 ---
 
 Annotation File Utilities
-
-Annotation File Utilities
 =========================
 
 Contents:
@@ -68,7 +66,7 @@ The following instructions assume either a Linux or Windows system using a comma
 
 The current release is Annotation File Utilities version $LatestAnnotationFileUtilitiesRelease, $LatestAnnotationFileUtilitiesReleaseDate.
 
-1.  Download [$LatestAnnotationFileUtilitiesReleaseDownloadLink]($LatestAnnotationFileUtilitiesReleaseZip).
+1.  Download [$LatestAnnotationFileUtilitiesReleaseZip]($LatestAnnotationFileUtilitiesReleaseDownloadLink).
 2.  Create a directory named `annotation-tools` by unpacking the distribution zipfile. (You will typically make `annotation-tools/` a sibling of `checker-framework/`.)
     
         unzip annotation-tools-$LatestAnnotationFileUtilitiesRelease.zip
@@ -82,13 +80,13 @@ The current release is Annotation File Utilities version $LatestAnnotationFileUt
         
              Control Panel -> System -> Advanced -> Environment Variables 
         
-        From there, find the `PATH` variable under “System variables” and append to it the directory `_path\to_\annotatation-tools\annotation-file-utilities\scripts`.
+        From there, find the `PATH` variable under “System variables” and append to it the directory `_path\to_\annotation-tools\annotation-file-utilities\scripts`.
 
 ### Building from source
 
 The annotation file utilities are pre-compiled (a jar file is included in the distribution), so most users do not need to compile it themselves.
 
-There are two ways to obtain the source code. Source code is provided in the [distribution](https://github.com/typetools/annotation-tools/releases). Alternately, see the source code repository at [https://github.com/typetools/annotation-tools](https://github.com/typetools/annotation-tools).
+There are two ways to obtain the source code. Source code is provided in the [distribution](https://github.com/eisop/annotation-tools/releases). Alternately, see the source code repository at [https://github.com/eisop/annotation-tools](https://github.com/eisop/annotation-tools).
 
 To compile and run tests, do `./gradlew build` from the `annotation-file-utilities` subdirectory.
 
@@ -260,9 +258,9 @@ If there are remaining `Insertion`s that were not matched to a node in the abstr
 Feedback and bug reports
 ------------------------
 
-To submit a bug report or request a new feature, use the [issue tracker](https://github.com/typetools/annotation-tools/issues). When reporting a bug, please include exact instructions in how to reproduce it, and please also attach relevant input files. This will let us resolve the issue quickly.
+To submit a bug report or request a new feature, use the [issue tracker](https://github.com/eisop/annotation-tools/issues). When reporting a bug, please include exact instructions on how to reproduce it, and please also attach relevant input files. This will let us resolve the issue quickly.
 
-You can also reach the developers at [annotation-tools-dev@googlegroups.com](mailto:annotation-tools-dev@googlegroups.com). But please use the [issue tracker](https://github.com/typetools/annotation-tools/issues) for bug reports and feature requests.
+You can also reach the developers at [annotation-tools-dev@googlegroups.com](mailto:annotation-tools-dev@googlegroups.com). But please use the [issue tracker](https://github.com/eisop/annotation-tools/issues) for bug reports and feature requests.
 
 ### Changelog
 

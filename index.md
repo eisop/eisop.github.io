@@ -44,13 +44,13 @@ We provide several integrations for the EISOP Framework:
 ## Checker Framework Live Demo
 
 To experience the Checker Framework from within your browser, see our
-[Checker Framework Live Demo](http://eisop.uwaterloo.ca/live/).
+[Checker Framework Live Demo](https://eisop.uwaterloo.ca/live/).
 [Source Code](https://github.com/eisop/webserver/).
 
 
 ## Contributors
 
-- [Credits](https://eisop.github.io/cf/manual/#credits)
+- [Credits](/cf/manual/#credits)
 - [Project members](https://github.com/orgs/eisop/people)
 - [Student list](https://ece.uwaterloo.ca/~wdietl/students/)
 
