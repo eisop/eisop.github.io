@@ -189,11 +189,8 @@ public class EisopSiteGenerator {
             }
 
             // Unzip downloaded assets, move them to /cf
-            String assetBaseName =
-                    String.valueOf(latestAssetsData.get("name"))
-                            .substring(
-                                    0,
-                                    String.valueOf(latestAssetsData.get("name")).length() - 4);
+            String assetName = String.valueOf(latestAssetsData.get("name"));
+            String assetBaseName = assetName.substring(0, assetName.length() - 4);
             File unzippedFile = new File(assetBaseName);
             try {
                 ZipFile zipFile = new ZipFile(fileTest);
@@ -625,7 +622,7 @@ public class EisopSiteGenerator {
                 getReadableDate(latestAnnotationFileUtilitiesReleaseDate);
 
         substituteAfuPlaceholders(
-                new File(System.getProperty("user.dir") + "/cf"),
+                new File(System.getProperty("user.dir"), "cf"),
                 latestAnnotationFileUtilitiesReleaseZip,
                 latestAnnotationFileUtilitiesReleaseDownloadLink,
                 latestAnnotationFileUtilitiesReleaseDate);
