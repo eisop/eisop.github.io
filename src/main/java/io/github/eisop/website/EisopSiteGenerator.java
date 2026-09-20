@@ -16,13 +16,46 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.TimeZone;
 
 public class EisopSiteGenerator {
 
     public static void main(String[] args) throws IOException {
+        File localReleaseZip = null;
+        boolean onlyLatest = false;
+
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            if (arg.equals("--only-latest")) {
+                onlyLatest = true;
+            } else if (arg.equals("--local-release")) {
+                if (i + 1 < args.length) {
+                    localReleaseZip = new File(args[++i]);
+                } else {
+                    System.err.println(
+                            "Error: --local-release requires a path to a release zip file");
+                    System.exit(1);
+                }
+            } else if (arg.startsWith("--local-release=")) {
+                localReleaseZip = new File(arg.substring("--local-release=".length()));
+            } else {
+                System.err.println("Unknown argument: " + arg);
+                System.exit(1);
+            }
+        }
+
+        if (localReleaseZip != null) {
+            localReleaseZip = localReleaseZip.getAbsoluteFile();
+            if (!localReleaseZip.isFile()) {
+                System.err.println("Error: local release zip does not exist: " + localReleaseZip);
+                System.exit(1);
+            }
+        }
 
         File directoryPath = new File(System.getProperty("user.dir") + "/cf");
         if (!directoryPath.exists()) {
@@ -39,7 +72,44 @@ public class EisopSiteGenerator {
         URL listReleasesURL =
                 new URL(
                         "https://api.github.com/repos/eisop/checker-framework/releases?per_page=100");
-        JSONArray frameworkReleases = getAPIResponse(listReleasesURL);
+        JSONArray frameworkReleases;
+        try {
+            frameworkReleases = getAPIResponse(listReleasesURL);
+        } catch (IOException e) {
+            if (localReleaseZip != null && onlyLatest) {
+                System.out.println(
+                        "Warning: could not reach GitHub API, proceeding with local release only: "
+                                + e.getMessage());
+                frameworkReleases = new JSONArray();
+            } else {
+                throw e;
+            }
+        }
+
+        if (localReleaseZip != null) {
+            String zipName = localReleaseZip.getName();
+            if (!zipName.endsWith(".zip")) {
+                System.err.println("Error: local release zip must end with .zip: " + zipName);
+                System.exit(1);
+            }
+            String tagName = zipName.substring(0, zipName.length() - 4);
+            Date lastModified = new Date(localReleaseZip.lastModified());
+            SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String dateStr = isoFormat.format(lastModified);
+
+            JSONObject localRelease = new JSONObject();
+            localRelease.put("tag_name", tagName);
+            JSONObject asset = new JSONObject();
+            asset.put("name", zipName);
+            asset.put("browser_download_url", localReleaseZip.toURI().toString());
+            asset.put("created_at", dateStr);
+            JSONArray assets = new JSONArray();
+            assets.add(asset);
+            localRelease.put("assets", assets);
+
+            frameworkReleases.add(0, localRelease);
+        }
 
         File releaseFile = new File(System.getProperty("user.dir") + "/cf/releases/releases.md");
         String releaseFileHTML =
@@ -52,16 +122,20 @@ public class EisopSiteGenerator {
                         + "=====================\n";
 
         // Loop through list of framework releases
-        for (int i = 0; i < frameworkReleases.size(); i++) {
+        int limit = onlyLatest ? 1 : frameworkReleases.size();
+        for (int i = 0; i < limit; i++) {
+            boolean isLocalRelease = (i == 0 && localReleaseZip != null);
 
-            releaseFileHTML +=
-                    "["
-                            + String.valueOf(
-                                    ((JSONObject) frameworkReleases.get(i)).get("tag_name"))
-                            + "](../"
-                            + String.valueOf(
-                                    ((JSONObject) frameworkReleases.get(i)).get("tag_name"))
-                            + "/index.html)\n";
+            if (!isLocalRelease) {
+                releaseFileHTML +=
+                        "["
+                                + String.valueOf(
+                                        ((JSONObject) frameworkReleases.get(i)).get("tag_name"))
+                                + "](../"
+                                + String.valueOf(
+                                        ((JSONObject) frameworkReleases.get(i)).get("tag_name"))
+                                + "/index.html)\n";
+            }
 
             // Get data on release assets
             JSONObject LatestAssetsData =
@@ -76,29 +150,44 @@ public class EisopSiteGenerator {
 
             System.out.println("Checking release " + String.valueOf(FILE_TEST));
 
-            // Check if we've already downloaded this release
-            String contents[] = directoryPath.list();
-            boolean alreadyDownloaded = false;
-            if (contents != null) {
-                for (int j = 0; j < contents.length; j++) {
-                    // System.out.println(contents[j]);
-                    if (String.valueOf(contents[j]).equals(String.valueOf(FILE_TEST))) {
-                        alreadyDownloaded = true;
-                        System.out.println(
-                                "Release " + String.valueOf(FILE_TEST) + " already downloaded");
-                        System.out.println("");
-                        break;
+            if (isLocalRelease) {
+                // For a local release, clean up any previous copy and copy the local zip into place
+                File existingZip = new File(directoryPath, String.valueOf(FILE_TEST));
+                if (existingZip.exists()) {
+                    FileUtils.forceDelete(existingZip);
+                }
+                String folderName =
+                        String.valueOf(FILE_TEST)
+                                .substring(0, String.valueOf(FILE_TEST).length() - 4);
+                File existingFolder = new File(directoryPath, folderName);
+                if (existingFolder.exists()) {
+                    FileUtils.deleteDirectory(existingFolder);
+                }
+                FileUtils.copyFile(localReleaseZip, FILE_TEST);
+            } else {
+                // Check if we've already downloaded this release
+                String contents[] = directoryPath.list();
+                boolean alreadyDownloaded = false;
+                if (contents != null) {
+                    for (int j = 0; j < contents.length; j++) {
+                        if (String.valueOf(contents[j]).equals(String.valueOf(FILE_TEST))) {
+                            alreadyDownloaded = true;
+                            System.out.println(
+                                    "Release " + String.valueOf(FILE_TEST) + " already downloaded");
+                            System.out.println("");
+                            break;
+                        }
                     }
                 }
-            }
-            if (alreadyDownloaded) {
-                continue;
-            }
+                if (alreadyDownloaded) {
+                    continue;
+                }
 
-            // If not already downloaded, download release assets
-            FileUtils.copyURLToFile(FILE_URL, FILE_TEST, CONNECT_TIMEOUT, READ_TIMEOUT);
-            System.out.println("Downloading " + String.valueOf(FILE_TEST));
-            System.out.println("");
+                // If not already downloaded, download release assets
+                FileUtils.copyURLToFile(FILE_URL, FILE_TEST, CONNECT_TIMEOUT, READ_TIMEOUT);
+                System.out.println("Downloading " + String.valueOf(FILE_TEST));
+                System.out.println("");
+            }
 
             // Unzip downloaded assets, move them to /cf
             File unzippedFile =
@@ -289,8 +378,10 @@ public class EisopSiteGenerator {
             }
         }
 
-        // Write HTML to releases/releases.md
-        FileUtils.writeStringToFile(releaseFile, releaseFileHTML, StandardCharsets.UTF_8);
+        // Write HTML to releases/releases.md if not in only-latest mode
+        if (!onlyLatest) {
+            FileUtils.writeStringToFile(releaseFile, releaseFileHTML, StandardCharsets.UTF_8);
+        }
 
         // Re-generate cf/index.html or cf/index.md with latest release
         File globalIndexHTML = new File(directoryPath, "index.html");
@@ -352,15 +443,25 @@ public class EisopSiteGenerator {
         File latestChangelog = new File(String.valueOf(latestRelease) + "/CHANGELOG.md");
         File latestJavadoc = new File(String.valueOf(latestRelease) + "/api");
 
-        FileUtils.copyDirectory(latestExamples, newExamples);
-        FileUtils.copyDirectory(latestManual, newManual);
-        FileUtils.copyDirectory(latestTutorial, newTutorial);
-        FileUtils.copyFile(latestChangelog, newChangelog);
+        if (latestExamples.exists()) {
+            FileUtils.copyDirectory(latestExamples, newExamples);
+        }
+        if (latestManual.exists()) {
+            FileUtils.copyDirectory(latestManual, newManual);
+        }
+        if (latestTutorial.exists()) {
+            FileUtils.copyDirectory(latestTutorial, newTutorial);
+        }
+        if (latestChangelog.exists()) {
+            FileUtils.copyFile(latestChangelog, newChangelog);
+        }
         File latestQuickStart = new File(String.valueOf(latestRelease) + "/quick-start.html");
         if (latestQuickStart.exists()) {
             FileUtils.copyFile(latestQuickStart, newQuickStart);
         }
-        FileUtils.copyDirectory(latestJavadoc, newJavadoc);
+        if (latestJavadoc.exists()) {
+            FileUtils.copyDirectory(latestJavadoc, newJavadoc);
+        }
 
         System.out.println("Latest release: " + String.valueOf(latestRelease));
 
@@ -382,7 +483,7 @@ public class EisopSiteGenerator {
             FileUtils.copyFile(cfLogo, newCFLogo);
         }
 
-        getAFU();
+        getAFU(onlyLatest);
     }
 
     /**
@@ -423,7 +524,7 @@ public class EisopSiteGenerator {
         }
     }
 
-    static void getAFU() throws IOException {
+    static void getAFU(boolean onlyLatest) throws IOException {
         File directoryPath = new File(System.getProperty("user.dir") + "/afu");
         if (!directoryPath.exists()) {
             if (directoryPath.mkdirs()) {
@@ -442,7 +543,8 @@ public class EisopSiteGenerator {
         JSONArray frameworkReleases = getAPIResponse(listReleasesURL);
 
         // Loop through list of framework releases
-        for (int i = 0; i < frameworkReleases.size(); i++) {
+        int limit = onlyLatest ? 1 : frameworkReleases.size();
+        for (int i = 0; i < limit; i++) {
 
             JSONObject LatestReleaseData = (JSONObject) frameworkReleases.get(i);
 
