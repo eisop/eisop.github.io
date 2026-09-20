@@ -19,8 +19,8 @@ The Checker Framework enhances Java's type system to make it more powerful and u
     *   [Checker Framework Manual (HTML)](manual/manual.html)
     *   [Checker Framework Manual (PDF)](manual/manual.pdf)
     *   [Installation instructions](manual/manual.html#installation)  
-        or, try it without installation at the [Checker Framework Live Demo](http://eisop.uwaterloo.ca/live/) webpage
-    *   [Tutorial](tutorial/) with Nullness Checker, Regex Checker, and Tainting checker  
+        or, try it without installation at the [Checker Framework Live Demo](https://eisop.uwaterloo.ca/live/) webpage
+    *   [Tutorial](tutorial/) with Nullness Checker, Regex Checker, and Tainting Checker  
         (There is also an older external [Nullness Checker tutorial](https://github.com/glts/safer-spring-petclinic/wiki) whose setup information is out of date.)
     *   [FAQ (Frequently Asked Questions with answers)](manual/manual.html#faq)
     *   [Javadoc](api/checker-javadoc/) API documentation
@@ -48,7 +48,7 @@ If you **have a question**, then first see whether your question is answered in 
 
 *   Checker Framework Manual ([PDF](manual/manual.pdf), [HTML](manual/manual.html))
 *   [Installation instructions](manual/manual.html#installation)  
-    or, try it without installation at the [Checker Framework Live Demo](http://eisop.uwaterloo.ca/live/) webpage
+    or, try it without installation at the [Checker Framework Live Demo](https://eisop.uwaterloo.ca/live/) webpage
 *   [Tutorial](tutorial/) Other tutorials:
     *   [Nullness Checker tutorial](https://github.com/glts/safer-spring-petclinic/wiki) (external site, setup information is out of date)
 *   [FAQ (Frequently Asked Questions with answers)](manual/manual.html#faq)

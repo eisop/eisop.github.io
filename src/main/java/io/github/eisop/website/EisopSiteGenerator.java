@@ -14,13 +14,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 import java.util.TimeZone;
 
 public class EisopSiteGenerator {
@@ -70,8 +70,9 @@ public class EisopSiteGenerator {
 
         // Get list of framework releases
         URL listReleasesURL =
-                new URL(
-                        "https://api.github.com/repos/eisop/checker-framework/releases?per_page=100");
+                URI.create(
+                                "https://api.github.com/repos/eisop/checker-framework/releases?per_page=100")
+                        .toURL();
         JSONArray frameworkReleases;
         try {
             frameworkReleases = getAPIResponse(listReleasesURL);
@@ -111,7 +112,7 @@ public class EisopSiteGenerator {
             frameworkReleases.add(0, localRelease);
         }
 
-        File releaseFile = new File(System.getProperty("user.dir") + "/cf/releases/releases.md");
+        File releaseFile = new File(directoryPath, "releases/releases.md");
         String releaseFileHTML =
                 "---\n"
                         + "layout: default\n"
@@ -138,43 +139,42 @@ public class EisopSiteGenerator {
             }
 
             // Get data on release assets
-            JSONObject LatestAssetsData =
+            JSONObject latestAssetsData =
                     (JSONObject)
                             ((((JSONArray) ((JSONObject) frameworkReleases.get(i)).get("assets"))
                                     .get(0)));
-            int CONNECT_TIMEOUT = 0;
-            int READ_TIMEOUT = 0;
-            String FILE_URL_STRING = (String.valueOf(LatestAssetsData.get("browser_download_url")));
-            URL FILE_URL = new URL(FILE_URL_STRING);
-            File FILE_TEST = new File(String.valueOf(LatestAssetsData.get("name")));
+            int connectTimeout = 0;
+            int readTimeout = 0;
+            String fileUrlString = String.valueOf(latestAssetsData.get("browser_download_url"));
+            URL fileUrl = URI.create(fileUrlString).toURL();
+            File fileTest = new File(String.valueOf(latestAssetsData.get("name")));
 
-            System.out.println("Checking release " + String.valueOf(FILE_TEST));
+            System.out.println("Checking release " + fileTest.getName());
 
             if (isLocalRelease) {
                 // For a local release, clean up any previous copy and copy the local zip into place
-                File existingZip = new File(directoryPath, String.valueOf(FILE_TEST));
+                File existingZip = new File(directoryPath, fileTest.getName());
                 if (existingZip.exists()) {
                     FileUtils.forceDelete(existingZip);
                 }
                 String folderName =
-                        String.valueOf(FILE_TEST)
-                                .substring(0, String.valueOf(FILE_TEST).length() - 4);
+                        fileTest.getName()
+                                .substring(0, fileTest.getName().length() - 4);
                 File existingFolder = new File(directoryPath, folderName);
                 if (existingFolder.exists()) {
                     FileUtils.deleteDirectory(existingFolder);
                 }
-                FileUtils.copyFile(localReleaseZip, FILE_TEST);
+                FileUtils.copyFile(localReleaseZip, fileTest);
             } else {
                 // Check if we've already downloaded this release
-                String contents[] = directoryPath.list();
+                String[] contents = directoryPath.list();
                 boolean alreadyDownloaded = false;
                 if (contents != null) {
-                    for (int j = 0; j < contents.length; j++) {
-                        if (String.valueOf(contents[j]).equals(String.valueOf(FILE_TEST))) {
+                    for (String item : contents) {
+                        if (item.equals(fileTest.getName())) {
                             alreadyDownloaded = true;
                             System.out.println(
-                                    "Release " + String.valueOf(FILE_TEST) + " already downloaded");
-                            System.out.println("");
+                                    "Release " + fileTest.getName() + " already downloaded\n");
                             break;
                         }
                     }
@@ -184,76 +184,53 @@ public class EisopSiteGenerator {
                 }
 
                 // If not already downloaded, download release assets
-                FileUtils.copyURLToFile(FILE_URL, FILE_TEST, CONNECT_TIMEOUT, READ_TIMEOUT);
-                System.out.println("Downloading " + String.valueOf(FILE_TEST));
-                System.out.println("");
+                FileUtils.copyURLToFile(fileUrl, fileTest, connectTimeout, readTimeout);
+                System.out.println("Downloading " + fileTest.getName() + "\n");
             }
 
             // Unzip downloaded assets, move them to /cf
-            File unzippedFile =
-                    new File(
-                            String.valueOf(LatestAssetsData.get("name"))
-                                    .substring(
-                                            0,
-                                            String.valueOf(LatestAssetsData.get("name")).length()
-                                                    - 4));
+            String assetName = String.valueOf(latestAssetsData.get("name"));
+            String assetBaseName = assetName.substring(0, assetName.length() - 4);
+            File unzippedFile = new File(assetBaseName);
             try {
-                ZipFile zipFile = new ZipFile(FILE_TEST);
+                ZipFile zipFile = new ZipFile(fileTest);
                 if (zipFile.isEncrypted()) {
                     throw new RuntimeException(
                             "Encountered an encrypted zip file, which was not expected.");
                 }
-                zipFile.extractAll(
-                        String.valueOf(LatestAssetsData.get("name"))
-                                .substring(
-                                        0,
-                                        String.valueOf(LatestAssetsData.get("name")).length() - 4));
+                zipFile.extractAll(assetBaseName);
             } catch (ZipException e) {
                 e.printStackTrace();
             }
 
-            FileUtils.moveFileToDirectory(FILE_TEST, directoryPath, false);
+            FileUtils.moveFileToDirectory(fileTest, directoryPath, false);
             FileUtils.moveDirectoryToDirectory(unzippedFile, directoryPath, false);
 
             // Remove assets folder from enclosing folder
-            File copyFolder =
-                    new File(
-                            System.getProperty("user.dir") + "/cf/" + String.valueOf(unzippedFile));
-            File copyFolderRename =
-                    new File(
-                            System.getProperty("user.dir")
-                                    + "/cf/"
-                                    + String.valueOf(unzippedFile)
-                                    + "_copy");
+            File copyFolder = new File(directoryPath, unzippedFile.getName());
+            File copyFolderRename = new File(directoryPath, unzippedFile.getName() + "_copy");
             copyFolder.renameTo(copyFolderRename);
-            File innerFolder =
-                    new File(String.valueOf(copyFolderRename) + "/" + String.valueOf(unzippedFile));
+            File innerFolder = new File(copyFolderRename, unzippedFile.getName());
             FileUtils.moveDirectoryToDirectory(innerFolder, directoryPath, false);
             FileUtils.deleteDirectory(copyFolderRename);
 
-            File releaseFolder =
-                    new File(String.valueOf(directoryPath) + "/" + String.valueOf(unzippedFile));
-            String releaseZipName =
-                    String.valueOf(releaseFolder)
-                                    .split("/", 0)[
-                                    String.valueOf(releaseFolder).split("/", 0).length - 1]
-                            + ".zip";
+            File releaseFolder = new File(directoryPath, unzippedFile.getName());
+            String releaseZipName = releaseFolder.getName() + ".zip";
 
             // Move javadoc.jar to /api and unzip for latest release, or write stub for older releases
-            File releaseJavadoc =
-                    new File(String.valueOf(releaseFolder) + "/checker/dist/checker-javadoc.jar");
-            File javadocFolder = new File(String.valueOf(releaseFolder) + "/api");
+            File releaseJavadoc = new File(releaseFolder, "checker/dist/checker-javadoc.jar");
+            File javadocFolder = new File(releaseFolder, "api");
             FileUtils.forceMkdir(javadocFolder);
 
             if (i == 0) {
                 // Keep full javadoc only for the latest release
                 if (releaseJavadoc.exists()) {
                     FileUtils.moveFileToDirectory(releaseJavadoc, javadocFolder, false);
-                    File unzippedJavadoc =
-                            new File(String.valueOf(releaseFolder) + "/api/checker-javadoc.jar");
+                    File unzippedJavadoc = new File(javadocFolder, "checker-javadoc.jar");
                     try {
                         ZipFile zipFile = new ZipFile(unzippedJavadoc);
-                        zipFile.extractAll(String.valueOf(releaseFolder) + "/api/checker-javadoc");
+                        zipFile.extractAll(
+                                new File(javadocFolder, "checker-javadoc").getAbsolutePath());
                     } catch (ZipException e) {
                         e.printStackTrace();
                     }
@@ -276,28 +253,14 @@ public class EisopSiteGenerator {
             }
 
             // Find the subdirectories and files to move
-            String examplesString = String.valueOf(releaseFolder) + "/docs/examples";
-            File examplesDirectory = new File(examplesString);
-            String manualString = String.valueOf(releaseFolder) + "/docs/manual";
-            File manualDirectory = new File(manualString);
-            String tutorialString = String.valueOf(releaseFolder) + "/docs/tutorial";
-            File tutorialDirectory = new File(tutorialString);
-            String changeLogString = String.valueOf(releaseFolder) + "/docs/CHANGELOG.md";
-            File changelogFile = new File(changeLogString);
-            File quickStartFile =
-                    new File(
-                            String.valueOf(releaseFolder)
-                                    + "/docs/checker-framework-quick-start.html");
-            File shippedWebpage =
-                    new File(
-                            String.valueOf(releaseFolder)
-                                    + "/docs/checker-framework-webpage.html");
-            File shippedFavicon =
-                    new File(
-                            String.valueOf(releaseFolder)
-                                    + "/docs/favicon-checkerframework.png");
-            String logoString = String.valueOf(releaseFolder) + "/tutorial/CFLogo.png";
-            File logoFile = new File(logoString);
+            File examplesDirectory = new File(releaseFolder, "docs/examples");
+            File manualDirectory = new File(releaseFolder, "docs/manual");
+            File tutorialDirectory = new File(releaseFolder, "docs/tutorial");
+            File changelogFile = new File(releaseFolder, "docs/CHANGELOG.md");
+            File quickStartFile = new File(releaseFolder, "docs/checker-framework-quick-start.html");
+            File shippedWebpage = new File(releaseFolder, "docs/checker-framework-webpage.html");
+            File shippedFavicon = new File(releaseFolder, "docs/favicon-checkerframework.png");
+            File logoFile = new File(releaseFolder, "tutorial/CFLogo.png");
 
             // Move the subdirectories and files to the root of the directory
             if (examplesDirectory.exists()) {
@@ -343,14 +306,14 @@ public class EisopSiteGenerator {
                         htmlString.replace(
                                 "$LatestCheckerFrameworkReleaseZip", releaseZipName);
 
-                String LatestCheckerFrameworkReleaseDownloadLink =
+                String latestCheckerFrameworkReleaseDownloadLink =
                         "/cf/" + releaseZipName;
                 htmlString =
                         htmlString.replace(
                                 "$LatestCheckerFrameworkReleaseDownloadLink",
-                                LatestCheckerFrameworkReleaseDownloadLink);
+                                latestCheckerFrameworkReleaseDownloadLink);
 
-                String LatestCheckerFrameworkReleaseDate =
+                String latestCheckerFrameworkReleaseDate =
                         String.valueOf(
                                 ((JSONObject)
                                                 ((((JSONArray)
@@ -358,11 +321,11 @@ public class EisopSiteGenerator {
                                                                         .get("assets"))
                                                         .get(0))))
                                         .get("created_at"));
-                LatestCheckerFrameworkReleaseDate = getReadableDate(LatestCheckerFrameworkReleaseDate);
+                latestCheckerFrameworkReleaseDate = getReadableDate(latestCheckerFrameworkReleaseDate);
                 htmlString =
                         htmlString.replace(
                                 "$LatestCheckerFrameworkReleaseDate",
-                                LatestCheckerFrameworkReleaseDate);
+                                latestCheckerFrameworkReleaseDate);
 
                 FileUtils.writeStringToFile(indexMD, htmlString, StandardCharsets.UTF_8);
             }
@@ -412,36 +375,36 @@ public class EisopSiteGenerator {
         }
 
         // Get folders from latest release
-        File newExamples = new File(System.getProperty("user.dir") + "/cf/examples");
+        File newExamples = new File(directoryPath, "examples");
         if (newExamples.exists()) {
             FileUtils.forceDelete(newExamples);
         }
-        File newManual = new File(System.getProperty("user.dir") + "/cf/manual");
+        File newManual = new File(directoryPath, "manual");
         if (newManual.exists()) {
             FileUtils.forceDelete(newManual);
         }
-        File newTutorial = new File(System.getProperty("user.dir") + "/cf/tutorial");
+        File newTutorial = new File(directoryPath, "tutorial");
         if (newTutorial.exists()) {
             FileUtils.forceDelete(newTutorial);
         }
-        File newChangelog = new File(System.getProperty("user.dir") + "/cf/CHANGELOG.md");
+        File newChangelog = new File(directoryPath, "CHANGELOG.md");
         if (newChangelog.exists()) {
             FileUtils.forceDelete(newChangelog);
         }
-        File newQuickStart = new File(System.getProperty("user.dir") + "/cf/quick-start.html");
+        File newQuickStart = new File(directoryPath, "quick-start.html");
         if (newQuickStart.exists()) {
             FileUtils.forceDelete(newQuickStart);
         }
-        File newJavadoc = new File(System.getProperty("user.dir") + "/cf/api");
+        File newJavadoc = new File(directoryPath, "api");
         if (newJavadoc.exists()) {
             FileUtils.forceDelete(newJavadoc);
         }
 
-        File latestExamples = new File(String.valueOf(latestRelease) + "/examples");
-        File latestManual = new File(String.valueOf(latestRelease) + "/manual");
-        File latestTutorial = new File(String.valueOf(latestRelease) + "/tutorial");
-        File latestChangelog = new File(String.valueOf(latestRelease) + "/CHANGELOG.md");
-        File latestJavadoc = new File(String.valueOf(latestRelease) + "/api");
+        File latestExamples = new File(latestRelease, "examples");
+        File latestManual = new File(latestRelease, "manual");
+        File latestTutorial = new File(latestRelease, "tutorial");
+        File latestChangelog = new File(latestRelease, "CHANGELOG.md");
+        File latestJavadoc = new File(latestRelease, "api");
 
         if (latestExamples.exists()) {
             FileUtils.copyDirectory(latestExamples, newExamples);
@@ -455,7 +418,7 @@ public class EisopSiteGenerator {
         if (latestChangelog.exists()) {
             FileUtils.copyFile(latestChangelog, newChangelog);
         }
-        File latestQuickStart = new File(String.valueOf(latestRelease) + "/quick-start.html");
+        File latestQuickStart = new File(latestRelease, "quick-start.html");
         if (latestQuickStart.exists()) {
             FileUtils.copyFile(latestQuickStart, newQuickStart);
         }
@@ -463,23 +426,23 @@ public class EisopSiteGenerator {
             FileUtils.copyDirectory(latestJavadoc, newJavadoc);
         }
 
-        System.out.println("Latest release: " + String.valueOf(latestRelease));
+        System.out.println("Latest release: " + latestRelease);
 
         // Rename cf/manual/manual.pdf to cf/manual/checker-framework-manual.pdf
-        File manualPDF = new File(String.valueOf(directoryPath) + "/manual/manual.pdf");
+        File manualPDF = new File(directoryPath, "manual/manual.pdf");
         if (manualPDF.exists()) {
             File checkerFrameworkManualPDF =
-                    new File(String.valueOf(directoryPath) + "/manual/checker-framework-manual.pdf");
+                    new File(directoryPath, "manual/checker-framework-manual.pdf");
             FileUtils.copyFile(manualPDF, checkerFrameworkManualPDF);
         }
 
         // Copy CFLogo.png to cf/
-        File cfLogo = new File(String.valueOf(latestRelease) + "/CFLogo.png");
+        File cfLogo = new File(latestRelease, "CFLogo.png");
         if (!cfLogo.exists()) {
-            cfLogo = new File(String.valueOf(latestRelease) + "/tutorial/CFLogo.png");
+            cfLogo = new File(latestRelease, "tutorial/CFLogo.png");
         }
         if (cfLogo.exists()) {
-            File newCFLogo = new File(System.getProperty("user.dir") + "/cf/CFLogo.png");
+            File newCFLogo = new File(directoryPath, "CFLogo.png");
             FileUtils.copyFile(cfLogo, newCFLogo);
         }
 
@@ -489,12 +452,12 @@ public class EisopSiteGenerator {
     /**
      * Fetches the given API URL and parses the response as a JSON array.
      *
-     * @param APIURL the URL to fetch
+     * @param apiURL the URL to fetch
      * @return the parsed response
      * @throws IOException if the request fails or the response cannot be parsed
      */
-    static JSONArray getAPIResponse(URL APIURL) throws IOException {
-        HttpURLConnection conn = (HttpURLConnection) APIURL.openConnection();
+    static JSONArray getAPIResponse(URL apiURL) throws IOException {
+        HttpURLConnection conn = (HttpURLConnection) apiURL.openConnection();
         try {
             conn.setRequestMethod("GET");
             conn.setRequestProperty("User-Agent", "eisop-website-generator");
@@ -504,21 +467,25 @@ public class EisopSiteGenerator {
             }
             int responseCode = conn.getResponseCode();
             if (responseCode != 200) {
-                throw new IOException("GET " + APIURL + " returned HTTP " + responseCode);
-            }
-
-            StringBuilder informationString = new StringBuilder();
-            try (Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8)) {
-                while (scanner.hasNextLine()) {
-                    informationString.append(scanner.nextLine());
+                String errorDetails = "";
+                try (InputStream err = conn.getErrorStream()) {
+                    if (err != null) {
+                        errorDetails = ": " + new String(err.readAllBytes(), StandardCharsets.UTF_8);
+                    }
+                } catch (IOException ignored) {
                 }
+                throw new IOException("GET " + apiURL + " returned HTTP " + responseCode + errorDetails);
             }
 
-            // JSON simple library Setup with Maven is used to convert strings to JSON
+            String responseBody;
+            try (InputStream in = conn.getInputStream()) {
+                responseBody = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+            }
+
             JSONParser parse = new JSONParser();
-            return (JSONArray) parse.parse(String.valueOf(informationString));
+            return (JSONArray) parse.parse(responseBody);
         } catch (ParseException e) {
-            throw new IOException("Could not parse the response from " + APIURL, e);
+            throw new IOException("Could not parse the response from " + apiURL, e);
         } finally {
             conn.disconnect();
         }
@@ -538,40 +505,38 @@ public class EisopSiteGenerator {
 
         // Get list of framework releases
         URL listReleasesURL =
-                new URL(
-                        "https://api.github.com/repos/eisop/annotation-tools/releases?per_page=100");
+                URI.create(
+                                "https://api.github.com/repos/eisop/annotation-tools/releases?per_page=100")
+                        .toURL();
         JSONArray frameworkReleases = getAPIResponse(listReleasesURL);
 
         // Loop through list of framework releases
         int limit = onlyLatest ? 1 : frameworkReleases.size();
         for (int i = 0; i < limit; i++) {
-
-            JSONObject LatestReleaseData = (JSONObject) frameworkReleases.get(i);
-
             // Get data on release assets
-            JSONObject LatestAssetsData =
+            JSONObject latestAssetsData =
                     (JSONObject)
                             ((((JSONArray) ((JSONObject) frameworkReleases.get(i)).get("assets"))
                                     .get(0)));
-            int CONNECT_TIMEOUT = 0;
-            int READ_TIMEOUT = 0;
-            String FILE_URL_STRING = (String.valueOf(LatestAssetsData.get("browser_download_url")));
-            URL FILE_URL = new URL(FILE_URL_STRING);
-            File FILE_TEST = new File(String.valueOf(LatestAssetsData.get("name")));
+            int connectTimeout = 0;
+            int readTimeout = 0;
+            String fileUrlString = String.valueOf(latestAssetsData.get("browser_download_url"));
+            URL fileUrl = URI.create(fileUrlString).toURL();
+            File fileTest = new File(String.valueOf(latestAssetsData.get("name")));
 
-            System.out.println("Checking release " + String.valueOf(FILE_TEST));
+            System.out.println("Checking release " + fileTest.getName());
 
             // Check if we've already downloaded this release
-            String contents[] = directoryPath.list();
+            String[] contents = directoryPath.list();
             boolean alreadyDownloaded = false;
-            for (int j = 0; contents != null && j < contents.length; j++) {
-                // System.out.println(contents[j]);
-                if (String.valueOf(contents[j]).equals(String.valueOf(FILE_TEST))) {
-                    alreadyDownloaded = true;
-                    System.out.println(
-                            "Release " + String.valueOf(FILE_TEST) + " already downloaded");
-                    System.out.println("");
-                    break;
+            if (contents != null) {
+                for (String item : contents) {
+                    if (item.equals(fileTest.getName())) {
+                        alreadyDownloaded = true;
+                        System.out.println(
+                                "Release " + fileTest.getName() + " already downloaded\n");
+                        break;
+                    }
                 }
             }
             if (alreadyDownloaded) {
@@ -579,17 +544,16 @@ public class EisopSiteGenerator {
             }
 
             // If not already downloaded, download release assets
-            FileUtils.copyURLToFile(FILE_URL, FILE_TEST, CONNECT_TIMEOUT, READ_TIMEOUT);
-            System.out.println("Downloading " + String.valueOf(FILE_TEST));
-            System.out.println("");
+            FileUtils.copyURLToFile(fileUrl, fileTest, connectTimeout, readTimeout);
+            System.out.println("Downloading " + fileTest.getName() + "\n");
 
             // Move the zip to afu/ without extracting the source tree
-            FileUtils.moveFileToDirectory(FILE_TEST, directoryPath, false);
+            FileUtils.moveFileToDirectory(fileTest, directoryPath, false);
         }
 
         // Re-generate afu/annotation-file-utilities.html with latest release
         File globalIndexHTML =
-                new File(String.valueOf(directoryPath) + "/annotation-file-utilities.html");
+                new File(directoryPath, "annotation-file-utilities.html");
         if (globalIndexHTML.exists()) {
             FileUtils.forceDelete(globalIndexHTML);
         }
@@ -641,12 +605,12 @@ public class EisopSiteGenerator {
 
         System.out.println("Latest release: " + latestReleaseName);
 
-        String LatestAnnotationFileUtilitiesReleaseZip = latestReleaseName + ".zip";
+        String latestAnnotationFileUtilitiesReleaseZip = latestReleaseName + ".zip";
 
-        String LatestAnnotationFileUtilitiesReleaseDownloadLink =
-                "/afu/" + LatestAnnotationFileUtilitiesReleaseZip;
+        String latestAnnotationFileUtilitiesReleaseDownloadLink =
+                "/afu/" + latestAnnotationFileUtilitiesReleaseZip;
 
-        String LatestAnnotationFileUtilitiesReleaseDate =
+        String latestAnnotationFileUtilitiesReleaseDate =
                 String.valueOf(
                         ((JSONObject)
                                         ((((JSONArray)
@@ -654,33 +618,44 @@ public class EisopSiteGenerator {
                                                                 .get("assets"))
                                                 .get(0))))
                                 .get("created_at"));
-        LatestAnnotationFileUtilitiesReleaseDate =
-                getReadableDate(LatestAnnotationFileUtilitiesReleaseDate);
+        latestAnnotationFileUtilitiesReleaseDate =
+                getReadableDate(latestAnnotationFileUtilitiesReleaseDate);
 
         substituteAfuPlaceholders(
-                new File(System.getProperty("user.dir") + "/cf"),
-                LatestAnnotationFileUtilitiesReleaseZip,
-                LatestAnnotationFileUtilitiesReleaseDownloadLink,
-                LatestAnnotationFileUtilitiesReleaseDate);
+                new File(System.getProperty("user.dir"), "cf"),
+                latestAnnotationFileUtilitiesReleaseZip,
+                latestAnnotationFileUtilitiesReleaseDownloadLink,
+                latestAnnotationFileUtilitiesReleaseDate);
 
         // Re-generate afu/annotation-file-utilities.md with latest release
-        File newMD = new File(System.getProperty("user.dir") + "/afu/annotation-file-utilities.md");
+        File newMD = new File(directoryPath, "annotation-file-utilities.md");
         String mdString = readTemplate("afu-template.md");
 
-        String LatestAnnotationFileUtilitiesRelease =
-                latestReleaseName.split("-")[latestReleaseName.split("-").length - 2];
+        String[] parts = latestReleaseName.split("-");
+        String latestAnnotationFileUtilitiesRelease = parts[parts.length - 2];
 
-        mdString = mdString.replace("$LatestAnnotationFileUtilitiesReleaseDate", LatestAnnotationFileUtilitiesReleaseDate);
-        mdString = mdString.replace("$LatestAnnotationFileUtilitiesReleaseZip", LatestAnnotationFileUtilitiesReleaseZip);
-        mdString = mdString.replace("$LatestAnnotationFileUtilitiesReleaseDownloadLink", LatestAnnotationFileUtilitiesReleaseZip);
-        mdString = mdString.replace("$LatestAnnotationFileUtilitiesRelease", String.valueOf(LatestAnnotationFileUtilitiesRelease));
+        mdString =
+                mdString.replace(
+                        "$LatestAnnotationFileUtilitiesReleaseDate",
+                        latestAnnotationFileUtilitiesReleaseDate);
+        mdString =
+                mdString.replace(
+                        "$LatestAnnotationFileUtilitiesReleaseZip",
+                        latestAnnotationFileUtilitiesReleaseZip);
+        mdString =
+                mdString.replace(
+                        "$LatestAnnotationFileUtilitiesReleaseDownloadLink",
+                        latestAnnotationFileUtilitiesReleaseDownloadLink);
+        mdString =
+                mdString.replace(
+                        "$LatestAnnotationFileUtilitiesRelease",
+                        latestAnnotationFileUtilitiesRelease);
 
         if (newMD.exists()) {
             FileUtils.forceDelete(newMD);
         }
         newMD.createNewFile();
         FileUtils.writeStringToFile(newMD, mdString, StandardCharsets.UTF_8);
-
     }
 
     /**
@@ -744,15 +719,17 @@ public class EisopSiteGenerator {
      * @return the body content with Jekyll front matter prepended
      */
     static String themeShippedPage(String html) {
+        String lower = html.toLowerCase();
+        int bodyStart = lower.indexOf("<body");
         String body = html;
-        int bodyStart = html.indexOf("<body");
         if (bodyStart != -1) {
-            bodyStart = html.indexOf('>', bodyStart);
-            if (bodyStart != -1) {
-                body = html.substring(bodyStart + 1);
+            int bodyStartClose = html.indexOf('>', bodyStart);
+            if (bodyStartClose != -1) {
+                body = html.substring(bodyStartClose + 1);
+                lower = lower.substring(bodyStartClose + 1);
             }
         }
-        int bodyEnd = body.indexOf("</body>");
+        int bodyEnd = lower.indexOf("</body>");
         if (bodyEnd != -1) {
             body = body.substring(0, bodyEnd);
         }
@@ -783,6 +760,7 @@ public class EisopSiteGenerator {
             return new String(in.readAllBytes(), StandardCharsets.UTF_8);
         }
     }
+
     static String getReadableDate(String autoDate) {
         String[] splitDate = autoDate.split("-", 0);
         String[] months = {
@@ -802,7 +780,7 @@ public class EisopSiteGenerator {
 
         String year = splitDate[0];
         String month = splitDate[1];
-        month = months[Integer.valueOf(month) - 1];
+        month = months[Integer.parseInt(month) - 1];
         String day = splitDate[2].substring(0, 2);
 
         return month + " " + day + ", " + year;

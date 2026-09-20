@@ -1,2 +1,10 @@
 # Maven build output.
 target/
+
+# IDE and editor files
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
