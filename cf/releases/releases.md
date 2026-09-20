@@ -5,6 +5,7 @@ title: Releases
 ![Checker Framework logo](../CFLogo.png)
 Previous Checker Framework Releases
 =====================
+[checker-framework-3.49.5-eisop1](../checker-framework-3.49.5-eisop1/index.html)
 [checker-framework-3.49.3-eisop1](../checker-framework-3.49.3-eisop1/index.html)
 [checker-framework-3.49.1-eisop1](../checker-framework-3.49.1-eisop1/index.html)
 [checker-framework-3.42.0-eisop5](../checker-framework-3.42.0-eisop5/index.html)

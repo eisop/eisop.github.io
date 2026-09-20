@@ -31,7 +31,7 @@ The Checker Framework enhances Java's type system to make it more powerful and u
 *   Inference tools automatically add annotations to your code, making it even easier to start using the checkers. The Checker Framework manual contains [a list of inference tools](manual/manual.html#type-inference-tools).
 *   Optional related tools:
     *   The [**Annotation File Utilities**](../afu/annotation-file-utilities.md) extract annotations from, and write annotations to, `.java` and `.class` files. It also provides a representation (called an “annotation file”) for annotations that is outside the source code or the `.class` file. The tools support both Java 5 declaration annotations and Java 8 type annotations.
-        *   [$LatestAnnotationFileUtilitiesReleaseZip]($LatestAnnotationFileUtilitiesReleaseDownloadLink) ($LatestAnnotationFileUtilitiesReleaseDate)
+        *   [annotation-tools-3.49.5-eisop1.zip](/afu/annotation-tools-3.49.5-eisop1.zip) (April 26, 2026)
         *   [source code repository](https://github.com/eisop/annotation-tools/)
         *   [Documentation](../afu/annotation-file-utilities.html) is included in the zip archive and in the repository.
 *   [Archive of previous releases](releases/releases.html) of the Checker Framework
