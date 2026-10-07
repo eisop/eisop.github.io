@@ -127,6 +127,16 @@ public class EisopSiteGenerator {
         for (int i = 0; i < limit; i++) {
             boolean isLocalRelease = (i == 0 && localReleaseZip != null);
 
+            // A release has other assets as well, such as the Annotation File Utilities zip.
+            JSONObject latestAssetsData =
+                    findZipAsset((JSONObject) frameworkReleases.get(i), "checker-framework-");
+            if (latestAssetsData == null) {
+                System.out.println(
+                        "Skipping release without a Checker Framework zip: "
+                                + ((JSONObject) frameworkReleases.get(i)).get("tag_name"));
+                continue;
+            }
+
             if (!isLocalRelease) {
                 releaseFileHTML +=
                         "["
@@ -138,11 +148,6 @@ public class EisopSiteGenerator {
                                 + "/index.html)\n";
             }
 
-            // Get data on release assets
-            JSONObject latestAssetsData =
-                    (JSONObject)
-                            ((((JSONArray) ((JSONObject) frameworkReleases.get(i)).get("assets"))
-                                    .get(0)));
             int connectTimeout = 0;
             int readTimeout = 0;
             String fileUrlString = String.valueOf(latestAssetsData.get("browser_download_url"));
@@ -314,13 +319,7 @@ public class EisopSiteGenerator {
                                 latestCheckerFrameworkReleaseDownloadLink);
 
                 String latestCheckerFrameworkReleaseDate =
-                        String.valueOf(
-                                ((JSONObject)
-                                                ((((JSONArray)
-                                                                ((JSONObject) frameworkReleases.get(i))
-                                                                        .get("assets"))
-                                                        .get(0))))
-                                        .get("created_at"));
+                        String.valueOf(latestAssetsData.get("created_at"));
                 latestCheckerFrameworkReleaseDate = getReadableDate(latestCheckerFrameworkReleaseDate);
                 htmlString =
                         htmlString.replace(
@@ -491,6 +490,28 @@ public class EisopSiteGenerator {
         }
     }
 
+    /**
+     * Returns the zip asset of the given release whose name starts with the given prefix.
+     *
+     * @param release a GitHub release
+     * @param prefix the start of the name of the asset
+     * @return the asset, or null if the release has none
+     */
+    static JSONObject findZipAsset(JSONObject release, String prefix) {
+        JSONArray assets = (JSONArray) release.get("assets");
+        if (assets == null) {
+            return null;
+        }
+        for (Object assetObject : assets) {
+            JSONObject asset = (JSONObject) assetObject;
+            String name = String.valueOf(asset.get("name"));
+            if (name.startsWith(prefix) && name.endsWith(".zip")) {
+                return asset;
+            }
+        }
+        return null;
+    }
+
     static void getAFU(boolean onlyLatest) throws IOException {
         File directoryPath = new File(System.getProperty("user.dir") + "/afu");
         if (!directoryPath.exists()) {
@@ -503,21 +524,41 @@ public class EisopSiteGenerator {
             System.out.println("Folder already exists at: " + directoryPath);
         }
 
-        // Get list of framework releases
-        URL listReleasesURL =
-                URI.create(
-                                "https://api.github.com/repos/eisop/annotation-tools/releases?per_page=100")
-                        .toURL();
-        JSONArray frameworkReleases = getAPIResponse(listReleasesURL);
+        // Get the releases of the Annotation File Utilities.  Since the Annotation File Utilities
+        // became part of the Checker Framework repository, each Checker Framework release has an
+        // annotation-tools-VERSION.zip asset.  Older releases are in the former repository.
+        // The releases are ordered from the newest to the oldest.
+        List<JSONObject> afuAssets = new ArrayList<>();
+        // The zips of the former repository are named annotation-tools-VERSION.zip, and the zips of
+        // the Checker Framework releases are named annotation-file-utilities-VERSION.zip.
+        for (String repo : new String[] {"checker-framework", "annotation-tools"}) {
+            URL listReleasesURL =
+                    URI.create(
+                                    "https://api.github.com/repos/eisop/"
+                                            + repo
+                                            + "/releases?per_page=100")
+                            .toURL();
+            JSONArray releases = getAPIResponse(listReleasesURL);
+            for (Object release : releases) {
+                JSONObject afuAsset =
+                        findZipAsset((JSONObject) release, "annotation-file-utilities-");
+                if (afuAsset == null) {
+                    afuAsset = findZipAsset((JSONObject) release, "annotation-tools-");
+                }
+                if (afuAsset != null) {
+                    afuAssets.add(afuAsset);
+                }
+            }
+        }
+        if (afuAssets.isEmpty()) {
+            throw new IOException("No Annotation File Utilities release found.");
+        }
 
-        // Loop through list of framework releases
-        int limit = onlyLatest ? 1 : frameworkReleases.size();
+        // Loop through the list of Annotation File Utilities releases
+        int limit = onlyLatest ? 1 : afuAssets.size();
         for (int i = 0; i < limit; i++) {
             // Get data on release assets
-            JSONObject latestAssetsData =
-                    (JSONObject)
-                            ((((JSONArray) ((JSONObject) frameworkReleases.get(i)).get("assets"))
-                                    .get(0)));
+            JSONObject latestAssetsData = afuAssets.get(i);
             int connectTimeout = 0;
             int readTimeout = 0;
             String fileUrlString = String.valueOf(latestAssetsData.get("browser_download_url"));
@@ -557,13 +598,7 @@ public class EisopSiteGenerator {
         if (globalIndexHTML.exists()) {
             FileUtils.forceDelete(globalIndexHTML);
         }
-        String latestReleaseZipName =
-                String.valueOf(
-                        ((JSONObject)
-                                        ((JSONArray) ((JSONObject) frameworkReleases.get(0))
-                                                        .get("assets"))
-                                                .get(0))
-                                .get("name"));
+        String latestReleaseZipName = String.valueOf(afuAssets.get(0).get("name"));
         String latestReleaseName =
                 latestReleaseZipName.substring(0, latestReleaseZipName.length() - 4);
 
@@ -611,13 +646,7 @@ public class EisopSiteGenerator {
                 "/afu/" + latestAnnotationFileUtilitiesReleaseZip;
 
         String latestAnnotationFileUtilitiesReleaseDate =
-                String.valueOf(
-                        ((JSONObject)
-                                        ((((JSONArray)
-                                                        ((JSONObject) frameworkReleases.get(0))
-                                                                .get("assets"))
-                                                .get(0))))
-                                .get("created_at"));
+                String.valueOf(afuAssets.get(0).get("created_at"));
         latestAnnotationFileUtilitiesReleaseDate =
                 getReadableDate(latestAnnotationFileUtilitiesReleaseDate);
 
@@ -634,6 +663,8 @@ public class EisopSiteGenerator {
         String[] parts = latestReleaseName.split("-");
         String latestAnnotationFileUtilitiesRelease = parts[parts.length - 2];
 
+        // The name of the release, such as annotation-tools-1.2.3-eisop1.
+        mdString = mdString.replace("$LatestAnnotationFileUtilitiesReleaseName", latestReleaseName);
         mdString =
                 mdString.replace(
                         "$LatestAnnotationFileUtilitiesReleaseDate",

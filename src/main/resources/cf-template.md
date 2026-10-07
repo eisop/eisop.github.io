@@ -32,7 +32,7 @@ The Checker Framework enhances Java's type system to make it more powerful and u
 *   Optional related tools:
     *   The [**Annotation File Utilities**](../afu/annotation-file-utilities.md) extract annotations from, and write annotations to, `.java` and `.class` files. It also provides a representation (called an “annotation file”) for annotations that is outside the source code or the `.class` file. The tools support both Java 5 declaration annotations and Java 8 type annotations.
         *   [$LatestAnnotationFileUtilitiesReleaseZip]($LatestAnnotationFileUtilitiesReleaseDownloadLink) ($LatestAnnotationFileUtilitiesReleaseDate)
-        *   [source code repository](https://github.com/eisop/annotation-tools/)
+        *   [source code](https://github.com/eisop/checker-framework/tree/master/annotation-file-utilities)
         *   [Documentation](../afu/annotation-file-utilities.html) is included in the zip archive and in the repository.
 *   [Archive of previous releases](releases/releases.html) of the Checker Framework
 *   Research papers: See the [Checker Framework manual](manual/manual.html#publications)
