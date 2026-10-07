@@ -43,7 +43,7 @@ jobs:
           CF_TAG=$(gh api repos/eisop/checker-framework/releases --jq '.[0].tag_name')
           # The Annotation File Utilities zip is an asset of the Checker Framework release.
           # Older releases are in the former annotation-tools repository.
-          AFU_ZIP=$(gh api repos/eisop/checker-framework/releases --jq '[.[].assets[] | select(.name | startswith("annotation-tools-"))] | .[0].name')
+          AFU_ZIP=$(gh api repos/eisop/checker-framework/releases --jq '[.[].assets[] | select(.name | startswith("annotation-file-utilities-"))] | .[0].name')
           if [ -z "$AFU_ZIP" ] || [ "$AFU_ZIP" = "null" ]; then
             AFU_ZIP=$(gh api repos/eisop/annotation-tools/releases --jq '.[0].assets[0].name')
           fi

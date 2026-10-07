@@ -529,6 +529,8 @@ public class EisopSiteGenerator {
         // annotation-tools-VERSION.zip asset.  Older releases are in the former repository.
         // The releases are ordered from the newest to the oldest.
         List<JSONObject> afuAssets = new ArrayList<>();
+        // The zips of the former repository are named annotation-tools-VERSION.zip, and the zips of
+        // the Checker Framework releases are named annotation-file-utilities-VERSION.zip.
         for (String repo : new String[] {"checker-framework", "annotation-tools"}) {
             URL listReleasesURL =
                     URI.create(
@@ -538,7 +540,11 @@ public class EisopSiteGenerator {
                             .toURL();
             JSONArray releases = getAPIResponse(listReleasesURL);
             for (Object release : releases) {
-                JSONObject afuAsset = findZipAsset((JSONObject) release, "annotation-tools-");
+                JSONObject afuAsset =
+                        findZipAsset((JSONObject) release, "annotation-file-utilities-");
+                if (afuAsset == null) {
+                    afuAsset = findZipAsset((JSONObject) release, "annotation-tools-");
+                }
                 if (afuAsset != null) {
                     afuAssets.add(afuAsset);
                 }
