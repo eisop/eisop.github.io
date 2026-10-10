@@ -3,6 +3,7 @@ package io.github.eisop.website;
 
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.FileHeader;
 
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EisopSiteGenerator {
 
@@ -567,40 +570,10 @@ public class EisopSiteGenerator {
         String latestReleaseName =
                 latestReleaseZipName.substring(0, latestReleaseZipName.length() - 4);
 
-        // Extract format documentation from the latest AFU release zip if not already present
-        File latestFormatHTML = new File(directoryPath, "annotation-file-format.html");
-        File latestFormatPDF = new File(directoryPath, "annotation-file-format.pdf");
-        if (!latestFormatHTML.exists() || !latestFormatPDF.exists()) {
-            File latestZip = new File(directoryPath, latestReleaseZipName);
-            if (latestZip.exists()) {
-                File tempDir = File.createTempFile("afu-extract", "");
-                tempDir.delete();
-                tempDir.mkdirs();
-                try {
-                    ZipFile zipFile = new ZipFile(latestZip);
-                    zipFile.extractAll(tempDir.getAbsolutePath());
-                    File formatHTML =
-                            new File(
-                                    tempDir,
-                                    latestReleaseName
-                                            + "/annotation-file-utilities/annotation-file-format.html");
-                    if (formatHTML.exists()) {
-                        FileUtils.copyFileToDirectory(formatHTML, directoryPath);
-                    }
-                    File formatPDF =
-                            new File(
-                                    tempDir,
-                                    latestReleaseName
-                                            + "/annotation-file-utilities/annotation-file-format.pdf");
-                    if (formatPDF.exists()) {
-                        FileUtils.copyFileToDirectory(formatPDF, directoryPath);
-                    }
-                } catch (ZipException e) {
-                    e.printStackTrace();
-                } finally {
-                    FileUtils.deleteQuietly(tempDir);
-                }
-            }
+        // Refresh the documents that the AFU page links to from the latest release's zip
+        File latestZip = new File(directoryPath, latestReleaseZipName);
+        if (latestZip.exists()) {
+            extractAfuDocs(latestZip, directoryPath);
         }
 
         System.out.println("Latest release: " + latestReleaseName);
@@ -656,6 +629,55 @@ public class EisopSiteGenerator {
         }
         newMD.createNewFile();
         FileUtils.writeStringToFile(newMD, mdString, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * The documents of an Annotation File Utilities zip that the AFU page links to: the file format
+     * specification, the changelog, and the figures. They are in the zip's
+     * annotation-file-utilities directory, which is at the top of older zips and inside a
+     * directory named after the release in newer ones.
+     */
+    private static final Pattern AFU_DOC_ENTRY =
+            Pattern.compile(
+                    "(?:[^/]+/)?annotation-file-utilities/"
+                            + "(annotation-file-format\\.(?:html|pdf)|changelog\\.html"
+                            + "|figures/[^/]+\\.(?:svg|png))");
+
+    /**
+     * Returns where a zip entry goes relative to the afu directory of the website, if it is one of
+     * the documents that the AFU page links to.
+     *
+     * @param entryName the name of an entry of an Annotation File Utilities zip
+     * @return the path relative to the afu directory, or null if the entry is not such a document
+     */
+    static String afuDocPath(String entryName) {
+        Matcher m = AFU_DOC_ENTRY.matcher(entryName);
+        return m.matches() ? m.group(1) : null;
+    }
+
+    /**
+     * Copies the documents that the AFU page links to out of an Annotation File Utilities zip,
+     * replacing the copies of an earlier release. A document that the zip does not have, such as
+     * the changelog in releases that moved it into the Checker Framework changelog, keeps its
+     * earlier copy.
+     *
+     * @param zip the zip of the latest Annotation File Utilities release
+     * @param afuDir the website's afu directory
+     * @throws IOException if the zip cannot be read or a document cannot be written
+     */
+    static void extractAfuDocs(File zip, File afuDir) throws IOException {
+        try (ZipFile zipFile = new ZipFile(zip)) {
+            for (FileHeader header : zipFile.getFileHeaders()) {
+                String path = header.isDirectory() ? null : afuDocPath(header.getFileName());
+                if (path == null) {
+                    continue;
+                }
+                try (InputStream in = zipFile.getInputStream(header)) {
+                    FileUtils.copyInputStreamToFile(in, new File(afuDir, path));
+                }
+                System.out.println("Extracted " + path + " from " + zip.getName());
+            }
+        }
     }
 
     /**
