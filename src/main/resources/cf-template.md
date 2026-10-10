@@ -13,7 +13,7 @@ Are you tired of null pointer exceptions, unintended side effects, SQL injection
 The Checker Framework enhances Java's type system to make it more powerful and useful. This lets software developers detect and prevent errors in their Java programs. The Checker Framework includes compiler plug-ins ("checkers") that find bugs or verify their absence. It also permits you to write your own compiler plug-ins.
 
 *   Quick start: see the [**Installation instructions and tutorial**](manual/manual.html#installation).
-*   Download: [$LatestCheckerFrameworkReleaseZip]($LatestCheckerFrameworkReleaseDownloadLink) ($LatestCheckerFrameworkReleaseDate); includes source, platform-independent binary, tests, and documentation.  
+*   Download: <a href="$LatestCheckerFrameworkReleaseDownloadLink"><!-- checker-framework-zip-version -->$LatestCheckerFrameworkReleaseZip<!-- /checker-framework-zip-version --></a> ($LatestCheckerFrameworkReleaseDate); includes source, platform-independent binary, tests, and documentation.  
     Then, see the [**installation instructions and tutorial**](manual/manual.html#installation).
 *   Documentation:
     *   [Checker Framework Manual (HTML)](manual/manual.html)
