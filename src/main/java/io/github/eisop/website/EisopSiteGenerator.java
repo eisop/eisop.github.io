@@ -192,15 +192,15 @@ public class EisopSiteGenerator {
             String assetName = String.valueOf(latestAssetsData.get("name"));
             String assetBaseName = assetName.substring(0, assetName.length() - 4);
             File unzippedFile = new File(assetBaseName);
-            try {
-                ZipFile zipFile = new ZipFile(fileTest);
+            // A zip that cannot be extracted must stop the run here, before the zip is moved into
+            // cf/: a zip in cf/ counts as published and is never extracted again.
+            try (ZipFile zipFile = new ZipFile(fileTest)) {
                 if (zipFile.isEncrypted()) {
-                    throw new RuntimeException(
-                            "Encountered an encrypted zip file, which was not expected.");
+                    throw new IOException(
+                            "Encountered an encrypted zip file, which was not expected: "
+                                    + fileTest);
                 }
                 zipFile.extractAll(assetBaseName);
-            } catch (ZipException e) {
-                e.printStackTrace();
             }
 
             FileUtils.moveFileToDirectory(fileTest, directoryPath, false);
@@ -227,12 +227,9 @@ public class EisopSiteGenerator {
                 if (releaseJavadoc.exists()) {
                     FileUtils.moveFileToDirectory(releaseJavadoc, javadocFolder, false);
                     File unzippedJavadoc = new File(javadocFolder, "checker-javadoc.jar");
-                    try {
-                        ZipFile zipFile = new ZipFile(unzippedJavadoc);
+                    try (ZipFile zipFile = new ZipFile(unzippedJavadoc)) {
                         zipFile.extractAll(
                                 new File(javadocFolder, "checker-javadoc").getAbsolutePath());
-                    } catch (ZipException e) {
-                        e.printStackTrace();
                     }
                     FileUtils.forceDelete(unzippedJavadoc);
                 }
