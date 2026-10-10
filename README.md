@@ -20,16 +20,20 @@ box unchecked to publish.
 git checkout master
 mvn package
 git checkout gh-pages
+git checkout master -- index.md 404.html _config.yml
 java -cp ./target/eisop.github.io-1.0-SNAPSHOT-jar-with-dependencies.jar \
   io.github.eisop.website.EisopSiteGenerator
 git status && git diff                 # review
-git add afu/ cf/ && git commit
+git add afu/ cf/ index.md 404.html _config.yml && git commit
 git push origin gh-pages
 ```
 
 The page templates live in `src/main/resources/` and are packaged into the jar,
 so the generator always uses the templates belonging to the code you built.
-Nothing on `gh-pages` needs to be kept in sync with `master`.
+The hand-written pages `index.md` and `404.html` and the Jekyll configuration
+`_config.yml` are edited on `master` and copied to `gh-pages` when publishing.
+The scheduled run publishes only when there is a new release, so after editing
+one of them, run the workflow manually.
 
 ### Pre-release validation
 

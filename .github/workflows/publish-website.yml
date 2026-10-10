@@ -1,9 +1,12 @@
 # Rebuilds the published site on the gh-pages branch: downloads any Checker Framework or
 # Annotation File Utilities release that is not on the site yet, regenerates the pages from
-# the templates in src/main/resources, and pushes the result.
+# the templates in src/main/resources, copies the site's hand-written pages (index.md,
+# 404.html) and _config.yml from master, and pushes the result.
 #
 # It runs daily on a schedule (checking if new releases exist before checking out gh-pages),
 # or can be run manually from the Actions tab. Manual runs default to a dry run.
+# The scheduled check only looks for new releases, so after changing a page on master,
+# run the workflow manually to publish it.
 
 name: Publish website
 
@@ -106,9 +109,14 @@ jobs:
             fi
           done
 
+      - name: Copy the hand-written site pages and configuration from master
+        # These are edited on master, but only the generated afu/ and cf/ trees used to be
+        # published, so edits to them never reached the site.
+        run: cp generator/index.md generator/404.html generator/_config.yml site/
+
       - name: Stage changes
         working-directory: site
-        run: git add -A afu cf
+        run: git add -A afu cf index.md 404.html _config.yml
 
       - name: Summarize the changes
         working-directory: site
