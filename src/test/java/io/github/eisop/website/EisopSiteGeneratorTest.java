@@ -2,6 +2,7 @@
 package io.github.eisop.website;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,6 +18,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /** Tests for the parts of {@link EisopSiteGenerator} that do not need the network. */
 class EisopSiteGeneratorTest {
@@ -116,6 +119,61 @@ class EisopSiteGeneratorTest {
         assertNull(EisopSiteGenerator.findZipAsset(parse("{}"), "checker-framework-"));
         assertNull(
                 EisopSiteGenerator.findZipAsset(parse("{\"assets\": []}"), "checker-framework-"));
+    }
+
+    @Test
+    void afuDocPathAcceptsBothZipLayouts() {
+        assertEquals(
+                "changelog.html",
+                EisopSiteGenerator.afuDocPath("annotation-file-utilities/changelog.html"));
+        assertEquals(
+                "annotation-file-format.pdf",
+                EisopSiteGenerator.afuDocPath(
+                        "annotation-file-utilities-1/annotation-file-utilities/"
+                                + "annotation-file-format.pdf"));
+        assertEquals(
+                "figures/a.png",
+                EisopSiteGenerator.afuDocPath("annotation-file-utilities/figures/a.png"));
+    }
+
+    @Test
+    void afuDocPathRejectsOtherEntries() {
+        assertNull(EisopSiteGenerator.afuDocPath("annotation-file-utilities/README"));
+        assertNull(EisopSiteGenerator.afuDocPath("annotation-file-utilities/figures/sub/a.svg"));
+        assertNull(EisopSiteGenerator.afuDocPath("annotation-file-utilities/tests/changelog.html"));
+        assertNull(EisopSiteGenerator.afuDocPath("a/b/annotation-file-utilities/changelog.html"));
+        assertNull(EisopSiteGenerator.afuDocPath("annotation-file-format.html"));
+    }
+
+    @Test
+    void extractAfuDocsReplacesDocumentsInTheZip(@TempDir Path tmp) throws IOException {
+        String dir = "annotation-file-utilities-2/annotation-file-utilities/";
+        Path zip = tmp.resolve("annotation-file-utilities-2.zip");
+        try (ZipOutputStream out = new ZipOutputStream(Files.newOutputStream(zip))) {
+            addEntry(out, dir + "annotation-file-format.html", "new spec");
+            out.putNextEntry(new ZipEntry(dir + "figures/"));
+            out.closeEntry();
+            addEntry(out, dir + "figures/a.svg", "svg");
+            addEntry(out, dir + "figures/sub/b.svg", "nested");
+            addEntry(out, dir + "tests/changelog.html", "test input");
+        }
+        Path afuDir = write(tmp.resolve("afu/annotation-file-format.html"), "old spec").getParent();
+        write(afuDir.resolve("changelog.html"), "old changelog");
+
+        EisopSiteGenerator.extractAfuDocs(zip.toFile(), afuDir.toFile());
+
+        assertEquals("new spec", read(afuDir.resolve("annotation-file-format.html")));
+        assertEquals("svg", read(afuDir.resolve("figures/a.svg")));
+        assertEquals("old changelog", read(afuDir.resolve("changelog.html")));
+        assertFalse(Files.exists(afuDir.resolve("figures/sub")));
+        assertFalse(Files.exists(afuDir.resolve("tests")));
+    }
+
+    private static void addEntry(ZipOutputStream out, String name, String content)
+            throws IOException {
+        out.putNextEntry(new ZipEntry(name));
+        out.write(content.getBytes(StandardCharsets.UTF_8));
+        out.closeEntry();
     }
 
     private static JSONObject parse(String json) throws ParseException {
