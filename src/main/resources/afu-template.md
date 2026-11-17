@@ -67,26 +67,26 @@ The following instructions assume either a Linux or Windows system using a comma
 The current release is Annotation File Utilities version $LatestAnnotationFileUtilitiesRelease, $LatestAnnotationFileUtilitiesReleaseDate.
 
 1.  Download [$LatestAnnotationFileUtilitiesReleaseZip]($LatestAnnotationFileUtilitiesReleaseDownloadLink).
-2.  Create a directory named `annotation-tools` by unpacking the distribution zipfile. (You will typically make `annotation-tools/` a sibling of `checker-framework/`.)
+2.  Unpack the distribution zipfile, which creates a directory named `$LatestAnnotationFileUtilitiesReleaseName`.
     
-        unzip annotation-tools-$LatestAnnotationFileUtilitiesRelease.zip
+        unzip $LatestAnnotationFileUtilitiesReleaseName.zip
     
-3.  Add the `annotation-file-utilities` directory to your path.
+3.  Add the `annotation-file-utilities/bin` directory to your path.
     *   For **Unix** (including Linux and MacOS), add the directory to your PATH environment variable. If your shell is sh or bash, add to your `~/.bashrc` or `~/.bash_profile` file:
         
-            export PATH=${PATH}:/path/to/annotation-tools/annotation-file-utilities/scripts
+            export PATH=${PATH}:/path/to/$LatestAnnotationFileUtilitiesReleaseName/annotation-file-utilities/bin
         
     *   For **Windows**, add the directory to your `PATH` system variable by going to
         
              Control Panel -> System -> Advanced -> Environment Variables 
         
-        From there, find the `PATH` variable under “System variables” and append to it the directory `_path\to_\annotation-tools\annotation-file-utilities\scripts`.
+        From there, find the `PATH` variable under “System variables” and append to it the directory `_path\to_\$LatestAnnotationFileUtilitiesReleaseName\annotation-file-utilities\bin`.
 
 ### Building from source
 
 The annotation file utilities are pre-compiled (a jar file is included in the distribution), so most users do not need to compile it themselves.
 
-There are two ways to obtain the source code. Source code is provided in the [distribution](https://github.com/eisop/annotation-tools/releases). Alternately, see the source code repository at [https://github.com/eisop/annotation-tools](https://github.com/eisop/annotation-tools).
+The source code is in the `annotation-file-utilities` directory of the [EISOP Checker Framework repository](https://github.com/eisop/checker-framework). The Annotation File Utilities are also available from Maven Central, as `io.github.eisop:annotation-file-utilities`. The former repository, [eisop/annotation-tools](https://github.com/eisop/annotation-tools), is archived.
 
 To compile and run tests, do `./gradlew build` from the `annotation-file-utilities` subdirectory.
 
@@ -258,12 +258,10 @@ If there are remaining `Insertion`s that were not matched to a node in the abstr
 Feedback and bug reports
 ------------------------
 
-To submit a bug report or request a new feature, use the [issue tracker](https://github.com/eisop/annotation-tools/issues). When reporting a bug, please include exact instructions on how to reproduce it, and please also attach relevant input files. This will let us resolve the issue quickly.
-
-You can also reach the developers at [annotation-tools-dev@googlegroups.com](mailto:annotation-tools-dev@googlegroups.com). But please use the [issue tracker](https://github.com/eisop/annotation-tools/issues) for bug reports and feature requests.
+To submit a bug report or request a new feature, use the [issue tracker](https://github.com/eisop/checker-framework/issues). When reporting a bug, please include exact instructions on how to reproduce it, and please also attach relevant input files. This will let us resolve the issue quickly.
 
 ### Changelog
 
-The [changelog](changelog.html) describes what is new in each release.
+The [changelog](changelog.html) describes what is new in each release up to 3.49.5-eisop1. Later changes are in the [Checker Framework changelog](https://github.com/eisop/checker-framework/blob/master/docs/CHANGELOG.md).
 
 * * *
