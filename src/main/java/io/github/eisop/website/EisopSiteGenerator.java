@@ -218,8 +218,8 @@ public class EisopSiteGenerator {
             String releaseZipName = releaseFolder.getName() + ".zip";
 
             // Unzip the latest release's Javadoc into api/, where the manual's links (../api/...)
-            // point, or write a stub for older releases.  The release's web page links to
-            // api/checker-javadoc/, which redirects to api/.
+            // and the release's web page point, or write a stub for older releases.  The web pages
+            // of earlier releases link to api/checker-javadoc/, which redirects to api/.
             File releaseJavadoc = new File(releaseFolder, "checker/dist/checker-javadoc.jar");
             File javadocFolder = new File(releaseFolder, "api");
             FileUtils.forceMkdir(javadocFolder);
@@ -236,13 +236,9 @@ public class EisopSiteGenerator {
                         e.printStackTrace();
                     }
                     FileUtils.forceDelete(unzippedJavadoc);
-                    writeRedirect(new File(javadocFolder, "checker-javadoc/index.html"), "../index.html");
                 }
             } else {
                 // For older releases, write a stub redirecting to the release zip
-                File stubDir = new File(javadocFolder, "checker-javadoc");
-                FileUtils.forceMkdir(stubDir);
-                File stubIndex = new File(stubDir, "index.html");
                 String stubContent =
                         "---\n"
                                 + "layout: default\n"
@@ -251,8 +247,10 @@ public class EisopSiteGenerator {
                                 + "<p>Javadoc for this archived release is available in <a href=\"/cf/"
                                 + releaseZipName
                                 + "\">the release zip</a>.</p>\n";
-                FileUtils.writeStringToFile(stubIndex, stubContent, StandardCharsets.UTF_8);
+                FileUtils.writeStringToFile(
+                        new File(javadocFolder, "index.html"), stubContent, StandardCharsets.UTF_8);
             }
+            writeRedirect(new File(javadocFolder, "checker-javadoc/index.html"), "../index.html");
 
             // Find the subdirectories and files to move
             File examplesDirectory = new File(releaseFolder, "docs/examples");
