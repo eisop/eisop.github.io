@@ -217,7 +217,9 @@ public class EisopSiteGenerator {
             File releaseFolder = new File(directoryPath, unzippedFile.getName());
             String releaseZipName = releaseFolder.getName() + ".zip";
 
-            // Move javadoc.jar to /api and unzip for latest release, or write stub for older releases
+            // Unzip the latest release's Javadoc into api/, where the manual's links (../api/...)
+            // and the release's web page point, or write a stub for older releases.  The web pages
+            // of earlier releases link to api/checker-javadoc/, which redirects to api/.
             File releaseJavadoc = new File(releaseFolder, "checker/dist/checker-javadoc.jar");
             File javadocFolder = new File(releaseFolder, "api");
             FileUtils.forceMkdir(javadocFolder);
@@ -227,14 +229,11 @@ public class EisopSiteGenerator {
                 if (releaseJavadoc.exists()) {
                     FileUtils.moveFileToDirectory(releaseJavadoc, javadocFolder, false);
                     File unzippedJavadoc = new File(javadocFolder, "checker-javadoc.jar");
-                    extractZip(unzippedJavadoc, new File(javadocFolder, "checker-javadoc"));
+                    extractZip(unzippedJavadoc, javadocFolder);
                     FileUtils.forceDelete(unzippedJavadoc);
                 }
             } else {
                 // For older releases, write a stub redirecting to the release zip
-                File stubDir = new File(javadocFolder, "checker-javadoc");
-                FileUtils.forceMkdir(stubDir);
-                File stubIndex = new File(stubDir, "index.html");
                 String stubContent =
                         "---\n"
                                 + "layout: default\n"
@@ -243,8 +242,10 @@ public class EisopSiteGenerator {
                                 + "<p>Javadoc for this archived release is available in <a href=\"/cf/"
                                 + releaseZipName
                                 + "\">the release zip</a>.</p>\n";
-                FileUtils.writeStringToFile(stubIndex, stubContent, StandardCharsets.UTF_8);
+                FileUtils.writeStringToFile(
+                        new File(javadocFolder, "index.html"), stubContent, StandardCharsets.UTF_8);
             }
+            writeRedirect(new File(javadocFolder, "checker-javadoc/index.html"), "../index.html");
 
             // Find the subdirectories and files to move
             File examplesDirectory = new File(releaseFolder, "docs/examples");
@@ -262,6 +263,8 @@ public class EisopSiteGenerator {
             }
             if (manualDirectory.exists()) {
                 FileUtils.moveDirectoryToDirectory(manualDirectory, releaseFolder, true);
+                // Links to the manual's directory, such as .../manual/#nullness-checker, need an index.
+                writeRedirect(new File(releaseFolder, "manual/index.html"), "manual.html");
             }
             if (tutorialDirectory.exists()) {
                 FileUtils.moveDirectoryToDirectory(tutorialDirectory, releaseFolder, true);
@@ -435,6 +438,31 @@ public class EisopSiteGenerator {
         }
 
         getAFU(onlyLatest);
+    }
+
+    /**
+     * Writes an HTML page that redirects to the given target, keeping the query and the fragment.
+     *
+     * @param page the page to write
+     * @param target the URL to redirect to, relative to the page
+     * @throws IOException if the page cannot be written
+     */
+    static void writeRedirect(File page, String target) throws IOException {
+        String html =
+                "<!DOCTYPE html>\n"
+                        + "<html lang=\"en\">\n"
+                        + "<head>\n"
+                        + "<meta charset=\"utf-8\">\n"
+                        + "<title>Redirecting</title>\n"
+                        + "<link rel=\"canonical\" href=\"" + target + "\">\n"
+                        + "<meta http-equiv=\"refresh\" content=\"0; url=" + target + "\">\n"
+                        + "<script>location.replace('" + target
+                        + "' + location.search + location.hash);</script>\n"
+                        + "</head>\n"
+                        + "<body><p>This page has moved to <a href=\"" + target + "\">" + target
+                        + "</a>.</p></body>\n"
+                        + "</html>\n";
+        FileUtils.writeStringToFile(page, html, StandardCharsets.UTF_8);
     }
 
     /**

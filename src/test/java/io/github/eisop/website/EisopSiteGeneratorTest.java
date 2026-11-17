@@ -213,6 +213,18 @@ class EisopSiteGeneratorTest {
         assertFalse(Files.exists(destination));
     }
 
+    @Test
+    void writeRedirectKeepsQueryAndFragment(@TempDir Path tmp) throws IOException {
+        Path page = tmp.resolve("manual/index.html");
+        EisopSiteGenerator.writeRedirect(page.toFile(), "manual.html");
+        String html = read(page);
+        assertTrue(html.contains("<meta http-equiv=\"refresh\" content=\"0; url=manual.html\">"));
+        assertTrue(
+                html.contains(
+                        "location.replace('manual.html' + location.search + location.hash);"));
+        assertTrue(html.contains("<a href=\"manual.html\">"));
+    }
+
     private static void addEntry(ZipOutputStream out, String name, String content)
             throws IOException {
         out.putNextEntry(new ZipEntry(name));
