@@ -7,6 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.model.enums.EncryptionMethod;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -167,6 +171,46 @@ class EisopSiteGeneratorTest {
         assertEquals("old changelog", read(afuDir.resolve("changelog.html")));
         assertFalse(Files.exists(afuDir.resolve("figures/sub")));
         assertFalse(Files.exists(afuDir.resolve("tests")));
+    }
+
+    @Test
+    void extractZipExtractsEveryEntry(@TempDir Path tmp) throws IOException {
+        Path zip = tmp.resolve("r.zip");
+        try (ZipOutputStream out = new ZipOutputStream(Files.newOutputStream(zip))) {
+            addEntry(out, "r/a.txt", "a");
+            addEntry(out, "r/d/b.txt", "b");
+        }
+        Path destination = tmp.resolve("out");
+        EisopSiteGenerator.extractZip(zip.toFile(), destination.toFile());
+        assertEquals("a", read(destination.resolve("r/a.txt")));
+        assertEquals("b", read(destination.resolve("r/d/b.txt")));
+    }
+
+    @Test
+    void extractZipRejectsATruncatedZip(@TempDir Path tmp) throws IOException {
+        Path zip = write(tmp.resolve("r.zip"), "not a zip");
+        assertThrows(
+                IOException.class,
+                () -> EisopSiteGenerator.extractZip(zip.toFile(), tmp.resolve("out").toFile()));
+    }
+
+    @Test
+    void extractZipRejectsAnEncryptedZip(@TempDir Path tmp) throws IOException {
+        Path content = write(tmp.resolve("a.txt"), "a");
+        Path zip = tmp.resolve("r.zip");
+        ZipParameters parameters = new ZipParameters();
+        parameters.setEncryptFiles(true);
+        parameters.setEncryptionMethod(EncryptionMethod.ZIP_STANDARD);
+        try (ZipFile zipFile = new ZipFile(zip.toFile(), "secret".toCharArray())) {
+            zipFile.addFile(content.toFile(), parameters);
+        }
+        Path destination = tmp.resolve("out");
+        IOException e =
+                assertThrows(
+                        IOException.class,
+                        () -> EisopSiteGenerator.extractZip(zip.toFile(), destination.toFile()));
+        assertTrue(e.getMessage().contains("encrypted"));
+        assertFalse(Files.exists(destination));
     }
 
     private static void addEntry(ZipOutputStream out, String name, String content)
