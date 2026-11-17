@@ -2,9 +2,13 @@
 package io.github.eisop.website;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -87,6 +91,35 @@ class EisopSiteGeneratorTest {
                 cfDir.toFile(), "afu-1.zip", "/afu/afu-1.zip", "May 1, 2026");
         EisopSiteGenerator.substituteAfuPlaceholders(
                 new File(cfDir.toFile(), "missing"), "afu-1.zip", "/afu/afu-1.zip", "May 1, 2026");
+    }
+
+    @Test
+    void findZipAssetMatchesPrefixAndExtension() throws ParseException {
+        JSONObject release =
+                parse(
+                        "{\"assets\": [{\"name\": \"checker-framework-1.zip.asc\"},"
+                                + " {\"name\": \"checker-1.jar\"},"
+                                + " {\"name\": \"annotation-file-utilities-1.zip\"},"
+                                + " {\"name\": \"checker-framework-1.zip\"}]}");
+        assertEquals(
+                "checker-framework-1.zip",
+                EisopSiteGenerator.findZipAsset(release, "checker-framework-").get("name"));
+        assertEquals(
+                "annotation-file-utilities-1.zip",
+                EisopSiteGenerator.findZipAsset(release, "annotation-file-utilities-")
+                        .get("name"));
+        assertNull(EisopSiteGenerator.findZipAsset(release, "annotation-tools-"));
+    }
+
+    @Test
+    void findZipAssetWithoutAssets() throws ParseException {
+        assertNull(EisopSiteGenerator.findZipAsset(parse("{}"), "checker-framework-"));
+        assertNull(
+                EisopSiteGenerator.findZipAsset(parse("{\"assets\": []}"), "checker-framework-"));
+    }
+
+    private static JSONObject parse(String json) throws ParseException {
+        return (JSONObject) new JSONParser().parse(json);
     }
 
     private static Path write(Path file, String content) throws IOException {
