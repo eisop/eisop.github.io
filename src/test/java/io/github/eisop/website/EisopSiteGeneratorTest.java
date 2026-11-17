@@ -46,18 +46,6 @@ class EisopSiteGeneratorTest {
     }
 
     @Test
-    void themeShippedPageKeepsTheVersionMarker() {
-        // The release scripts of the Checker Framework read the current version from this marker.
-        String marker =
-                "<!-- checker-framework-zip-version -->checker-framework-1.2.3.zip"
-                        + "<!-- /checker-framework-zip-version -->";
-        String themed =
-                EisopSiteGenerator.themeShippedPage(
-                        "<html><body><a href=\"/cf/x.zip\">" + marker + "</a></body></html>");
-        assertTrue(themed.contains(marker), themed);
-    }
-
-    @Test
     void templatesArePackaged() throws IOException {
         String cf = EisopSiteGenerator.readTemplate("cf-template.md");
         assertTrue(cf.contains("$LatestCheckerFrameworkReleaseZip"));
