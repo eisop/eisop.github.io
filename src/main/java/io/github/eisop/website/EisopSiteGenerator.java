@@ -217,7 +217,9 @@ public class EisopSiteGenerator {
             File releaseFolder = new File(directoryPath, unzippedFile.getName());
             String releaseZipName = releaseFolder.getName() + ".zip";
 
-            // Move javadoc.jar to /api and unzip for latest release, or write stub for older releases
+            // Unzip the latest release's Javadoc into api/, where the manual's links (../api/...)
+            // point, or write a stub for older releases.  The release's web page links to
+            // api/checker-javadoc/, which redirects to api/.
             File releaseJavadoc = new File(releaseFolder, "checker/dist/checker-javadoc.jar");
             File javadocFolder = new File(releaseFolder, "api");
             FileUtils.forceMkdir(javadocFolder);
@@ -229,12 +231,12 @@ public class EisopSiteGenerator {
                     File unzippedJavadoc = new File(javadocFolder, "checker-javadoc.jar");
                     try {
                         ZipFile zipFile = new ZipFile(unzippedJavadoc);
-                        zipFile.extractAll(
-                                new File(javadocFolder, "checker-javadoc").getAbsolutePath());
+                        zipFile.extractAll(javadocFolder.getAbsolutePath());
                     } catch (ZipException e) {
                         e.printStackTrace();
                     }
                     FileUtils.forceDelete(unzippedJavadoc);
+                    writeRedirect(new File(javadocFolder, "checker-javadoc/index.html"), "../index.html");
                 }
             } else {
                 // For older releases, write a stub redirecting to the release zip
@@ -268,6 +270,8 @@ public class EisopSiteGenerator {
             }
             if (manualDirectory.exists()) {
                 FileUtils.moveDirectoryToDirectory(manualDirectory, releaseFolder, true);
+                // Links to the manual's directory, such as .../manual/#nullness-checker, need an index.
+                writeRedirect(new File(releaseFolder, "manual/index.html"), "manual.html");
             }
             if (tutorialDirectory.exists()) {
                 FileUtils.moveDirectoryToDirectory(tutorialDirectory, releaseFolder, true);
@@ -447,6 +451,31 @@ public class EisopSiteGenerator {
         }
 
         getAFU(onlyLatest);
+    }
+
+    /**
+     * Writes an HTML page that redirects to the given target, keeping the query and the fragment.
+     *
+     * @param page the page to write
+     * @param target the URL to redirect to, relative to the page
+     * @throws IOException if the page cannot be written
+     */
+    static void writeRedirect(File page, String target) throws IOException {
+        String html =
+                "<!DOCTYPE html>\n"
+                        + "<html lang=\"en\">\n"
+                        + "<head>\n"
+                        + "<meta charset=\"utf-8\">\n"
+                        + "<title>Redirecting</title>\n"
+                        + "<link rel=\"canonical\" href=\"" + target + "\">\n"
+                        + "<meta http-equiv=\"refresh\" content=\"0; url=" + target + "\">\n"
+                        + "<script>location.replace('" + target
+                        + "' + location.search + location.hash);</script>\n"
+                        + "</head>\n"
+                        + "<body><p>This page has moved to <a href=\"" + target + "\">" + target
+                        + "</a>.</p></body>\n"
+                        + "</html>\n";
+        FileUtils.writeStringToFile(page, html, StandardCharsets.UTF_8);
     }
 
     /**

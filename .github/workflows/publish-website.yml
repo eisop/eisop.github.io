@@ -106,9 +106,12 @@ jobs:
             fi
           done
 
+      - name: Copy the 404 page, which redirects moved pages
+        run: cp generator/404.html site/404.html
+
       - name: Stage changes
         working-directory: site
-        run: git add -A afu cf
+        run: git add -A afu cf 404.html
 
       - name: Summarize the changes
         working-directory: site

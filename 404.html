@@ -27,6 +27,10 @@ layout: default
 <script type="text/javascript">
   if (location.pathname === '/cf/manual/' || location.pathname === '/cf/manual') {
     location.replace('/cf/manual/manual.html' + location.search + location.hash);
+  } else if (location.pathname.startsWith('/cf/api/checker-javadoc/')) {
+    // The Javadoc moved from cf/api/checker-javadoc/ to cf/api/.
+    location.replace(location.pathname.replace('/cf/api/checker-javadoc/', '/cf/api/')
+        + location.search + location.hash);
   } else if (location.pathname === '/afu/' || location.pathname === '/afu') {
     location.replace('/afu/annotation-file-utilities.html' + location.search + location.hash);
   }
