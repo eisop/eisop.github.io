@@ -2,7 +2,7 @@
 package io.github.eisop.website;
 
 import net.lingala.zip4j.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.FileHeader;
 
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EisopSiteGenerator {
 
@@ -127,6 +129,16 @@ public class EisopSiteGenerator {
         for (int i = 0; i < limit; i++) {
             boolean isLocalRelease = (i == 0 && localReleaseZip != null);
 
+            // A release has other assets as well, such as the Annotation File Utilities zip.
+            JSONObject latestAssetsData =
+                    findZipAsset((JSONObject) frameworkReleases.get(i), "checker-framework-");
+            if (latestAssetsData == null) {
+                System.out.println(
+                        "Skipping release without a Checker Framework zip: "
+                                + ((JSONObject) frameworkReleases.get(i)).get("tag_name"));
+                continue;
+            }
+
             if (!isLocalRelease) {
                 releaseFileHTML +=
                         "["
@@ -138,11 +150,6 @@ public class EisopSiteGenerator {
                                 + "/index.html)\n";
             }
 
-            // Get data on release assets
-            JSONObject latestAssetsData =
-                    (JSONObject)
-                            ((((JSONArray) ((JSONObject) frameworkReleases.get(i)).get("assets"))
-                                    .get(0)));
             int connectTimeout = 0;
             int readTimeout = 0;
             String fileUrlString = String.valueOf(latestAssetsData.get("browser_download_url"));
@@ -192,16 +199,9 @@ public class EisopSiteGenerator {
             String assetName = String.valueOf(latestAssetsData.get("name"));
             String assetBaseName = assetName.substring(0, assetName.length() - 4);
             File unzippedFile = new File(assetBaseName);
-            try {
-                ZipFile zipFile = new ZipFile(fileTest);
-                if (zipFile.isEncrypted()) {
-                    throw new RuntimeException(
-                            "Encountered an encrypted zip file, which was not expected.");
-                }
-                zipFile.extractAll(assetBaseName);
-            } catch (ZipException e) {
-                e.printStackTrace();
-            }
+            // A zip that cannot be extracted must stop the run here, before the zip is moved into
+            // cf/: a zip in cf/ counts as published and is never extracted again.
+            extractZip(fileTest, new File(assetBaseName));
 
             FileUtils.moveFileToDirectory(fileTest, directoryPath, false);
             FileUtils.moveDirectoryToDirectory(unzippedFile, directoryPath, false);
@@ -227,13 +227,7 @@ public class EisopSiteGenerator {
                 if (releaseJavadoc.exists()) {
                     FileUtils.moveFileToDirectory(releaseJavadoc, javadocFolder, false);
                     File unzippedJavadoc = new File(javadocFolder, "checker-javadoc.jar");
-                    try {
-                        ZipFile zipFile = new ZipFile(unzippedJavadoc);
-                        zipFile.extractAll(
-                                new File(javadocFolder, "checker-javadoc").getAbsolutePath());
-                    } catch (ZipException e) {
-                        e.printStackTrace();
-                    }
+                    extractZip(unzippedJavadoc, new File(javadocFolder, "checker-javadoc"));
                     FileUtils.forceDelete(unzippedJavadoc);
                 }
             } else {
@@ -314,13 +308,7 @@ public class EisopSiteGenerator {
                                 latestCheckerFrameworkReleaseDownloadLink);
 
                 String latestCheckerFrameworkReleaseDate =
-                        String.valueOf(
-                                ((JSONObject)
-                                                ((((JSONArray)
-                                                                ((JSONObject) frameworkReleases.get(i))
-                                                                        .get("assets"))
-                                                        .get(0))))
-                                        .get("created_at"));
+                        String.valueOf(latestAssetsData.get("created_at"));
                 latestCheckerFrameworkReleaseDate = getReadableDate(latestCheckerFrameworkReleaseDate);
                 htmlString =
                         htmlString.replace(
@@ -491,6 +479,28 @@ public class EisopSiteGenerator {
         }
     }
 
+    /**
+     * Returns the zip asset of the given release whose name starts with the given prefix.
+     *
+     * @param release a GitHub release
+     * @param prefix the start of the name of the asset
+     * @return the asset, or null if the release has none
+     */
+    static JSONObject findZipAsset(JSONObject release, String prefix) {
+        JSONArray assets = (JSONArray) release.get("assets");
+        if (assets == null) {
+            return null;
+        }
+        for (Object assetObject : assets) {
+            JSONObject asset = (JSONObject) assetObject;
+            String name = String.valueOf(asset.get("name"));
+            if (name.startsWith(prefix) && name.endsWith(".zip")) {
+                return asset;
+            }
+        }
+        return null;
+    }
+
     static void getAFU(boolean onlyLatest) throws IOException {
         File directoryPath = new File(System.getProperty("user.dir") + "/afu");
         if (!directoryPath.exists()) {
@@ -503,21 +513,39 @@ public class EisopSiteGenerator {
             System.out.println("Folder already exists at: " + directoryPath);
         }
 
-        // Get list of framework releases
-        URL listReleasesURL =
-                URI.create(
-                                "https://api.github.com/repos/eisop/annotation-tools/releases?per_page=100")
-                        .toURL();
-        JSONArray frameworkReleases = getAPIResponse(listReleasesURL);
+        // Get the releases of the Annotation File Utilities, from the newest to the oldest.  Since
+        // the Annotation File Utilities became part of the Checker Framework repository, each
+        // Checker Framework release has an annotation-file-utilities-VERSION.zip asset.  Older
+        // releases are in the former repository, with zips named annotation-tools-VERSION.zip.
+        List<JSONObject> afuAssets = new ArrayList<>();
+        for (String repo : new String[] {"checker-framework", "annotation-tools"}) {
+            URL listReleasesURL =
+                    URI.create(
+                                    "https://api.github.com/repos/eisop/"
+                                            + repo
+                                            + "/releases?per_page=100")
+                            .toURL();
+            JSONArray releases = getAPIResponse(listReleasesURL);
+            for (Object release : releases) {
+                JSONObject afuAsset =
+                        findZipAsset((JSONObject) release, "annotation-file-utilities-");
+                if (afuAsset == null) {
+                    afuAsset = findZipAsset((JSONObject) release, "annotation-tools-");
+                }
+                if (afuAsset != null) {
+                    afuAssets.add(afuAsset);
+                }
+            }
+        }
+        if (afuAssets.isEmpty()) {
+            throw new IOException("No Annotation File Utilities release found.");
+        }
 
-        // Loop through list of framework releases
-        int limit = onlyLatest ? 1 : frameworkReleases.size();
+        // Loop through the list of Annotation File Utilities releases
+        int limit = onlyLatest ? 1 : afuAssets.size();
         for (int i = 0; i < limit; i++) {
             // Get data on release assets
-            JSONObject latestAssetsData =
-                    (JSONObject)
-                            ((((JSONArray) ((JSONObject) frameworkReleases.get(i)).get("assets"))
-                                    .get(0)));
+            JSONObject latestAssetsData = afuAssets.get(i);
             int connectTimeout = 0;
             int readTimeout = 0;
             String fileUrlString = String.valueOf(latestAssetsData.get("browser_download_url"));
@@ -557,50 +585,14 @@ public class EisopSiteGenerator {
         if (globalIndexHTML.exists()) {
             FileUtils.forceDelete(globalIndexHTML);
         }
-        String latestReleaseZipName =
-                String.valueOf(
-                        ((JSONObject)
-                                        ((JSONArray) ((JSONObject) frameworkReleases.get(0))
-                                                        .get("assets"))
-                                                .get(0))
-                                .get("name"));
+        String latestReleaseZipName = String.valueOf(afuAssets.get(0).get("name"));
         String latestReleaseName =
                 latestReleaseZipName.substring(0, latestReleaseZipName.length() - 4);
 
-        // Extract format documentation from the latest AFU release zip if not already present
-        File latestFormatHTML = new File(directoryPath, "annotation-file-format.html");
-        File latestFormatPDF = new File(directoryPath, "annotation-file-format.pdf");
-        if (!latestFormatHTML.exists() || !latestFormatPDF.exists()) {
-            File latestZip = new File(directoryPath, latestReleaseZipName);
-            if (latestZip.exists()) {
-                File tempDir = File.createTempFile("afu-extract", "");
-                tempDir.delete();
-                tempDir.mkdirs();
-                try {
-                    ZipFile zipFile = new ZipFile(latestZip);
-                    zipFile.extractAll(tempDir.getAbsolutePath());
-                    File formatHTML =
-                            new File(
-                                    tempDir,
-                                    latestReleaseName
-                                            + "/annotation-file-utilities/annotation-file-format.html");
-                    if (formatHTML.exists()) {
-                        FileUtils.copyFileToDirectory(formatHTML, directoryPath);
-                    }
-                    File formatPDF =
-                            new File(
-                                    tempDir,
-                                    latestReleaseName
-                                            + "/annotation-file-utilities/annotation-file-format.pdf");
-                    if (formatPDF.exists()) {
-                        FileUtils.copyFileToDirectory(formatPDF, directoryPath);
-                    }
-                } catch (ZipException e) {
-                    e.printStackTrace();
-                } finally {
-                    FileUtils.deleteQuietly(tempDir);
-                }
-            }
+        // Refresh the documents that the AFU page links to from the latest release's zip
+        File latestZip = new File(directoryPath, latestReleaseZipName);
+        if (latestZip.exists()) {
+            extractAfuDocs(latestZip, directoryPath);
         }
 
         System.out.println("Latest release: " + latestReleaseName);
@@ -611,13 +603,7 @@ public class EisopSiteGenerator {
                 "/afu/" + latestAnnotationFileUtilitiesReleaseZip;
 
         String latestAnnotationFileUtilitiesReleaseDate =
-                String.valueOf(
-                        ((JSONObject)
-                                        ((((JSONArray)
-                                                        ((JSONObject) frameworkReleases.get(0))
-                                                                .get("assets"))
-                                                .get(0))))
-                                .get("created_at"));
+                String.valueOf(afuAssets.get(0).get("created_at"));
         latestAnnotationFileUtilitiesReleaseDate =
                 getReadableDate(latestAnnotationFileUtilitiesReleaseDate);
 
@@ -634,6 +620,8 @@ public class EisopSiteGenerator {
         String[] parts = latestReleaseName.split("-");
         String latestAnnotationFileUtilitiesRelease = parts[parts.length - 2];
 
+        // The name of the release, such as annotation-tools-1.2.3-eisop1.
+        mdString = mdString.replace("$LatestAnnotationFileUtilitiesReleaseName", latestReleaseName);
         mdString =
                 mdString.replace(
                         "$LatestAnnotationFileUtilitiesReleaseDate",
@@ -656,6 +644,72 @@ public class EisopSiteGenerator {
         }
         newMD.createNewFile();
         FileUtils.writeStringToFile(newMD, mdString, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Extracts a zip file.
+     *
+     * @param zip the zip file
+     * @param destination the directory to extract it into
+     * @throws IOException if the zip cannot be read or is encrypted, or a file cannot be written
+     */
+    static void extractZip(File zip, File destination) throws IOException {
+        try (ZipFile zipFile = new ZipFile(zip)) {
+            if (zipFile.isEncrypted()) {
+                throw new IOException(
+                        "Encountered an encrypted zip file, which was not expected: " + zip);
+            }
+            zipFile.extractAll(destination.getAbsolutePath());
+        }
+    }
+
+    /**
+     * The documents of an Annotation File Utilities zip that the AFU page links to: the file format
+     * specification, the changelog, and the figures. They are in the zip's
+     * annotation-file-utilities directory, which is at the top of older zips and inside a
+     * directory named after the release in newer ones.
+     */
+    private static final Pattern AFU_DOC_ENTRY =
+            Pattern.compile(
+                    "(?:[^/]+/)?annotation-file-utilities/"
+                            + "(annotation-file-format\\.(?:html|pdf)|changelog\\.html"
+                            + "|figures/[^/]+\\.(?:svg|png))");
+
+    /**
+     * Returns where a zip entry goes relative to the afu directory of the website, if it is one of
+     * the documents that the AFU page links to.
+     *
+     * @param entryName the name of an entry of an Annotation File Utilities zip
+     * @return the path relative to the afu directory, or null if the entry is not such a document
+     */
+    static String afuDocPath(String entryName) {
+        Matcher m = AFU_DOC_ENTRY.matcher(entryName);
+        return m.matches() ? m.group(1) : null;
+    }
+
+    /**
+     * Copies the documents that the AFU page links to out of an Annotation File Utilities zip,
+     * replacing the copies of an earlier release. A document that the zip does not have, such as
+     * the changelog in releases that moved it into the Checker Framework changelog, keeps its
+     * earlier copy.
+     *
+     * @param zip the zip of the latest Annotation File Utilities release
+     * @param afuDir the website's afu directory
+     * @throws IOException if the zip cannot be read or a document cannot be written
+     */
+    static void extractAfuDocs(File zip, File afuDir) throws IOException {
+        try (ZipFile zipFile = new ZipFile(zip)) {
+            for (FileHeader header : zipFile.getFileHeaders()) {
+                String path = header.isDirectory() ? null : afuDocPath(header.getFileName());
+                if (path == null) {
+                    continue;
+                }
+                try (InputStream in = zipFile.getInputStream(header)) {
+                    FileUtils.copyInputStreamToFile(in, new File(afuDir, path));
+                }
+                System.out.println("Extracted " + path + " from " + zip.getName());
+            }
+        }
     }
 
     /**
