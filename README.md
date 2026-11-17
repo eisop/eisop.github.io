@@ -9,8 +9,9 @@ published. If new releases exist, it generates and publishes the pages.
 A release of the Checker Framework has two zip assets,
 `checker-framework-VERSION.zip` and `annotation-file-utilities-VERSION.zip`.
 The former repository `eisop/annotation-tools` is archived; its releases,
-with zips named `annotation-tools-VERSION.zip`, are used for the Annotation File Utilities versions before the first release
-of the Checker Framework that has the second asset.
+with zips named `annotation-tools-VERSION.zip`, are used for the Annotation
+File Utilities versions before the first release of the Checker Framework that
+has the second asset.
 
 You can also run the **Publish website** workflow manually from the Actions tab.
 It checks out `master` for the generator, builds it, checks out `gh-pages`,

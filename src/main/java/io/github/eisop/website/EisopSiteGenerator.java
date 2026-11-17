@@ -524,13 +524,11 @@ public class EisopSiteGenerator {
             System.out.println("Folder already exists at: " + directoryPath);
         }
 
-        // Get the releases of the Annotation File Utilities.  Since the Annotation File Utilities
-        // became part of the Checker Framework repository, each Checker Framework release has an
-        // annotation-tools-VERSION.zip asset.  Older releases are in the former repository.
-        // The releases are ordered from the newest to the oldest.
+        // Get the releases of the Annotation File Utilities, from the newest to the oldest.  Since
+        // the Annotation File Utilities became part of the Checker Framework repository, each
+        // Checker Framework release has an annotation-file-utilities-VERSION.zip asset.  Older
+        // releases are in the former repository, with zips named annotation-tools-VERSION.zip.
         List<JSONObject> afuAssets = new ArrayList<>();
-        // The zips of the former repository are named annotation-tools-VERSION.zip, and the zips of
-        // the Checker Framework releases are named annotation-file-utilities-VERSION.zip.
         for (String repo : new String[] {"checker-framework", "annotation-tools"}) {
             URL listReleasesURL =
                     URI.create(
