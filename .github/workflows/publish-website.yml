@@ -1,9 +1,11 @@
 # Rebuilds the published site on the gh-pages branch: downloads any Checker Framework or
 # Annotation File Utilities release that is not on the site yet, regenerates the pages from
-# the templates in src/main/resources, and pushes the result.
+# the templates in src/main/resources, copies the site's hand-written pages (index.md,
+# 404.html) and _config.yml from master, and pushes the result.
 #
 # It runs daily on a schedule (checking if new releases exist before checking out gh-pages),
-# or can be run manually from the Actions tab. Manual runs default to a dry run.
+# on a push to master that changes one of the hand-written pages, or manually from the
+# Actions tab. Manual runs default to a dry run.
 
 name: Publish website
 
@@ -11,6 +13,9 @@ on:
   schedule:
     # Run daily at 06:00 UTC
     - cron: '0 6 * * *'
+  push:
+    branches: [master]
+    paths: [index.md, 404.html, _config.yml]
   workflow_dispatch:
     inputs:
       dry_run:
@@ -20,6 +25,11 @@ on:
 
 permissions:
   contents: write
+
+# Runs push to gh-pages, so they must not overlap.
+concurrency:
+  group: publish-website
+  cancel-in-progress: false
 
 jobs:
   check:
@@ -38,10 +48,21 @@ jobs:
             echo "Manual run requested (dry_run=${{ inputs.dry_run }})."
             exit 0
           fi
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "should_publish=true" >> "$GITHUB_OUTPUT"
+            echo "dry_run=false" >> "$GITHUB_OUTPUT"
+            echo "A hand-written page changed on master."
+            exit 0
+          fi
 
           # Scheduled run: check if latest releases are already published on the site
           CF_TAG=$(gh api repos/eisop/checker-framework/releases --jq '.[0].tag_name')
-          AFU_ZIP=$(gh api repos/eisop/annotation-tools/releases --jq '.[0].assets[0].name')
+          # The Annotation File Utilities zip is an asset of the Checker Framework release.
+          # Older releases are in the former annotation-tools repository.
+          AFU_ZIP=$(gh api repos/eisop/checker-framework/releases --jq '[.[].assets[] | select(.name | startswith("annotation-file-utilities-"))] | .[0].name')
+          if [ -z "$AFU_ZIP" ] || [ "$AFU_ZIP" = "null" ]; then
+            AFU_ZIP=$(gh api repos/eisop/annotation-tools/releases --jq '.[0].assets[0].name')
+          fi
 
           CF_STATUS=$(curl -s -o /dev/null -w '%{http_code}' "https://eisop.github.io/cf/${CF_TAG}/index.html")
           AFU_STATUS=$(curl -s -o /dev/null -w '%{http_code}' "https://eisop.github.io/afu/${AFU_ZIP}")
@@ -106,12 +127,13 @@ jobs:
             fi
           done
 
-      - name: Copy the 404 page, which redirects moved pages
-        run: cp generator/404.html site/404.html
+      - name: Copy the hand-written site pages and configuration from master
+        # The generator writes only afu/ and cf/; these files are edited on master.
+        run: cp generator/index.md generator/404.html generator/_config.yml site/
 
       - name: Stage changes
         working-directory: site
-        run: git add -A afu cf 404.html
+        run: git add -A afu cf index.md 404.html _config.yml
 
       - name: Summarize the changes
         working-directory: site
