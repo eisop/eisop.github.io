@@ -38,9 +38,8 @@ git push origin gh-pages
 The page templates live in `src/main/resources/` and are packaged into the jar,
 so the generator always uses the templates belonging to the code you built.
 The hand-written pages `index.md` and `404.html` and the Jekyll configuration
-`_config.yml` are edited on `master` and copied to `gh-pages` when publishing.
-The scheduled run publishes only when there is a new release, so after editing
-one of them, run the workflow manually.
+`_config.yml` are edited on `master` and copied to `gh-pages` when publishing;
+a push to `master` that changes one of them publishes the site.
 
 ### Pre-release validation
 
