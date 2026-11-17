@@ -2,7 +2,6 @@
 package io.github.eisop.website;
 
 import net.lingala.zip4j.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
 
 import org.apache.commons.io.FileUtils;
@@ -202,14 +201,7 @@ public class EisopSiteGenerator {
             File unzippedFile = new File(assetBaseName);
             // A zip that cannot be extracted must stop the run here, before the zip is moved into
             // cf/: a zip in cf/ counts as published and is never extracted again.
-            try (ZipFile zipFile = new ZipFile(fileTest)) {
-                if (zipFile.isEncrypted()) {
-                    throw new IOException(
-                            "Encountered an encrypted zip file, which was not expected: "
-                                    + fileTest);
-                }
-                zipFile.extractAll(assetBaseName);
-            }
+            extractZip(fileTest, new File(assetBaseName));
 
             FileUtils.moveFileToDirectory(fileTest, directoryPath, false);
             FileUtils.moveDirectoryToDirectory(unzippedFile, directoryPath, false);
@@ -235,10 +227,7 @@ public class EisopSiteGenerator {
                 if (releaseJavadoc.exists()) {
                     FileUtils.moveFileToDirectory(releaseJavadoc, javadocFolder, false);
                     File unzippedJavadoc = new File(javadocFolder, "checker-javadoc.jar");
-                    try (ZipFile zipFile = new ZipFile(unzippedJavadoc)) {
-                        zipFile.extractAll(
-                                new File(javadocFolder, "checker-javadoc").getAbsolutePath());
-                    }
+                    extractZip(unzippedJavadoc, new File(javadocFolder, "checker-javadoc"));
                     FileUtils.forceDelete(unzippedJavadoc);
                 }
             } else {
@@ -655,6 +644,23 @@ public class EisopSiteGenerator {
         }
         newMD.createNewFile();
         FileUtils.writeStringToFile(newMD, mdString, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Extracts a zip file.
+     *
+     * @param zip the zip file
+     * @param destination the directory to extract it into
+     * @throws IOException if the zip cannot be read or is encrypted, or a file cannot be written
+     */
+    static void extractZip(File zip, File destination) throws IOException {
+        try (ZipFile zipFile = new ZipFile(zip)) {
+            if (zipFile.isEncrypted()) {
+                throw new IOException(
+                        "Encountered an encrypted zip file, which was not expected: " + zip);
+            }
+            zipFile.extractAll(destination.getAbsolutePath());
+        }
     }
 
     /**
