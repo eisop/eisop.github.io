@@ -2,9 +2,10 @@
 
 ## Publishing the website
 
-The website is updated automatically via a daily GitHub Actions schedule that
-checks if new Checker Framework or Annotation File Utilities releases have been
-published. If new releases exist, it generates and publishes the pages.
+The website is updated automatically via a daily GitHub Actions schedule, at
+20:00 UTC, that checks if new Checker Framework or Annotation File Utilities
+releases or a new nightly build have been published. If so, it generates and
+publishes the pages.
 
 A release of the Checker Framework has two zip assets,
 `checker-framework-VERSION.zip` and `annotation-file-utilities-VERSION.zip`.
@@ -15,8 +16,9 @@ has the second asset.
 
 The development version of the site, https://eisop.github.io/cf/dev/ and
 https://eisop.github.io/afu/dev/, is the nightly build of master: the
-`nightly` prerelease of `eisop/checker-framework`, which its "Publish nightly
-build" workflow updates at 04:00 UTC when master has changed.  Prereleases are
+`nightly` prerelease of `eisop/checker-framework`, which the `nightly-zips` job
+of its CI workflow updates after the daily scheduled run (07:00 UTC, started
+hours late by GitHub) passes on a master that has changed.  Prereleases are
 otherwise ignored.  `cf/dev/build.txt` holds the time of the published nightly
 build, so the daily run publishes a new one, and only a new one.  The front
 pages link to it, and `robots.txt` keeps search engines out of it.

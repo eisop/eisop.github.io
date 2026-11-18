@@ -5,7 +5,8 @@
 # robots.txt, and _config.yml from master, and pushes the result.
 #
 # It runs daily on a schedule (checking if new releases or a new nightly build exist before
-# checking out gh-pages),
+# checking out gh-pages), after the scheduled CI run of eisop/checker-framework has attached the
+# nightly build to the "nightly" prerelease,
 # on a push to master that changes one of the hand-written pages, or manually from the
 # Actions tab. Manual runs default to a dry run.
 
@@ -13,8 +14,10 @@ name: Publish website
 
 on:
   schedule:
-    # Run daily at 06:00 UTC
-    - cron: '0 6 * * *'
+    # Run daily at 20:00 UTC.  The Checker Framework's CI is scheduled at 07:00 UTC, but GitHub
+    # starts scheduled runs hours late: its runs have started between 11:00 and 17:00 UTC and
+    # finished by 18:30 UTC, so this run, however late, sees that day's nightly build.
+    - cron: '0 20 * * *'
   push:
     branches: [master]
     paths: [index.md, 404.html, robots.txt, _config.yml]
