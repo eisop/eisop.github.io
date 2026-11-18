@@ -613,6 +613,10 @@ public class EisopSiteGenerator {
         if (globalIndexHTML.exists()) {
             FileUtils.forceDelete(globalIndexHTML);
         }
+        // Links to the afu directory itself, such as .../afu/#insert-annotations-to-source, need
+        // an index.
+        writeRedirect(new File(directoryPath, "index.html"), "annotation-file-utilities.html");
+
         String latestReleaseZipName = String.valueOf(afuAssets.get(0).get("name"));
         String latestReleaseName =
                 latestReleaseZipName.substring(0, latestReleaseZipName.length() - 4);
