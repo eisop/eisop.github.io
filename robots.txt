@@ -1,0 +1,5 @@
+# The development version, built nightly from master, is not a release; keep search results on
+# the released documentation.
+User-agent: *
+Disallow: /cf/dev/
+Disallow: /afu/dev/
