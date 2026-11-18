@@ -13,6 +13,14 @@ with zips named `annotation-tools-VERSION.zip`, are used for the Annotation
 File Utilities versions before the first release of the Checker Framework that
 has the second asset.
 
+The development version of the site, https://eisop.github.io/cf/dev/ and
+https://eisop.github.io/afu/dev/, is the nightly build of master: the
+`nightly` prerelease of `eisop/checker-framework`, which its "Publish nightly
+build" workflow updates at 04:00 UTC when master has changed.  Prereleases are
+otherwise ignored.  `cf/dev/build.txt` holds the time of the published nightly
+build, so the daily run publishes a new one, and only a new one.  The front
+pages link to it, and `robots.txt` keeps search engines out of it.
+
 You can also run the **Publish website** workflow manually from the Actions tab.
 It checks out `master` for the generator, builds it, checks out `gh-pages`,
 downloads any release that is not on the site yet, regenerates the pages, and pushes.
@@ -27,18 +35,18 @@ box unchecked to publish.
 git checkout master
 mvn package
 git checkout gh-pages
-git checkout master -- index.md 404.html _config.yml
+git checkout master -- index.md 404.html robots.txt _config.yml
 java -cp ./target/eisop.github.io-1.0-SNAPSHOT-jar-with-dependencies.jar \
   io.github.eisop.website.EisopSiteGenerator
 git status && git diff                 # review
-git add afu/ cf/ index.md 404.html _config.yml && git commit
+git add afu/ cf/ index.md 404.html robots.txt _config.yml && git commit
 git push origin gh-pages
 ```
 
 The page templates live in `src/main/resources/` and are packaged into the jar,
 so the generator always uses the templates belonging to the code you built.
-The hand-written pages `index.md` and `404.html` and the Jekyll configuration
-`_config.yml` are edited on `master` and copied to `gh-pages` when publishing;
+The hand-written pages `index.md` and `404.html`, `robots.txt`, and the Jekyll
+configuration `_config.yml` are edited on `master` and copied to `gh-pages` when publishing;
 a push to `master` that changes one of them publishes the site.
 
 ### Pre-release validation

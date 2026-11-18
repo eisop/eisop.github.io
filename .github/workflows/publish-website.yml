@@ -1,9 +1,11 @@
 # Rebuilds the published site on the gh-pages branch: downloads any Checker Framework or
 # Annotation File Utilities release that is not on the site yet, regenerates the pages from
-# the templates in src/main/resources, copies the site's hand-written pages (index.md,
-# 404.html) and _config.yml from master, and pushes the result.
+# the templates in src/main/resources, publishes the nightly build of master as the development
+# version in cf/dev/ and afu/dev/, copies the site's hand-written pages (index.md, 404.html),
+# robots.txt, and _config.yml from master, and pushes the result.
 #
-# It runs daily on a schedule (checking if new releases exist before checking out gh-pages),
+# It runs daily on a schedule (checking if new releases or a new nightly build exist before
+# checking out gh-pages),
 # on a push to master that changes one of the hand-written pages, or manually from the
 # Actions tab. Manual runs default to a dry run.
 
@@ -15,7 +17,7 @@ on:
     - cron: '0 6 * * *'
   push:
     branches: [master]
-    paths: [index.md, 404.html, _config.yml]
+    paths: [index.md, 404.html, robots.txt, _config.yml]
   workflow_dispatch:
     inputs:
       dry_run:
@@ -55,11 +57,13 @@ jobs:
             exit 0
           fi
 
-          # Scheduled run: check if latest releases are already published on the site
-          CF_TAG=$(gh api repos/eisop/checker-framework/releases --jq '.[0].tag_name')
+          # Scheduled run: check if latest releases are already published on the site.  The nightly
+          # build is a prerelease, which is not a release.
+          RELEASES='[.[] | select((.prerelease or .draft) | not)]'
+          CF_TAG=$(gh api repos/eisop/checker-framework/releases --jq "$RELEASES | .[0].tag_name")
           # The Annotation File Utilities zip is an asset of the Checker Framework release.
           # Older releases are in the former annotation-tools repository.
-          AFU_ZIP=$(gh api repos/eisop/checker-framework/releases --jq '[.[].assets[] | select(.name | startswith("annotation-file-utilities-"))] | .[0].name')
+          AFU_ZIP=$(gh api repos/eisop/checker-framework/releases --jq "$RELEASES"' | [.[].assets[] | select(.name | startswith("annotation-file-utilities-"))] | .[0].name')
           if [ -z "$AFU_ZIP" ] || [ "$AFU_ZIP" = "null" ]; then
             AFU_ZIP=$(gh api repos/eisop/annotation-tools/releases --jq '.[0].assets[0].name')
           fi
@@ -70,8 +74,17 @@ jobs:
           echo "Latest CF release: $CF_TAG (HTTP $CF_STATUS on site)"
           echo "Latest AFU release: $AFU_ZIP (HTTP $AFU_STATUS on site)"
 
-          if [ "$CF_STATUS" != "200" ] || [ "$AFU_STATUS" != "200" ]; then
-            echo "New release detected that is not yet on the site. Triggering publish."
+          # The generator writes the time of the nightly build it published to cf/dev/build.txt.
+          # gh prints the error response on stdout when there is no nightly build.
+          NIGHTLY=$(gh api repos/eisop/checker-framework/releases/tags/nightly \
+            --jq '[.assets[] | select(.name | startswith("checker-framework-"))] | .[0].updated_at // ""' \
+            2> /dev/null) || NIGHTLY=""
+          DEV=$(curl -sf "https://eisop.github.io/cf/dev/build.txt" || true)
+          echo "Nightly build: ${NIGHTLY:-none} (on site: ${DEV:-none})"
+
+          if [ "$CF_STATUS" != "200" ] || [ "$AFU_STATUS" != "200" ] \
+              || { [ -n "$NIGHTLY" ] && [ "$NIGHTLY" != "$DEV" ]; }; then
+            echo "New release or nightly build detected that is not yet on the site. Triggering publish."
             echo "should_publish=true" >> "$GITHUB_OUTPUT"
             echo "dry_run=false" >> "$GITHUB_OUTPUT"
           else
@@ -129,11 +142,11 @@ jobs:
 
       - name: Copy the hand-written site pages and configuration from master
         # The generator writes only afu/ and cf/; these files are edited on master.
-        run: cp generator/index.md generator/404.html generator/_config.yml site/
+        run: cp generator/index.md generator/404.html generator/robots.txt generator/_config.yml site/
 
       - name: Stage changes
         working-directory: site
-        run: git add -A afu cf index.md 404.html _config.yml
+        run: git add -A afu cf index.md 404.html robots.txt _config.yml
 
       - name: Summarize the changes
         working-directory: site

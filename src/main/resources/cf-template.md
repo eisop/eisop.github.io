@@ -27,7 +27,8 @@ The Checker Framework enhances Java's type system to make it more powerful and u
     *   [Changelog](CHANGELOG.md)
 *   Source code repository (at GitHub): [https://github.com/eisop/checker-framework/](https://github.com/eisop/checker-framework/)  
     The Checker Framework Manual contains [instructions on building from source](manual/manual.html#build-source).  
-    Also see the [Developer manual](https://htmlpreview.github.io/?https://github.com/eisop/checker-framework/master/docs/developer/developer-manual.html).
+    Also see the [Developer manual](https://htmlpreview.github.io/?https://github.com/eisop/checker-framework/master/docs/developer/developer-manual.html).  
+    The [development version](/cf/dev/) of this site has the manual and Javadoc of master, built nightly.
 *   Inference tools automatically add annotations to your code, making it even easier to start using the checkers. The Checker Framework manual contains [a list of inference tools](manual/manual.html#type-inference-tools).
 *   Optional related tools:
     *   The [**Annotation File Utilities**](../afu/annotation-file-utilities.md) extract annotations from, and write annotations to, `.java` and `.class` files. It also provides a representation (called an “annotation file”) for annotations that is outside the source code or the `.class` file. The tools support both Java 5 declaration annotations and Java 8 type annotations.
