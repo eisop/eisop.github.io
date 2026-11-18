@@ -1,8 +1,8 @@
 # Rebuilds the published site on the gh-pages branch: downloads any Checker Framework or
 # Annotation File Utilities release that is not on the site yet, regenerates the pages from
 # the templates in src/main/resources, publishes the nightly build of master as the development
-# version in cf/dev/ and afu/dev/, copies the site's hand-written pages (index.md, 404.html) and
-# _config.yml from master, and pushes the result.
+# version in cf/dev/ and afu/dev/, copies the site's hand-written pages (index.md, 404.html),
+# robots.txt, and _config.yml from master, and pushes the result.
 #
 # It runs daily on a schedule (checking if new releases or a new nightly build exist before
 # checking out gh-pages),
@@ -17,7 +17,7 @@ on:
     - cron: '0 6 * * *'
   push:
     branches: [master]
-    paths: [index.md, 404.html, _config.yml]
+    paths: [index.md, 404.html, robots.txt, _config.yml]
   workflow_dispatch:
     inputs:
       dry_run:
@@ -142,11 +142,11 @@ jobs:
 
       - name: Copy the hand-written site pages and configuration from master
         # The generator writes only afu/ and cf/; these files are edited on master.
-        run: cp generator/index.md generator/404.html generator/_config.yml site/
+        run: cp generator/index.md generator/404.html generator/robots.txt generator/_config.yml site/
 
       - name: Stage changes
         working-directory: site
-        run: git add -A afu cf index.md 404.html _config.yml
+        run: git add -A afu cf index.md 404.html robots.txt _config.yml
 
       - name: Summarize the changes
         working-directory: site
