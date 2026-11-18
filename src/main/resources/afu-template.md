@@ -87,6 +87,7 @@ The current release is Annotation File Utilities version $LatestAnnotationFileUt
 The annotation file utilities are pre-compiled (a jar file is included in the distribution), so most users do not need to compile it themselves.
 
 The source code is in the `annotation-file-utilities` directory of the [EISOP Checker Framework repository](https://github.com/eisop/checker-framework). The Annotation File Utilities are also available from Maven Central, as `io.github.eisop:annotation-file-utilities`. The former repository, [eisop/annotation-tools](https://github.com/eisop/annotation-tools), is archived.
+The [development version](/afu/dev/) of this page documents master, built nightly.
 
 To compile and run tests, do `./gradlew build` from the `annotation-file-utilities` subdirectory.
 

@@ -11,6 +11,7 @@ import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.model.enums.EncryptionMethod;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -223,6 +224,118 @@ class EisopSiteGeneratorTest {
                 html.contains(
                         "location.replace('manual.html' + location.search + location.hash);"));
         assertTrue(html.contains("<a href=\"manual.html\">"));
+    }
+
+    @Test
+    void publishedReleasesDropsDraftsAndPrereleases() throws ParseException {
+        JSONArray releases =
+                (JSONArray)
+                        new JSONParser()
+                                .parse(
+                                        "[{\"tag_name\": \"nightly\", \"prerelease\": true},"
+                                                + " {\"tag_name\": \"draft\", \"draft\": true},"
+                                                + " {\"tag_name\": \"a\", \"prerelease\": false},"
+                                                + " {\"tag_name\": \"b\"}]");
+        JSONArray published = EisopSiteGenerator.publishedReleases(releases);
+        assertEquals(2, published.size());
+        assertEquals("a", ((JSONObject) published.get(0)).get("tag_name"));
+        assertEquals("b", ((JSONObject) published.get(1)).get("tag_name"));
+        assertEquals(
+                "nightly",
+                EisopSiteGenerator.findRelease(releases, "nightly").get("tag_name"));
+        assertNull(EisopSiteGenerator.findRelease(published, "nightly"));
+    }
+
+    @Test
+    void devFrontPageSaysWhatItIsAndLinksToTheNightlyBuild() {
+        String page =
+                EisopSiteGenerator.devFrontPage(
+                        "---\nlayout: default\n---\n"
+                                + "Download: <a href=\"/cf/checker-framework-1.0.zip\">"
+                                + "checker-framework-1.0.zip</a>\n"
+                                + "<a href=\"/afu/annotation-file-utilities.html\">AFU</a>\n",
+                        "checker-framework-1.1-SNAPSHOT.zip",
+                        "https://example.org/n.zip",
+                        "https://example.org/nightly",
+                        "November 17, 2026");
+        assertTrue(page.startsWith("---\nlayout: default\n---\n<p><strong>This is the development"));
+        assertTrue(page.contains("November 17, 2026"));
+        assertTrue(page.contains("<a href=\"https://example.org/nightly\">nightly build</a>"));
+        assertTrue(
+                page.contains(
+                        "<a href=\"https://example.org/n.zip\">checker-framework-1.1-SNAPSHOT.zip</a>"));
+        assertFalse(page.contains("checker-framework-1.0.zip"));
+        assertTrue(page.contains("<a href=\"/afu/dev/annotation-file-utilities.html\">"));
+    }
+
+    @Test
+    void generateDevSitePublishesTheNightlyBuild(@TempDir Path tmp) throws Exception {
+        String cfName = "checker-framework-1.1-SNAPSHOT";
+        Path cfZip = tmp.resolve(cfName + ".zip");
+        try (ZipOutputStream out = new ZipOutputStream(Files.newOutputStream(cfZip))) {
+            addEntry(out, cfName + "/docs/manual/manual.html", "manual");
+            addEntry(
+                    out,
+                    cfName + "/docs/checker-framework-webpage.html",
+                    "<html><body>Download: <a href=\"/cf/checker-framework-1.0.zip\">"
+                            + "checker-framework-1.0.zip</a></body></html>");
+            addEntry(out, cfName + "/checker/dist/checker.jar", "jar");
+        }
+        String afuName = "annotation-file-utilities-1.1-SNAPSHOT";
+        Path afuZip = tmp.resolve(afuName + ".zip");
+        try (ZipOutputStream out = new ZipOutputStream(Files.newOutputStream(afuZip))) {
+            String dir = afuName + "/annotation-file-utilities/";
+            addEntry(out, dir + "annotation-file-utilities.html", "afu page");
+            addEntry(out, dir + "annotation-file-format.html", "afu format");
+        }
+        JSONObject nightly =
+                parse(
+                        "{\"tag_name\": \"nightly\", \"prerelease\": true,"
+                                + " \"html_url\": \"https://example.org/nightly\", \"assets\": ["
+                                + asset(cfZip, "2026-11-17T04:30:00Z")
+                                + ", "
+                                + asset(afuZip, "2026-11-17T04:30:01Z")
+                                + "]}");
+        Path cfDir = tmp.resolve("site/cf");
+        Path afuDir = tmp.resolve("site/afu");
+
+        EisopSiteGenerator.generateDevSite(nightly, cfDir.toFile(), afuDir.toFile());
+
+        Path dev = cfDir.resolve("dev");
+        assertEquals("manual", read(dev.resolve("manual/manual.html")));
+        assertTrue(Files.exists(dev.resolve("manual/index.html")));
+        String page = read(dev.resolve("index.html"));
+        assertTrue(page.contains("This is the development version"));
+        assertTrue(page.contains(cfZip.toUri().toString()));
+        assertFalse(Files.exists(dev.resolve("checker")));
+        assertFalse(Files.exists(dev.resolve("docs")));
+        assertEquals("2026-11-17T04:30:00Z\n", read(dev.resolve("build.txt")));
+        assertEquals("afu page", read(afuDir.resolve("dev/annotation-file-utilities.html")));
+        assertEquals("afu format", read(afuDir.resolve("dev/annotation-file-format.html")));
+        assertTrue(Files.exists(afuDir.resolve("dev/index.html")));
+
+        // The same build is not published again.
+        Files.delete(dev.resolve("manual/manual.html"));
+        EisopSiteGenerator.generateDevSite(nightly, cfDir.toFile(), afuDir.toFile());
+        assertFalse(Files.exists(dev.resolve("manual/manual.html")));
+    }
+
+    @Test
+    void generateDevSiteWithoutANightlyBuildChangesNothing(@TempDir Path tmp) throws IOException {
+        Path page = write(tmp.resolve("cf/dev/index.html"), "old");
+        EisopSiteGenerator.generateDevSite(
+                null, tmp.resolve("cf").toFile(), tmp.resolve("afu").toFile());
+        assertEquals("old", read(page));
+    }
+
+    private static String asset(Path zip, String updatedAt) {
+        return "{\"name\": \""
+                + zip.getFileName()
+                + "\", \"browser_download_url\": \""
+                + zip.toUri()
+                + "\", \"updated_at\": \""
+                + updatedAt
+                + "\"}";
     }
 
     private static void addEntry(ZipOutputStream out, String name, String content)

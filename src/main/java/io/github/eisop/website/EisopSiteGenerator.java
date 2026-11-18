@@ -17,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +27,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EisopSiteGenerator {
+
+    /** The tag of the prerelease that holds the zip files of the nightly build of master. */
+    static final String NIGHTLY_TAG = "nightly";
 
     public static void main(String[] args) throws IOException {
         File localReleaseZip = null;
@@ -88,6 +92,11 @@ public class EisopSiteGenerator {
                 throw e;
             }
         }
+
+        // The nightly build is a prerelease: it is published as the development version of the
+        // site, not as a release.
+        JSONObject nightly = findRelease(frameworkReleases, NIGHTLY_TAG);
+        frameworkReleases = publishedReleases(frameworkReleases);
 
         if (localReleaseZip != null) {
             String zipName = localReleaseZip.getName();
@@ -217,119 +226,11 @@ public class EisopSiteGenerator {
             File releaseFolder = new File(directoryPath, unzippedFile.getName());
             String releaseZipName = releaseFolder.getName() + ".zip";
 
-            // Unzip the latest release's Javadoc into api/, where the manual's links (../api/...)
-            // and the release's web page point, or write a stub for older releases.  The web pages
-            // of earlier releases link to api/checker-javadoc/, which redirects to api/.
-            File releaseJavadoc = new File(releaseFolder, "checker/dist/checker-javadoc.jar");
-            File javadocFolder = new File(releaseFolder, "api");
-            FileUtils.forceMkdir(javadocFolder);
-
-            if (i == 0) {
-                // Keep full javadoc only for the latest release
-                if (releaseJavadoc.exists()) {
-                    FileUtils.moveFileToDirectory(releaseJavadoc, javadocFolder, false);
-                    File unzippedJavadoc = new File(javadocFolder, "checker-javadoc.jar");
-                    extractZip(unzippedJavadoc, javadocFolder);
-                    FileUtils.forceDelete(unzippedJavadoc);
-                }
-            } else {
-                // For older releases, write a stub redirecting to the release zip
-                String stubContent =
-                        "---\n"
-                                + "layout: default\n"
-                                + "title: Javadoc\n"
-                                + "---\n"
-                                + "<p>Javadoc for this archived release is available in <a href=\"/cf/"
-                                + releaseZipName
-                                + "\">the release zip</a>.</p>\n";
-                FileUtils.writeStringToFile(
-                        new File(javadocFolder, "index.html"), stubContent, StandardCharsets.UTF_8);
-            }
-            writeRedirect(new File(javadocFolder, "checker-javadoc/index.html"), "../index.html");
-
-            // Find the subdirectories and files to move
-            File examplesDirectory = new File(releaseFolder, "docs/examples");
-            File manualDirectory = new File(releaseFolder, "docs/manual");
-            File tutorialDirectory = new File(releaseFolder, "docs/tutorial");
-            File changelogFile = new File(releaseFolder, "docs/CHANGELOG.md");
-            File quickStartFile = new File(releaseFolder, "docs/checker-framework-quick-start.html");
-            File shippedWebpage = new File(releaseFolder, "docs/checker-framework-webpage.html");
-            File shippedFavicon = new File(releaseFolder, "docs/favicon-checkerframework.png");
-            File logoFile = new File(releaseFolder, "tutorial/CFLogo.png");
-
-            // Move the subdirectories and files to the root of the directory
-            if (examplesDirectory.exists()) {
-                FileUtils.moveDirectoryToDirectory(examplesDirectory, releaseFolder, true);
-            }
-            if (manualDirectory.exists()) {
-                FileUtils.moveDirectoryToDirectory(manualDirectory, releaseFolder, true);
-                // Links to the manual's directory, such as .../manual/#nullness-checker, need an index.
-                writeRedirect(new File(releaseFolder, "manual/index.html"), "manual.html");
-            }
-            if (tutorialDirectory.exists()) {
-                FileUtils.moveDirectoryToDirectory(tutorialDirectory, releaseFolder, true);
-            }
-            if (changelogFile.exists()) {
-                FileUtils.moveFileToDirectory(changelogFile, releaseFolder, true);
-            }
-            // Releases before the quick-start guide was added to the distribution do not have it.
-            if (quickStartFile.exists()) {
-                FileUtils.moveFile(quickStartFile, new File(releaseFolder, "quick-start.html"));
-            }
-            if (logoFile.exists()) {
-                FileUtils.copyFileToDirectory(logoFile, releaseFolder);
-            }
-
-            // Generate release front page: use shipped page if present, else fall back to template
-            File indexHTML = new File(releaseFolder, "index.html");
-            File indexMD = new File(releaseFolder, "index.md");
-            if (indexHTML.exists()) {
-                FileUtils.forceDelete(indexHTML);
-            }
-            if (indexMD.exists()) {
-                FileUtils.forceDelete(indexMD);
-            }
-
-            if (shippedWebpage.exists()) {
-                String rawHtml = FileUtils.readFileToString(shippedWebpage, StandardCharsets.UTF_8);
-                String themedHtml = themeShippedPage(rawHtml);
-                FileUtils.writeStringToFile(indexHTML, themedHtml, StandardCharsets.UTF_8);
-                if (shippedFavicon.exists()) {
-                    FileUtils.moveFile(shippedFavicon, new File(releaseFolder, "favicon-checkerframework.png"));
-                }
-            } else {
-                String htmlString = readTemplate("cf-template.md");
-                htmlString =
-                        htmlString.replace(
-                                "$LatestCheckerFrameworkReleaseZip", releaseZipName);
-
-                String latestCheckerFrameworkReleaseDownloadLink =
-                        "/cf/" + releaseZipName;
-                htmlString =
-                        htmlString.replace(
-                                "$LatestCheckerFrameworkReleaseDownloadLink",
-                                latestCheckerFrameworkReleaseDownloadLink);
-
-                String latestCheckerFrameworkReleaseDate =
-                        String.valueOf(latestAssetsData.get("created_at"));
-                latestCheckerFrameworkReleaseDate = getReadableDate(latestCheckerFrameworkReleaseDate);
-                htmlString =
-                        htmlString.replace(
-                                "$LatestCheckerFrameworkReleaseDate",
-                                latestCheckerFrameworkReleaseDate);
-
-                FileUtils.writeStringToFile(indexMD, htmlString, StandardCharsets.UTF_8);
-            }
-
-            // Remove checker/ and docs/ to avoid keeping redundant build jars and files
-            File checkerDir = new File(releaseFolder, "checker");
-            if (checkerDir.exists()) {
-                FileUtils.deleteDirectory(checkerDir);
-            }
-            File docsDir = new File(releaseFolder, "docs");
-            if (docsDir.exists()) {
-                FileUtils.deleteDirectory(docsDir);
-            }
+            layOutRelease(
+                    releaseFolder,
+                    releaseZipName,
+                    String.valueOf(latestAssetsData.get("created_at")),
+                    i == 0);
         }
 
         // Write HTML to releases/releases.md if not in only-latest mode
@@ -437,7 +338,142 @@ public class EisopSiteGenerator {
             FileUtils.copyFile(cfLogo, newCFLogo);
         }
 
+        // A local release is checked before it is published; the development version is not part
+        // of that check.  getAFU fills in the AFU placeholders of a front page made from
+        // cf-template.md, the development version's too.
+        if (localReleaseZip == null) {
+            generateDevSite(nightly, directoryPath, new File(System.getProperty("user.dir"), "afu"));
+        }
+
         getAFU(onlyLatest);
+    }
+
+    /**
+     * Lays out the extracted release zip in the given folder as a page of the web site: moves the
+     * manual, the tutorial, the examples, and the changelog to the top of the folder, puts the
+     * Javadoc in api/, writes the release's front page, and removes the rest of the zip's files.
+     *
+     * @param releaseFolder the folder that holds the extracted zip
+     * @param releaseZipName the file name of the release zip, linked from a template front page
+     * @param createdAt the GitHub timestamp of the release zip
+     * @param fullJavadoc whether to keep the full Javadoc in api/, rather than a stub page that
+     *     links to the release zip
+     * @throws IOException if a file cannot be moved or written
+     */
+    static void layOutRelease(
+            File releaseFolder, String releaseZipName, String createdAt, boolean fullJavadoc)
+            throws IOException {
+        // Unzip the latest release's Javadoc into api/, where the manual's links (../api/...)
+        // and the release's web page point, or write a stub for older releases.  The web pages
+        // of earlier releases link to api/checker-javadoc/, which redirects to api/.
+        File releaseJavadoc = new File(releaseFolder, "checker/dist/checker-javadoc.jar");
+        File javadocFolder = new File(releaseFolder, "api");
+        FileUtils.forceMkdir(javadocFolder);
+
+        if (fullJavadoc) {
+            // Keep full javadoc only for the latest release
+            if (releaseJavadoc.exists()) {
+                FileUtils.moveFileToDirectory(releaseJavadoc, javadocFolder, false);
+                File unzippedJavadoc = new File(javadocFolder, "checker-javadoc.jar");
+                extractZip(unzippedJavadoc, javadocFolder);
+                FileUtils.forceDelete(unzippedJavadoc);
+            }
+        } else {
+            // For older releases, write a stub redirecting to the release zip
+            String stubContent =
+                    "---\n"
+                            + "layout: default\n"
+                            + "title: Javadoc\n"
+                            + "---\n"
+                            + "<p>Javadoc for this archived release is available in <a href=\"/cf/"
+                            + releaseZipName
+                            + "\">the release zip</a>.</p>\n";
+            FileUtils.writeStringToFile(
+                    new File(javadocFolder, "index.html"), stubContent, StandardCharsets.UTF_8);
+        }
+        writeRedirect(new File(javadocFolder, "checker-javadoc/index.html"), "../index.html");
+
+        // Find the subdirectories and files to move
+        File examplesDirectory = new File(releaseFolder, "docs/examples");
+        File manualDirectory = new File(releaseFolder, "docs/manual");
+        File tutorialDirectory = new File(releaseFolder, "docs/tutorial");
+        File changelogFile = new File(releaseFolder, "docs/CHANGELOG.md");
+        File quickStartFile = new File(releaseFolder, "docs/checker-framework-quick-start.html");
+        File shippedWebpage = new File(releaseFolder, "docs/checker-framework-webpage.html");
+        File shippedFavicon = new File(releaseFolder, "docs/favicon-checkerframework.png");
+        File logoFile = new File(releaseFolder, "tutorial/CFLogo.png");
+
+        // Move the subdirectories and files to the root of the directory
+        if (examplesDirectory.exists()) {
+            FileUtils.moveDirectoryToDirectory(examplesDirectory, releaseFolder, true);
+        }
+        if (manualDirectory.exists()) {
+            FileUtils.moveDirectoryToDirectory(manualDirectory, releaseFolder, true);
+            // Links to the manual's directory, such as .../manual/#nullness-checker, need an index.
+            writeRedirect(new File(releaseFolder, "manual/index.html"), "manual.html");
+        }
+        if (tutorialDirectory.exists()) {
+            FileUtils.moveDirectoryToDirectory(tutorialDirectory, releaseFolder, true);
+        }
+        if (changelogFile.exists()) {
+            FileUtils.moveFileToDirectory(changelogFile, releaseFolder, true);
+        }
+        // Releases before the quick-start guide was added to the distribution do not have it.
+        if (quickStartFile.exists()) {
+            FileUtils.moveFile(quickStartFile, new File(releaseFolder, "quick-start.html"));
+        }
+        if (logoFile.exists()) {
+            FileUtils.copyFileToDirectory(logoFile, releaseFolder);
+        }
+
+        // Generate release front page: use shipped page if present, else fall back to template
+        File indexHTML = new File(releaseFolder, "index.html");
+        File indexMD = new File(releaseFolder, "index.md");
+        if (indexHTML.exists()) {
+            FileUtils.forceDelete(indexHTML);
+        }
+        if (indexMD.exists()) {
+            FileUtils.forceDelete(indexMD);
+        }
+
+        if (shippedWebpage.exists()) {
+            String rawHtml = FileUtils.readFileToString(shippedWebpage, StandardCharsets.UTF_8);
+            String themedHtml = themeShippedPage(rawHtml);
+            FileUtils.writeStringToFile(indexHTML, themedHtml, StandardCharsets.UTF_8);
+            if (shippedFavicon.exists()) {
+                FileUtils.moveFile(shippedFavicon, new File(releaseFolder, "favicon-checkerframework.png"));
+            }
+        } else {
+            String htmlString = readTemplate("cf-template.md");
+            htmlString =
+                    htmlString.replace(
+                            "$LatestCheckerFrameworkReleaseZip", releaseZipName);
+
+            String latestCheckerFrameworkReleaseDownloadLink =
+                    "/cf/" + releaseZipName;
+            htmlString =
+                    htmlString.replace(
+                            "$LatestCheckerFrameworkReleaseDownloadLink",
+                            latestCheckerFrameworkReleaseDownloadLink);
+
+            String latestCheckerFrameworkReleaseDate = getReadableDate(createdAt);
+            htmlString =
+                    htmlString.replace(
+                            "$LatestCheckerFrameworkReleaseDate",
+                            latestCheckerFrameworkReleaseDate);
+
+            FileUtils.writeStringToFile(indexMD, htmlString, StandardCharsets.UTF_8);
+        }
+
+        // Remove checker/ and docs/ to avoid keeping redundant build jars and files
+        File checkerDir = new File(releaseFolder, "checker");
+        if (checkerDir.exists()) {
+            FileUtils.deleteDirectory(checkerDir);
+        }
+        File docsDir = new File(releaseFolder, "docs");
+        if (docsDir.exists()) {
+            FileUtils.deleteDirectory(docsDir);
+        }
     }
 
     /**
@@ -508,6 +544,188 @@ public class EisopSiteGenerator {
     }
 
     /**
+     * Returns the releases that are published as releases: not drafts and not prereleases, such as
+     * the nightly build.
+     *
+     * @param releases GitHub releases
+     * @return the releases that are neither drafts nor prereleases, in the same order
+     */
+    static JSONArray publishedReleases(JSONArray releases) {
+        JSONArray published = new JSONArray();
+        for (Object releaseObject : releases) {
+            JSONObject release = (JSONObject) releaseObject;
+            if (!Boolean.TRUE.equals(release.get("draft"))
+                    && !Boolean.TRUE.equals(release.get("prerelease"))) {
+                published.add(release);
+            }
+        }
+        return published;
+    }
+
+    /**
+     * Returns the release with the given tag.
+     *
+     * @param releases GitHub releases
+     * @param tag the tag of the release
+     * @return the release, or null if there is none
+     */
+    static JSONObject findRelease(JSONArray releases, String tag) {
+        for (Object releaseObject : releases) {
+            JSONObject release = (JSONObject) releaseObject;
+            if (tag.equals(release.get("tag_name"))) {
+                return release;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Publishes the nightly build as the development version of the site: the Checker Framework's
+     * pages in cf/dev/ and the Annotation File Utilities' documents in afu/dev/. The file
+     * cf/dev/build.txt holds the time of the nightly build's zip, so that an unchanged build is
+     * not published again; the publish workflow reads it, too.
+     *
+     * @param nightly the nightly prerelease, or null if there is none
+     * @param cfDir the website's cf directory
+     * @param afuDir the website's afu directory
+     * @throws IOException if a zip cannot be downloaded or extracted, or a file cannot be written
+     */
+    static void generateDevSite(JSONObject nightly, File cfDir, File afuDir) throws IOException {
+        JSONObject cfAsset =
+                nightly == null ? null : findZipAsset(nightly, "checker-framework-");
+        if (cfAsset == null) {
+            System.out.println("No nightly build; the development version is unchanged.");
+            return;
+        }
+        File devDir = new File(cfDir, "dev");
+        File buildFile = new File(devDir, "build.txt");
+        String buildTime = String.valueOf(cfAsset.get("updated_at"));
+        if (buildFile.exists()
+                && FileUtils.readFileToString(buildFile, StandardCharsets.UTF_8)
+                        .trim()
+                        .equals(buildTime)) {
+            System.out.println("The development version is the nightly build of " + buildTime);
+            return;
+        }
+
+        File tmp = Files.createTempDirectory("nightly").toFile();
+        try {
+            String zipName = String.valueOf(cfAsset.get("name"));
+            String zipUrl = String.valueOf(cfAsset.get("browser_download_url"));
+            File zip = new File(tmp, zipName);
+            System.out.println("Downloading " + zipUrl);
+            FileUtils.copyURLToFile(URI.create(zipUrl).toURL(), zip);
+            File extracted = new File(tmp, "cf");
+            extractZip(zip, extracted);
+            File releaseFolder =
+                    new File(extracted, zipName.substring(0, zipName.length() - ".zip".length()));
+            if (!releaseFolder.isDirectory()) {
+                throw new IOException(zipName + " does not contain " + releaseFolder.getName());
+            }
+
+            if (devDir.exists()) {
+                FileUtils.deleteDirectory(devDir);
+            }
+            FileUtils.moveDirectory(releaseFolder, devDir);
+            layOutRelease(devDir, zipName, buildTime, true);
+            // The front page is the page that the zip ships, or one made from cf-template.md.
+            for (String name : new String[] {"index.html", "index.md"}) {
+                File page = new File(devDir, name);
+                if (!page.exists()) {
+                    continue;
+                }
+                String html = FileUtils.readFileToString(page, StandardCharsets.UTF_8);
+                FileUtils.writeStringToFile(
+                        page,
+                        devFrontPage(
+                                html,
+                                zipName,
+                                zipUrl,
+                                String.valueOf(nightly.get("html_url")),
+                                getReadableDate(buildTime)),
+                        StandardCharsets.UTF_8);
+            }
+
+            File afuDevDir = new File(afuDir, "dev");
+            if (afuDevDir.exists()) {
+                FileUtils.deleteDirectory(afuDevDir);
+            }
+            JSONObject afuAsset = findZipAsset(nightly, "annotation-file-utilities-");
+            if (afuAsset != null) {
+                String afuZipUrl = String.valueOf(afuAsset.get("browser_download_url"));
+                File afuZip = new File(tmp, String.valueOf(afuAsset.get("name")));
+                System.out.println("Downloading " + afuZipUrl);
+                FileUtils.copyURLToFile(URI.create(afuZipUrl).toURL(), afuZip);
+                extractAfuDocs(afuZip, afuDevDir);
+                // The site's own AFU page is generated from a template; the development version
+                // has the page that the zip ships.
+                try (ZipFile zipFile = new ZipFile(afuZip)) {
+                    for (FileHeader header : zipFile.getFileHeaders()) {
+                        if (header.getFileName()
+                                .endsWith(
+                                        "annotation-file-utilities/annotation-file-utilities.html")) {
+                            try (InputStream in = zipFile.getInputStream(header)) {
+                                FileUtils.copyInputStreamToFile(
+                                        in, new File(afuDevDir, "annotation-file-utilities.html"));
+                            }
+                        }
+                    }
+                }
+                writeRedirect(
+                        new File(afuDevDir, "index.html"), "annotation-file-utilities.html");
+            }
+
+            FileUtils.writeStringToFile(buildFile, buildTime + "\n", StandardCharsets.UTF_8);
+            System.out.println("Published the nightly build of " + buildTime + " in " + devDir);
+        } finally {
+            FileUtils.deleteDirectory(tmp);
+        }
+    }
+
+    /** The links of a front page to the zip file of its release. */
+    private static final Pattern RELEASE_ZIP_LINK =
+            Pattern.compile("<a href=\"[^\"]*checker-framework-[^\"/]*\\.zip\">[^<]*</a>");
+
+    /**
+     * Turns the front page of the nightly build into the front page of the development version:
+     * says what it is, and links to the nightly build's zip file and Annotation File Utilities
+     * documentation instead of a release's.
+     *
+     * @param html the themed front page of the nightly build
+     * @param zipName the file name of the nightly build's zip file
+     * @param zipUrl the URL of the nightly build's zip file
+     * @param releaseUrl the URL of the nightly prerelease
+     * @param date the human-readable date of the nightly build
+     * @return the front page of the development version
+     */
+    static String devFrontPage(
+            String html, String zipName, String zipUrl, String releaseUrl, String date) {
+        String body =
+                RELEASE_ZIP_LINK
+                        .matcher(html)
+                        .replaceAll(
+                                Matcher.quoteReplacement(
+                                        "<a href=\"" + zipUrl + "\">" + zipName + "</a>"))
+                        .replace(
+                                "\"/afu/annotation-file-utilities.html\"",
+                                "\"/afu/dev/annotation-file-utilities.html\"");
+        String banner =
+                "<p><strong>This is the development version of the Checker Framework, built from"
+                        + " master on "
+                        + date
+                        + ", not a release.</strong>  See the <a href=\""
+                        + releaseUrl
+                        + "\">nightly build</a>, or the <a href=\"/cf/\">latest release</a>.</p>\n";
+        String frontMatterEnd = "---\n";
+        int start = body.startsWith(frontMatterEnd) ? body.indexOf(frontMatterEnd, 4) : -1;
+        if (start == -1) {
+            return banner + body;
+        }
+        start += frontMatterEnd.length();
+        return body.substring(0, start) + banner + body.substring(start);
+    }
+
+    /**
      * Returns the zip asset of the given release whose name starts with the given prefix.
      *
      * @param release a GitHub release
@@ -553,7 +771,7 @@ public class EisopSiteGenerator {
                                             + repo
                                             + "/releases?per_page=100")
                             .toURL();
-            JSONArray releases = getAPIResponse(listReleasesURL);
+            JSONArray releases = publishedReleases(getAPIResponse(listReleasesURL));
             for (Object release : releases) {
                 JSONObject afuAsset =
                         findZipAsset((JSONObject) release, "annotation-file-utilities-");
@@ -613,6 +831,10 @@ public class EisopSiteGenerator {
         if (globalIndexHTML.exists()) {
             FileUtils.forceDelete(globalIndexHTML);
         }
+        // Links to the afu directory itself, such as .../afu/#insert-annotations-to-source, need
+        // an index.
+        writeRedirect(new File(directoryPath, "index.html"), "annotation-file-utilities.html");
+
         String latestReleaseZipName = String.valueOf(afuAssets.get(0).get("name"));
         String latestReleaseName =
                 latestReleaseZipName.substring(0, latestReleaseZipName.length() - 4);
