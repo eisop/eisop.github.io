@@ -13,6 +13,13 @@ with zips named `annotation-tools-VERSION.zip`, are used for the Annotation
 File Utilities versions before the first release of the Checker Framework that
 has the second asset.
 
+The development version of the site, https://eisop.github.io/cf/dev/ and
+https://eisop.github.io/afu/dev/, is the nightly build of master: the
+`nightly` prerelease of `eisop/checker-framework`, which its "Publish nightly
+build" workflow updates at 04:00 UTC when master has changed.  Prereleases are
+otherwise ignored.  `cf/dev/build.txt` holds the time of the published nightly
+build, so the daily run publishes a new one, and only a new one.
+
 You can also run the **Publish website** workflow manually from the Actions tab.
 It checks out `master` for the generator, builds it, checks out `gh-pages`,
 downloads any release that is not on the site yet, regenerates the pages, and pushes.
