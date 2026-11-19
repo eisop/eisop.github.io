@@ -31,6 +31,11 @@ layout: default
     // The Javadoc moved from cf/api/checker-javadoc/ to cf/api/.
     location.replace(location.pathname.replace('/cf/api/checker-javadoc/', '/cf/api/')
         + location.search + location.hash);
+  } else if (/^\/cf\/checker-framework-[^/]+\/api\/(?!checker-javadoc\/)/.test(location.pathname)) {
+    // Releases published before the Javadoc moved to api/ keep it in api/checker-javadoc/, but
+    // their manuals link to ../api/.
+    location.replace(location.pathname.replace(/\/api\//, '/api/checker-javadoc/')
+        + location.search + location.hash);
   } else if (location.pathname === '/afu/' || location.pathname === '/afu') {
     location.replace('/afu/annotation-file-utilities.html' + location.search + location.hash);
   }
