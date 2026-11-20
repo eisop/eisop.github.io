@@ -142,6 +142,13 @@ public class EisopSiteGenerator {
             JSONObject latestAssetsData =
                     findZipAsset((JSONObject) frameworkReleases.get(i), "checker-framework-");
             if (latestAssetsData == null) {
+                if (i == 0) {
+                    // The front page, manual and Javadoc are replaced by the latest release's, so
+                    // continuing would delete them and put nothing in their place.
+                    throw new IOException(
+                            "The latest release has no Checker Framework zip: "
+                                    + ((JSONObject) frameworkReleases.get(i)).get("tag_name"));
+                }
                 System.out.println(
                         "Skipping release without a Checker Framework zip: "
                                 + ((JSONObject) frameworkReleases.get(i)).get("tag_name"));
@@ -253,6 +260,9 @@ public class EisopSiteGenerator {
                         directoryPath,
                         String.valueOf(
                                 ((JSONObject) frameworkReleases.get(0)).get("tag_name")));
+        if (!latestRelease.isDirectory()) {
+            throw new IOException("The latest release was not laid out in " + latestRelease);
+        }
         File latestReleaseHTML = new File(latestRelease, "index.html");
         File latestReleaseMD = new File(latestRelease, "index.md");
         if (latestReleaseHTML.exists()) {
