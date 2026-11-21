@@ -237,14 +237,17 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">addCheckedCodeDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds a default annotation that also applies to subpackages, if applicable.</div>
+<div class="block">Adds a default annotation for checked code.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)" class="member-name-link">addCheckedCodeDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)" class="member-name-link">addCheckedCodeDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location,
  boolean&nbsp;applyToSubpackages)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds a default annotation.</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment"><code>applyToSubpackages</code> has no effect, because a checked-code default is not
+     scoped to a package.</div>
+</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addCheckedCodeDefaults(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation%5B%5D)" class="member-name-link">addCheckedCodeDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
@@ -270,29 +273,31 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">addConservativeUncheckedCodeDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;uncheckedDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Add a conservative default annotation for unchecked elements that also applies to
- subpackages, if applicable.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)" class="member-name-link">addConservativeUncheckedCodeDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;uncheckedDefaultAnno,
- <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location,
- boolean&nbsp;applyToSubpackages)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Add a conservative default annotation for unchecked elements.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addConservativeUncheckedCodeDefaults(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation%5B%5D)" class="member-name-link">addConservativeUncheckedCodeDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addConservativeUncheckedCodeDefaults(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation%5B%5D)" class="member-name-link">addConservativeUncheckedCodeDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>[]&nbsp;locations)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a conservative default annotation for unchecked elements, at each of the given
  locations.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">addElementDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;elem,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">addElementDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;elem,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;elementDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the default annotations for a certain Element.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)" class="member-name-link">addPackageDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/PackageElement.html" title="class or interface in javax.lang.model.element" class="external-link">PackageElement</a>&nbsp;pkg,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;packageDefaultAnno,
+ <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location,
+ boolean&nbsp;applyToSubpackages)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the default annotations for a package, like <a href="#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>, and says whether
+ the default also applies to the package's subpackages, like the <code>applyToSubpackages</code>
+ element of <code>@DefaultQualifier</code>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPermissiveDefaultsForUncheckedCode()" class="member-name-link">addPermissiveDefaultsForUncheckedCode</a>()</code></div>
@@ -307,128 +312,120 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">addPermissiveUncheckedCodeDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;uncheckedDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Add a permissive default annotation for unchecked elements that also applies to subpackages,
- if applicable.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)" class="member-name-link">addPermissiveUncheckedCodeDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;uncheckedDefaultAnno,
- <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location,
- boolean&nbsp;applyToSubpackages)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Add a permissive default annotation for unchecked elements.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPermissiveUncheckedCodeDefaults(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation%5B%5D)" class="member-name-link">addPermissiveUncheckedCodeDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPermissiveUncheckedCodeDefaults(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation%5B%5D)" class="member-name-link">addPermissiveUncheckedCodeDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>[]&nbsp;locations)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a permissive default annotation for unchecked elements, at each of the given locations.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#addUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">addUncheckedCodeDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;uncheckedDefaultAnno,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#addUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">addUncheckedCodeDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;uncheckedDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addConservativeUncheckedCodeDefault(AnnotationMirror, TypeUseLocation)</code></a> or <a href="#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addPermissiveUncheckedCodeDefault(AnnotationMirror, TypeUseLocation)</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#addUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)" class="member-name-link">addUncheckedCodeDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;uncheckedDefaultAnno,
+ <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location,
+ boolean&nbsp;applyToSubpackages)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Use <a href="#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addConservativeUncheckedCodeDefault(AnnotationMirror, TypeUseLocation)</code></a> or <a href="#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addPermissiveUncheckedCodeDefault(AnnotationMirror, TypeUseLocation)</code></a>.</div>
 </div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#addUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)" class="member-name-link">addUncheckedCodeDefault</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;uncheckedDefaultAnno,
- <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location,
- boolean&nbsp;applyToSubpackages)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Use <a href="#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>addConservativeUncheckedCodeDefault(AnnotationMirror, TypeUseLocation, boolean)</code></a> or <a href="#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>addPermissiveUncheckedCodeDefault(AnnotationMirror, TypeUseLocation, boolean)</code></a>.</div>
-</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#addUncheckedCodeDefaults(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation%5B%5D)" class="member-name-link">addUncheckedCodeDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#addUncheckedCodeDefaults(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation%5B%5D)" class="member-name-link">addUncheckedCodeDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>[]&nbsp;locations)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Use <a href="#addConservativeUncheckedCodeDefaults(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation%5B%5D)"><code>addConservativeUncheckedCodeDefaults(AnnotationMirror, TypeUseLocation[])</code></a> or <a href="#addPermissiveUncheckedCodeDefaults(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation%5B%5D)"><code>addPermissiveUncheckedCodeDefaults(AnnotationMirror, TypeUseLocation[])</code></a>.</div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addUncheckedStandardDefaults()" class="member-name-link">addUncheckedStandardDefaults</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addUncheckedStandardDefaults()" class="member-name-link">addUncheckedStandardDefaults</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds the defaults for unchecked code of each mode the command-line options enable: <a href="#addConservativeDefaultsForUncheckedCode()"><code>addConservativeDefaultsForUncheckedCode()</code></a> and <a href="#addPermissiveDefaultsForUncheckedCode()"><code>addPermissiveDefaultsForUncheckedCode()</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#annotate(com.sun.source.tree.Tree,org.checkerframework.framework.type.AnnotatedTypeMirror)" class="member-name-link">annotate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.compiler/com/sun/source/tree/Tree.html" title="class or interface in com.sun.source.tree" class="external-link">Tree</a>&nbsp;tree,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#annotate(com.sun.source.tree.Tree,org.checkerframework.framework.type.AnnotatedTypeMirror)" class="member-name-link">annotate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.compiler/com/sun/source/tree/Tree.html" title="class or interface in com.sun.source.tree" class="external-link">Tree</a>&nbsp;tree,
  <a href="../../type/AnnotatedTypeMirror.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror</a>&nbsp;type)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Applies default annotations to a type given a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.compiler/com/sun/source/tree/Tree.html" title="class or interface in com.sun.source.tree" class="external-link"><code>Tree</code></a>.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#annotate(javax.lang.model.element.Element,org.checkerframework.framework.type.AnnotatedTypeMirror)" class="member-name-link">annotate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;elt,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#annotate(javax.lang.model.element.Element,org.checkerframework.framework.type.AnnotatedTypeMirror)" class="member-name-link">annotate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;elt,
  <a href="../../type/AnnotatedTypeMirror.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror</a>&nbsp;type)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Applies default annotations to a type obtained from an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link"><code>Element</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyConservativeDefaults(javax.lang.model.element.Element)" class="member-name-link">applyConservativeDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;annotationScope)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyConservativeDefaults(javax.lang.model.element.Element)" class="member-name-link">applyConservativeDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;annotationScope)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Given an element, returns true if the conservative default should be applied for it.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyPermissiveDefaults(javax.lang.model.element.Element)" class="member-name-link">applyPermissiveDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;annotationScope)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyPermissiveDefaults(javax.lang.model.element.Element)" class="member-name-link">applyPermissiveDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;annotationScope)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Given an element, returns whether the permissive default should be applied for it.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkConflictingDefaults(javax.lang.model.element.Element,com.sun.source.tree.Tree)" class="member-name-link">checkConflictingDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;elt,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkConflictingDefaults(javax.lang.model.element.Element,com.sun.source.tree.Tree)" class="member-name-link">checkConflictingDefaults</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;elt,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.compiler/com/sun/source/tree/Tree.html" title="class or interface in com.sun.source.tree" class="external-link">Tree</a>&nbsp;tree)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Reports each pair of <code>elt</code>'s own written <code>@DefaultQualifier</code> annotations that set
  the same <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual"><code>TypeUseLocation</code></a> in the same qualifier hierarchy to different qualifiers.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkDefaultQualifiers(javax.lang.model.element.Element,com.sun.source.tree.Tree)" class="member-name-link">checkDefaultQualifiers</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;elt,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkDefaultQualifiers(javax.lang.model.element.Element,com.sun.source.tree.Tree)" class="member-name-link">checkDefaultQualifiers</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;elt,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.compiler/com/sun/source/tree/Tree.html" title="class or interface in com.sun.source.tree" class="external-link">Tree</a>&nbsp;tree)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Checks @DefaultQualifier annotations on <code>elt</code> for conflicting defaults and for
  locations prohibited by the qualifier's <a href="../../qual/TargetLocations.html" title="annotation interface in org.checkerframework.framework.qual"><code>TargetLocations</code></a> meta-annotation.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkTargetLocations(javax.lang.model.element.Element,com.sun.source.tree.Tree)" class="member-name-link">checkTargetLocations</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;elt,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkTargetLocations(javax.lang.model.element.Element,com.sun.source.tree.Tree)" class="member-name-link">checkTargetLocations</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;elt,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.compiler/com/sun/source/tree/Tree.html" title="class or interface in com.sun.source.tree" class="external-link">Tree</a>&nbsp;tree)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Reports an error for each written @DefaultQualifier annotation on <code>elt</code> that specifies
  a <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual"><code>TypeUseLocation</code></a> prohibited by the qualifier's <a href="../../qual/TargetLocations.html" title="annotation interface in org.checkerframework.framework.qual"><code>TargetLocations</code></a>
  meta-annotation.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="QualifierDefaults.DefaultApplierElement.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults.DefaultApplierElement</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createDefaultApplierElement(org.checkerframework.framework.type.AnnotatedTypeFactory,javax.lang.model.element.Element,org.checkerframework.framework.type.AnnotatedTypeMirror,boolean)" class="member-name-link">createDefaultApplierElement</a><wbr>(<a href="../../type/AnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">AnnotatedTypeFactory</a>&nbsp;atypeFactory,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="QualifierDefaults.DefaultApplierElement.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults.DefaultApplierElement</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createDefaultApplierElement(org.checkerframework.framework.type.AnnotatedTypeFactory,javax.lang.model.element.Element,org.checkerframework.framework.type.AnnotatedTypeMirror,boolean)" class="member-name-link">createDefaultApplierElement</a><wbr>(<a href="../../type/AnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">AnnotatedTypeFactory</a>&nbsp;atypeFactory,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/Element.html" title="class or interface in javax.lang.model.element" class="external-link">Element</a>&nbsp;annotationScope,
  <a href="../../type/AnnotatedTypeMirror.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror</a>&nbsp;type,
  boolean&nbsp;fromTree)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Create the default applier element.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasDefaultsForCheckedCode()" class="member-name-link">hasDefaultsForCheckedCode</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasDefaultsForCheckedCode()" class="member-name-link">hasDefaultsForCheckedCode</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Check that a default with TypeUseLocation OTHERWISE or ALL is specified.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#permittedAtLocation(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">permittedAtLocation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;anno,
- <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Does <code>anno</code>'s <a href="../../qual/TargetLocations.html" title="annotation interface in org.checkerframework.framework.qual"><code>TargetLocations</code></a> meta-annotation permit it at <code>location</code>?</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#permittedAtProgrammaticLocation(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">permittedAtProgrammaticLocation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;anno,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#permittedAtLocation(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">permittedAtLocation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;anno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns true if <code>anno</code> may be applied at <code>location</code> as a programmatic default
- (e.g., via <a href="#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a>, <code>addUncheckedCodeDefault(org.checkerframework.framework.util.defaults.QualifierDefaults.UncheckedDefaultsMode, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code>, or <a href="#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>).</div>
+<div class="block">Does <code>anno</code>'s <a href="../../qual/TargetLocations.html" title="annotation interface in org.checkerframework.framework.qual"><code>TargetLocations</code></a> meta-annotation permit it at <code>location</code>?</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#validLocationsForUncheckedCodeDefaults()" class="member-name-link">validLocationsForUncheckedCodeDefaults</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#permittedAtProgrammaticLocation(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">permittedAtProgrammaticLocation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;anno,
+ <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns true if <code>anno</code> may be applied at <code>location</code> as a programmatic default
+ (e.g., via <a href="#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>, <code>addUncheckedCodeDefault(org.checkerframework.framework.util.defaults.QualifierDefaults.UncheckedDefaultsMode, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code>, <a href="#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>, or <a href="#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>addPackageDefault(javax.lang.model.element.PackageElement, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a>).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#validLocationsForUncheckedCodeDefaults()" class="member-name-link">validLocationsForUncheckedCodeDefaults</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns an array of locations that are valid for the unchecked value defaults.</div>
 </div>
 </div>
@@ -596,7 +593,7 @@ loadScripts(document, 'script');</script>
  enables: the top qualifier at <a href="#CONSERVATIVE_UNCHECKED_DEFAULTS_TOP"><code>CONSERVATIVE_UNCHECKED_DEFAULTS_TOP</code></a> and the bottom
  qualifier at <a href="#CONSERVATIVE_UNCHECKED_DEFAULTS_BOTTOM"><code>CONSERVATIVE_UNCHECKED_DEFAULTS_BOTTOM</code></a>, at each location the checker
  has not already given a conservative default. To add a checker-specific default instead, use
- <a href="#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a>.</div>
+ <a href="#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>.</div>
 </section>
 </li>
 <li>
@@ -607,7 +604,7 @@ loadScripts(document, 'script');</script>
  -AusePermissiveDefaultsForUncheckedCode</code> (e.g., with <code>source</code> or <code>bytecode</code>)
  enables: the top qualifier at <a href="#PERMISSIVE_UNCHECKED_DEFAULTS_TOP"><code>PERMISSIVE_UNCHECKED_DEFAULTS_TOP</code></a> and the bottom
  qualifier at <a href="#PERMISSIVE_UNCHECKED_DEFAULTS_BOTTOM"><code>PERMISSIVE_UNCHECKED_DEFAULTS_BOTTOM</code></a>, at each location the checker has
- not already given a permissive default. To add a checker-specific default instead, use <a href="#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a>.</div>
+ not already given a permissive default. To add a checker-specific default instead, use <a href="#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>.</div>
 </section>
 </li>
 <li>
@@ -635,7 +632,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">permittedAtProgrammaticLocation</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;anno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location)</span></div>
 <div class="block">Returns true if <code>anno</code> may be applied at <code>location</code> as a programmatic default
- (e.g., via <a href="#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a>, <code>addUncheckedCodeDefault(org.checkerframework.framework.util.defaults.QualifierDefaults.UncheckedDefaultsMode, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code>, or <a href="#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>).
+ (e.g., via <a href="#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>, <code>addUncheckedCodeDefault(org.checkerframework.framework.util.defaults.QualifierDefaults.UncheckedDefaultsMode, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code>, <a href="#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>, or <a href="#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>addPackageDefault(javax.lang.model.element.PackageElement, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a>).
 
  <p>If <code>anno</code> carries a <a href="../../qual/ProgrammaticDefaultLocations.html" title="annotation interface in org.checkerframework.framework.qual"><code>ProgrammaticDefaultLocations</code></a> meta-annotation, its
  locations are checked. Otherwise, falls back to <a href="#permittedAtLocation(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>permittedAtLocation(AnnotationMirror, TypeUseLocation)</code></a>.
@@ -660,28 +657,14 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)">
-<h3>addCheckedCodeDefault</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addCheckedCodeDefault</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
- <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location,
- boolean&nbsp;applyToSubpackages)</span></div>
-<div class="block">Adds a default annotation. A programmer may override this by writing the @DefaultQualifier
- annotation on an element.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>absoluteDefaultAnno</code> - the default annotation mirror</dd>
-<dd><code>location</code> - the type use location</dd>
-<dd><code>applyToSubpackages</code> - whether the default should be inherited by subpackages</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)">
 <h3>addCheckedCodeDefault</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addCheckedCodeDefault</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location)</span></div>
-<div class="block">Adds a default annotation that also applies to subpackages, if applicable. A programmer may
- override this by writing the @DefaultQualifier annotation on an element.</div>
+<div class="block">Adds a default annotation for checked code. A programmer may override this by writing the
+ <code>@DefaultQualifier</code> annotation on an element.
+
+ <p>A checked-code default applies to all checked code; it is not scoped to a package.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>absoluteDefaultAnno</code> - the default annotation mirror</dd>
@@ -690,17 +673,23 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)">
-<h3>addConservativeUncheckedCodeDefault</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addConservativeUncheckedCodeDefault</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;uncheckedDefaultAnno,
+<section class="detail" id="addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)">
+<h3>addCheckedCodeDefault</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addCheckedCodeDefault</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;absoluteDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location,
  boolean&nbsp;applyToSubpackages)</span></div>
-<div class="block">Add a conservative default annotation for unchecked elements.</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment"><code>applyToSubpackages</code> has no effect, because a checked-code default is not
+     scoped to a package. Use <a href="#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addCheckedCodeDefault(AnnotationMirror, TypeUseLocation)</code></a>, or <a href="#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>addPackageDefault(javax.lang.model.element.PackageElement, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a> for a default of one package that need
+     not apply to its subpackages.</div>
+</div>
+<div class="block">Adds a default annotation for checked code.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>uncheckedDefaultAnno</code> - the default annotation mirror</dd>
+<dd><code>absoluteDefaultAnno</code> - the default annotation mirror</dd>
 <dd><code>location</code> - the type use location</dd>
-<dd><code>applyToSubpackages</code> - whether the default should be inherited by subpackages</dd>
+<dd><code>applyToSubpackages</code> - ignored</dd>
 </dl>
 </section>
 </li>
@@ -709,27 +698,11 @@ loadScripts(document, 'script');</script>
 <h3>addConservativeUncheckedCodeDefault</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addConservativeUncheckedCodeDefault</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;uncheckedDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location)</span></div>
-<div class="block">Add a conservative default annotation for unchecked elements that also applies to
- subpackages, if applicable.</div>
+<div class="block">Add a conservative default annotation for unchecked elements.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>uncheckedDefaultAnno</code> - the default annotation mirror</dd>
 <dd><code>location</code> - the type use location</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)">
-<h3>addPermissiveUncheckedCodeDefault</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addPermissiveUncheckedCodeDefault</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;uncheckedDefaultAnno,
- <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location,
- boolean&nbsp;applyToSubpackages)</span></div>
-<div class="block">Add a permissive default annotation for unchecked elements.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>uncheckedDefaultAnno</code> - the default annotation mirror</dd>
-<dd><code>location</code> - the type use location</dd>
-<dd><code>applyToSubpackages</code> - whether the default should be inherited by subpackages</dd>
 </dl>
 </section>
 </li>
@@ -738,8 +711,7 @@ loadScripts(document, 'script');</script>
 <h3>addPermissiveUncheckedCodeDefault</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addPermissiveUncheckedCodeDefault</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;uncheckedDefaultAnno,
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location)</span></div>
-<div class="block">Add a permissive default annotation for unchecked elements that also applies to subpackages,
- if applicable.</div>
+<div class="block">Add a permissive default annotation for unchecked elements.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>uncheckedDefaultAnno</code> - the default annotation mirror</dd>
@@ -782,15 +754,15 @@ loadScripts(document, 'script');</script>
  <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location,
  boolean&nbsp;applyToSubpackages)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Use <a href="#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>addConservativeUncheckedCodeDefault(AnnotationMirror, TypeUseLocation, boolean)</code></a> or <a href="#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>addPermissiveUncheckedCodeDefault(AnnotationMirror, TypeUseLocation, boolean)</code></a>.</div>
+<div class="deprecation-comment">Use <a href="#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addConservativeUncheckedCodeDefault(AnnotationMirror, TypeUseLocation)</code></a> or <a href="#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addPermissiveUncheckedCodeDefault(AnnotationMirror, TypeUseLocation)</code></a>.</div>
 </div>
-<div class="block">Add an unchecked-code default annotation for unchecked elements that also applies to
- subpackages, if applicable.</div>
+<div class="block">Add an unchecked-code default annotation for unchecked elements.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>uncheckedDefaultAnno</code> - the default annotation mirror</dd>
 <dd><code>location</code> - the type use location</dd>
-<dd><code>applyToSubpackages</code> - whether the default should be inherited by subpackages</dd>
+<dd><code>applyToSubpackages</code> - ignored, because an unchecked-code default is not scoped to a
+     package</dd>
 </dl>
 </section>
 </li>
@@ -803,8 +775,7 @@ loadScripts(document, 'script');</script>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Use <a href="#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addConservativeUncheckedCodeDefault(AnnotationMirror, TypeUseLocation)</code></a> or <a href="#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addPermissiveUncheckedCodeDefault(AnnotationMirror, TypeUseLocation)</code></a>.</div>
 </div>
-<div class="block">Add an unchecked-code default annotation for unchecked elements that also applies to
- subpackages.</div>
+<div class="block">Add an unchecked-code default annotation for unchecked elements.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>uncheckedDefaultAnno</code> - the default annotation mirror</dd>
@@ -869,12 +840,36 @@ loadScripts(document, 'script');</script>
  elem</code> -- same <code>location</code> and same qualifier hierarchy, but a different qualifier --
  then a <a href="../../../javacutil/TypeSystemError.html" title="class in org.checkerframework.javacutil"><code>TypeSystemError</code></a> is thrown later, when <code>elem</code>'s defaults are computed.
  Only one qualifier from a hierarchy can be the default for a location, so a type system must
- not register one that contradicts what a user is permitted to write.</div>
+ not register one that contradicts what a user is permitted to write.
+
+ <p>A default on a package also applies to its subpackages; use <a href="#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>addPackageDefault(javax.lang.model.element.PackageElement, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a> for
+ one that does not.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>elem</code> - the scope to set the default within</dd>
 <dd><code>elementDefaultAnno</code> - the default to set</dd>
 <dd><code>location</code> - the location to apply the default to</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../../../javacutil/TypeSystemError.html" title="class in org.checkerframework.javacutil">TypeSystemError</a></code> - if called after type checking has begun</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)">
+<h3>addPackageDefault</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addPackageDefault</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/PackageElement.html" title="class or interface in javax.lang.model.element" class="external-link">PackageElement</a>&nbsp;pkg,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html" title="class or interface in javax.lang.model.element" class="external-link">AnnotationMirror</a>&nbsp;packageDefaultAnno,
+ <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a>&nbsp;location,
+ boolean&nbsp;applyToSubpackages)</span></div>
+<div class="block">Sets the default annotations for a package, like <a href="#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>, and says whether
+ the default also applies to the package's subpackages, like the <code>applyToSubpackages</code>
+ element of <code>@DefaultQualifier</code>.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pkg</code> - the package to set the default within</dd>
+<dd><code>packageDefaultAnno</code> - the default to set</dd>
+<dd><code>location</code> - the location to apply the default to</dd>
+<dd><code>applyToSubpackages</code> - whether the default also applies to the subpackages of <code>pkg</code></dd>
 <dt>Throws:</dt>
 <dd><code><a href="../../../javacutil/TypeSystemError.html" title="class in org.checkerframework.javacutil">TypeSystemError</a></code> - if called after type checking has begun</dd>
 </dl>

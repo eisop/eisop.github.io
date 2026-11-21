@@ -789,11 +789,15 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">addCheckedCodeDefault(AnnotationMirror, TypeUseLocation)</a> - Method in class org.checkerframework.framework.util.defaults.<a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults</a></dt>
 <dd>
-<div class="block">Adds a default annotation that also applies to subpackages, if applicable.</div>
+<div class="block">Adds a default annotation for checked code.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)" class="member-name-link">addCheckedCodeDefault(AnnotationMirror, TypeUseLocation, boolean)</a> - Method in class org.checkerframework.framework.util.defaults.<a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults</a></dt>
 <dd>
-<div class="block">Adds a default annotation.</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment"><code>applyToSubpackages</code> has no effect, because a checked-code default is not
+     scoped to a package. Use <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addCheckedCodeDefault(AnnotationMirror, TypeUseLocation)</code></a>, or <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>QualifierDefaults.addPackageDefault(javax.lang.model.element.PackageElement, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a> for a default of one package that need
+     not apply to its subpackages.</div>
+</div>
 </dd>
 <dt><a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addCheckedCodeDefaults(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation%5B%5D)" class="member-name-link">addCheckedCodeDefaults(AnnotationMirror, TypeUseLocation[])</a> - Method in class org.checkerframework.framework.util.defaults.<a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults</a></dt>
 <dd>
@@ -888,11 +892,6 @@ loadScripts(document, 'script');</script>
  has not already given a conservative default.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">addConservativeUncheckedCodeDefault(AnnotationMirror, TypeUseLocation)</a> - Method in class org.checkerframework.framework.util.defaults.<a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults</a></dt>
-<dd>
-<div class="block">Add a conservative default annotation for unchecked elements that also applies to
- subpackages, if applicable.</div>
-</dd>
-<dt><a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)" class="member-name-link">addConservativeUncheckedCodeDefault(AnnotationMirror, TypeUseLocation, boolean)</a> - Method in class org.checkerframework.framework.util.defaults.<a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults</a></dt>
 <dd>
 <div class="block">Add a conservative default annotation for unchecked elements.</div>
 </dd>
@@ -1150,6 +1149,12 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Adds to <code>activeOptions</code> the options that <code>mode</code> enables for this checker.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)" class="member-name-link">addPackageDefault(PackageElement, AnnotationMirror, TypeUseLocation, boolean)</a> - Method in class org.checkerframework.framework.util.defaults.<a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults</a></dt>
+<dd>
+<div class="block">Sets the default annotations for a package, like <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>, and says whether
+ the default also applies to the package's subpackages, like the <code>applyToSubpackages</code>
+ element of <code>@DefaultQualifier</code>.</div>
+</dd>
 <dt><a href="org/checkerframework/framework/util/TreePathCacher.html#addPath(com.sun.source.tree.Tree,com.sun.source.util.TreePath)" class="member-name-link">addPath(Tree, TreePath)</a> - Method in class org.checkerframework.framework.util.<a href="org/checkerframework/framework/util/TreePathCacher.html" title="class in org.checkerframework.framework.util">TreePathCacher</a></dt>
 <dd>
 <div class="block">Adds the given key and value to the cache.</div>
@@ -1163,11 +1168,6 @@ loadScripts(document, 'script');</script>
  not already given a permissive default.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">addPermissiveUncheckedCodeDefault(AnnotationMirror, TypeUseLocation)</a> - Method in class org.checkerframework.framework.util.defaults.<a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults</a></dt>
-<dd>
-<div class="block">Add a permissive default annotation for unchecked elements that also applies to subpackages,
- if applicable.</div>
-</dd>
-<dt><a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)" class="member-name-link">addPermissiveUncheckedCodeDefault(AnnotationMirror, TypeUseLocation, boolean)</a> - Method in class org.checkerframework.framework.util.defaults.<a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults</a></dt>
 <dd>
 <div class="block">Add a permissive default annotation for unchecked elements.</div>
 </dd>
@@ -1335,7 +1335,7 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)" class="member-name-link">addUncheckedCodeDefault(AnnotationMirror, TypeUseLocation, boolean)</a> - Method in class org.checkerframework.framework.util.defaults.<a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Use <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>QualifierDefaults.addConservativeUncheckedCodeDefault(AnnotationMirror, TypeUseLocation, boolean)</code></a> or <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>QualifierDefaults.addPermissiveUncheckedCodeDefault(AnnotationMirror, TypeUseLocation, boolean)</code></a>.</div>
+<div class="deprecation-comment">Use <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addConservativeUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addConservativeUncheckedCodeDefault(AnnotationMirror, TypeUseLocation)</code></a> or <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addPermissiveUncheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addPermissiveUncheckedCodeDefault(AnnotationMirror, TypeUseLocation)</code></a>.</div>
 </div>
 </dd>
 <dt><a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addUncheckedCodeDefaults(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation%5B%5D)" class="member-name-link">addUncheckedCodeDefaults(AnnotationMirror, TypeUseLocation[])</a> - Method in class org.checkerframework.framework.util.defaults.<a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults</a></dt>
@@ -2863,7 +2863,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/checkerframework/framework/util/defaults/Default.html#applyToSubpackages" class="member-name-link">applyToSubpackages</a> - Variable in class org.checkerframework.framework.util.defaults.<a href="org/checkerframework/framework/util/defaults/Default.html" title="class in org.checkerframework.framework.util.defaults">Default</a></dt>
 <dd>
-<div class="block">Whether the default should be inherited by subpackages.</div>
+<div class="block">Whether the default also applies to the subpackages of the package that it is written on or
+ registered for (see <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>QualifierDefaults.addPackageDefault(javax.lang.model.element.PackageElement, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a>).</div>
 </dd>
 <dt><a href="org/checkerframework/common/util/report/qual/ReportUse.html#applyToSubpackages()" class="member-name-link">applyToSubpackages()</a> - Element in annotation interface org.checkerframework.common.util.report.qual.<a href="org/checkerframework/common/util/report/qual/ReportUse.html" title="annotation interface in org.checkerframework.common.util.report.qual">ReportUse</a></dt>
 <dd>
@@ -9985,9 +9986,14 @@ loadScripts(document, 'script');</script>
 <div class="block">Utility class for applying the annotations inferred by dataflow to a given type.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/type/DefaultInferredTypesApplier.html#%3Cinit%3E(boolean,org.checkerframework.framework.type.QualifierHierarchy,org.checkerframework.framework.type.AnnotatedTypeFactory)" class="member-name-link">DefaultInferredTypesApplier(boolean, QualifierHierarchy, AnnotatedTypeFactory)</a> - Constructor for class org.checkerframework.framework.type.<a href="org/checkerframework/framework/type/DefaultInferredTypesApplier.html" title="class in org.checkerframework.framework.type">DefaultInferredTypesApplier</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates an applier.</div>
+</dd>
 <dt><a href="org/checkerframework/framework/type/DefaultInferredTypesApplier.html#%3Cinit%3E(org.checkerframework.framework.type.QualifierHierarchy,org.checkerframework.framework.type.AnnotatedTypeFactory)" class="member-name-link">DefaultInferredTypesApplier(QualifierHierarchy, AnnotatedTypeFactory)</a> - Constructor for class org.checkerframework.framework.type.<a href="org/checkerframework/framework/type/DefaultInferredTypesApplier.html" title="class in org.checkerframework.framework.type">DefaultInferredTypesApplier</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates an applier that applies an inferred qualifier only if it is a subtype of the
+ qualifier it replaces.</div>
+</dd>
 <dt><a href="org/checkerframework/framework/testchecker/defaulting/DefaultingLowerBoundAnnotatedTypeFactory.html" class="type-name-link" title="class in org.checkerframework.framework.testchecker.defaulting">DefaultingLowerBoundAnnotatedTypeFactory</a> - Class in <a href="org/checkerframework/framework/testchecker/defaulting/package-summary.html">org.checkerframework.framework.testchecker.defaulting</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/checkerframework/framework/testchecker/defaulting/DefaultingLowerBoundAnnotatedTypeFactory.html#%3Cinit%3E(org.checkerframework.common.basetype.BaseTypeChecker)" class="member-name-link">DefaultingLowerBoundAnnotatedTypeFactory(BaseTypeChecker)</a> - Constructor for class org.checkerframework.framework.testchecker.defaulting.<a href="org/checkerframework/framework/testchecker/defaulting/DefaultingLowerBoundAnnotatedTypeFactory.html" title="class in org.checkerframework.framework.testchecker.defaulting">DefaultingLowerBoundAnnotatedTypeFactory</a></dt>
@@ -10808,7 +10814,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/checkerframework/framework/testchecker/elementdefault/ElementDefaultAnnotatedTypeFactory.html" class="type-name-link" title="class in org.checkerframework.framework.testchecker.elementdefault">ElementDefaultAnnotatedTypeFactory</a> - Class in <a href="org/checkerframework/framework/testchecker/elementdefault/package-summary.html">org.checkerframework.framework.testchecker.elementdefault</a></dt>
 <dd>
 <div class="block">Calls <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a> directly on package <code>elementdefault.pkg</code>
- and on two of its classes, rather than through a written <code>@DefaultQualifier</code> annotation.</div>
+ and on two of its classes, and <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>QualifierDefaults.addPackageDefault(javax.lang.model.element.PackageElement, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a> on package <code>
+ elementdefault.nonpropagating</code>, rather than through a written <code>@DefaultQualifier</code>
+ annotation.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/testchecker/elementdefault/ElementDefaultAnnotatedTypeFactory.html#%3Cinit%3E(org.checkerframework.common.basetype.BaseTypeChecker)" class="member-name-link">ElementDefaultAnnotatedTypeFactory(BaseTypeChecker)</a> - Constructor for class org.checkerframework.framework.testchecker.elementdefault.<a href="org/checkerframework/framework/testchecker/elementdefault/ElementDefaultAnnotatedTypeFactory.html" title="class in org.checkerframework.framework.testchecker.elementdefault">ElementDefaultAnnotatedTypeFactory</a></dt>
 <dd>
@@ -10869,9 +10877,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Tests <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>:
  that a default added on a package reaches that package's subpackages, the same way a written
- <code>@DefaultQualifier</code> would (eisop#2037), and that a default added on a class merges with
- written <code>@DefaultQualifier</code> annotations and with enclosing defaults no matter which
- defaults were queried, and thereby memoized, before it was added (eisop#2047).</div>
+ <code>@DefaultQualifier</code> would (eisop#2037), unless it is added by <code>addPackageDefault</code>
+ with <code>applyToSubpackages = false</code>, and that a default added on a class merges with written
+ <code>@DefaultQualifier</code> annotations and with enclosing defaults no matter which defaults were
+ queried, and thereby memoized, before it was added (eisop#2047).</div>
 </dd>
 <dt><a href="org/checkerframework/framework/test/junit/ElementDefaultTest.html#%3Cinit%3E(java.util.List)" class="member-name-link">ElementDefaultTest(List&lt;File&gt;)</a> - Constructor for class org.checkerframework.framework.test.junit.<a href="org/checkerframework/framework/test/junit/ElementDefaultTest.html" title="class in org.checkerframework.framework.test.junit">ElementDefaultTest</a></dt>
 <dd>&nbsp;</dd>
@@ -30206,7 +30215,7 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#permittedAtProgrammaticLocation(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)" class="member-name-link">permittedAtProgrammaticLocation(AnnotationMirror, TypeUseLocation)</a> - Method in class org.checkerframework.framework.util.defaults.<a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html" title="class in org.checkerframework.framework.util.defaults">QualifierDefaults</a></dt>
 <dd>
 <div class="block">Returns true if <code>anno</code> may be applied at <code>location</code> as a programmatic default
- (e.g., via <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>QualifierDefaults.addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a>, <code>QualifierDefaults.addUncheckedCodeDefault(org.checkerframework.framework.util.defaults.QualifierDefaults.UncheckedDefaultsMode, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code>, or <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>).</div>
+ (e.g., via <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addCheckedCodeDefault(javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>, <code>QualifierDefaults.addUncheckedCodeDefault(org.checkerframework.framework.util.defaults.QualifierDefaults.UncheckedDefaultsMode, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code>, <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>, or <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>QualifierDefaults.addPackageDefault(javax.lang.model.element.PackageElement, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a>).</div>
 </dd>
 <dt><a href="org/checkerframework/checker/units/qual/Prefix.html#peta" class="member-name-link">peta</a> - Enum constant in enum class org.checkerframework.checker.units.qual.<a href="org/checkerframework/checker/units/qual/Prefix.html" title="enum class in org.checkerframework.checker.units.qual">Prefix</a></dt>
 <dd>

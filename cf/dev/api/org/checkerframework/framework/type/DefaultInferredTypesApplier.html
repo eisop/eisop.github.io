@@ -107,10 +107,15 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(boolean,org.checkerframework.framework.type.QualifierHierarchy,org.checkerframework.framework.type.AnnotatedTypeFactory)" class="member-name-link">DefaultInferredTypesApplier</a><wbr>(boolean&nbsp;omitSubtypingCheck,
  <a href="QualifierHierarchy.html" title="class in org.checkerframework.framework.type">QualifierHierarchy</a>&nbsp;hierarchy,
  <a href="AnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">AnnotatedTypeFactory</a>&nbsp;atypeFactory)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates an applier.</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(org.checkerframework.framework.type.QualifierHierarchy,org.checkerframework.framework.type.AnnotatedTypeFactory)" class="member-name-link">DefaultInferredTypesApplier</a><wbr>(<a href="QualifierHierarchy.html" title="class in org.checkerframework.framework.type">QualifierHierarchy</a>&nbsp;hierarchy,
  <a href="AnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">AnnotatedTypeFactory</a>&nbsp;atypeFactory)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Creates an applier that applies an inferred qualifier only if it is a subtype of the
+ qualifier it replaces.</div>
+</div>
 </div>
 </section>
 </li>
@@ -155,6 +160,13 @@ loadScripts(document, 'script');</script>
 <h3>DefaultInferredTypesApplier</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DefaultInferredTypesApplier</span><wbr><span class="parameters">(<a href="QualifierHierarchy.html" title="class in org.checkerframework.framework.type">QualifierHierarchy</a>&nbsp;hierarchy,
  <a href="AnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">AnnotatedTypeFactory</a>&nbsp;atypeFactory)</span></div>
+<div class="block">Creates an applier that applies an inferred qualifier only if it is a subtype of the
+ qualifier it replaces.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>hierarchy</code> - the qualifier hierarchy of <code>atypeFactory</code></dd>
+<dd><code>atypeFactory</code> - the type factory that uses this applier</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -163,6 +175,14 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DefaultInferredTypesApplier</span><wbr><span class="parameters">(boolean&nbsp;omitSubtypingCheck,
  <a href="QualifierHierarchy.html" title="class in org.checkerframework.framework.type">QualifierHierarchy</a>&nbsp;hierarchy,
  <a href="AnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">AnnotatedTypeFactory</a>&nbsp;atypeFactory)</span></div>
+<div class="block">Creates an applier.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>omitSubtypingCheck</code> - whether to apply an inferred qualifier even if it is not a subtype
+     of the qualifier it replaces</dd>
+<dd><code>hierarchy</code> - the qualifier hierarchy of <code>atypeFactory</code></dd>
+<dd><code>atypeFactory</code> - the type factory that uses this applier</dd>
+</dl>
 </section>
 </li>
 </ul>

@@ -197,7 +197,9 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html" title="class or interface in javax.lang.model.element" class="external-link">ExecutableElement</a>&nbsp;constructorElt,
  <a href="AnnotatedTypeMirror.AnnotatedExecutableType.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror.AnnotatedExecutableType</a>&nbsp;constructorType)</span></div>
 <div class="block">Viewpoint-adapts a constructor invocation. Takes an unsubstituted method invocation type and
- performs the viewpoint adaptation in place, modifying the parameter.</div>
+ performs the viewpoint adaptation in place, modifying the parameter. The type variables of
+ the class stay in place: <code>AnnotatedTypes#asMemberOf</code> substitutes the type arguments for
+ them afterwards.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>receiverType</code> - the receiver type through which a constructor is invoked</dd>
@@ -215,7 +217,9 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html" title="class or interface in javax.lang.model.element" class="external-link">ExecutableElement</a>&nbsp;methodElt,
  <a href="AnnotatedTypeMirror.AnnotatedExecutableType.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror.AnnotatedExecutableType</a>&nbsp;methodType)</span></div>
 <div class="block">Viewpoint-adapts a method invocation. Takes an unsubstituted method invocation type and
- performs the viewpoint adaptation in place, modifying the parameter.</div>
+ performs the viewpoint adaptation in place, modifying the parameter. The type variables of
+ the class stay in place: <code>AnnotatedTypes#asMemberOf</code> substitutes the receiver's type
+ arguments for them afterwards.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>receiverType</code> - the receiver type through which a method is invoked</dd>

@@ -103,7 +103,9 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ElementDefaultAnnotatedTypeFactory</span>
 <span class="extends-implements">extends <a href="../../../common/basetype/BaseAnnotatedTypeFactory.html" title="class in org.checkerframework.common.basetype">BaseAnnotatedTypeFactory</a></span></div>
 <div class="block">Calls <a href="../../util/defaults/QualifierDefaults.html#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a> directly on package <code>elementdefault.pkg</code>
- and on two of its classes, rather than through a written <code>@DefaultQualifier</code> annotation.
+ and on two of its classes, and <a href="../../util/defaults/QualifierDefaults.html#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>QualifierDefaults.addPackageDefault(javax.lang.model.element.PackageElement, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a> on package <code>
+ elementdefault.nonpropagating</code>, rather than through a written <code>@DefaultQualifier</code>
+ annotation.
 
  <p>All the calls happen while this factory is being initialized, but they are deliberately
  interleaved with queries that populate <code>QualifierDefaults</code>' memoization caches, so that the

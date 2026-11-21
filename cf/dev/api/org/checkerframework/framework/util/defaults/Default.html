@@ -122,7 +122,8 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="col-first odd-row-color"><code>final boolean</code></div>
 <div class="col-second odd-row-color"><code><a href="#applyToSubpackages" class="member-name-link">applyToSubpackages</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Whether the default should be inherited by subpackages.</div>
+<div class="block">Whether the default also applies to the subpackages of the package that it is written on or
+ registered for (see <a href="QualifierDefaults.html#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>QualifierDefaults.addPackageDefault(javax.lang.model.element.PackageElement, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a>).</div>
 </div>
 <div class="col-first even-row-color"><code>final <a href="../../qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a></code></div>
 <div class="col-second even-row-color"><code><a href="#location" class="member-name-link">location</a></code></div>
@@ -207,7 +208,9 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <section class="detail" id="applyToSubpackages">
 <h3>applyToSubpackages</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">applyToSubpackages</span></div>
-<div class="block">Whether the default should be inherited by subpackages.</div>
+<div class="block">Whether the default also applies to the subpackages of the package that it is written on or
+ registered for (see <a href="QualifierDefaults.html#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>QualifierDefaults.addPackageDefault(javax.lang.model.element.PackageElement, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a>). It has no effect on any
+ other default.</div>
 </section>
 </li>
 </ul>

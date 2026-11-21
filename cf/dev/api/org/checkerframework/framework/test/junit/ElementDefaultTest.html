@@ -96,9 +96,10 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="../CheckerFrameworkPerDirectoryTest.html" title="class in org.checkerframework.framework.test">CheckerFrameworkPerDirectoryTest</a></span></div>
 <div class="block">Tests <a href="../../util/defaults/QualifierDefaults.html#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>:
  that a default added on a package reaches that package's subpackages, the same way a written
- <code>@DefaultQualifier</code> would (eisop#2037), and that a default added on a class merges with
- written <code>@DefaultQualifier</code> annotations and with enclosing defaults no matter which
- defaults were queried, and thereby memoized, before it was added (eisop#2047).</div>
+ <code>@DefaultQualifier</code> would (eisop#2037), unless it is added by <code>addPackageDefault</code>
+ with <code>applyToSubpackages = false</code>, and that a default added on a class merges with written
+ <code>@DefaultQualifier</code> annotations and with enclosing defaults no matter which defaults were
+ queried, and thereby memoized, before it was added (eisop#2047).</div>
 </section>
 <section class="summary">
 <ul class="summary-list">

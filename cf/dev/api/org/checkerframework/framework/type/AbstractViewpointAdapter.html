@@ -337,7 +337,9 @@ implements <a href="ViewpointAdapter.html" title="interface in org.checkerframew
  <a href="AnnotatedTypeMirror.AnnotatedExecutableType.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror.AnnotatedExecutableType</a>&nbsp;constructorType)</span></div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="ViewpointAdapter.html#viewpointAdaptConstructor(org.checkerframework.framework.type.AnnotatedTypeMirror,javax.lang.model.element.ExecutableElement,org.checkerframework.framework.type.AnnotatedTypeMirror.AnnotatedExecutableType)">ViewpointAdapter</a></code></span></div>
 <div class="block">Viewpoint-adapts a constructor invocation. Takes an unsubstituted method invocation type and
- performs the viewpoint adaptation in place, modifying the parameter.</div>
+ performs the viewpoint adaptation in place, modifying the parameter. The type variables of
+ the class stay in place: <code>AnnotatedTypes#asMemberOf</code> substitutes the type arguments for
+ them afterwards.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ViewpointAdapter.html#viewpointAdaptConstructor(org.checkerframework.framework.type.AnnotatedTypeMirror,javax.lang.model.element.ExecutableElement,org.checkerframework.framework.type.AnnotatedTypeMirror.AnnotatedExecutableType)">viewpointAdaptConstructor</a></code>&nbsp;in interface&nbsp;<code><a href="ViewpointAdapter.html" title="interface in org.checkerframework.framework.type">ViewpointAdapter</a></code></dd>
@@ -358,7 +360,9 @@ implements <a href="ViewpointAdapter.html" title="interface in org.checkerframew
  <a href="AnnotatedTypeMirror.AnnotatedExecutableType.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror.AnnotatedExecutableType</a>&nbsp;methodType)</span></div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="ViewpointAdapter.html#viewpointAdaptMethod(org.checkerframework.framework.type.AnnotatedTypeMirror,javax.lang.model.element.ExecutableElement,org.checkerframework.framework.type.AnnotatedTypeMirror.AnnotatedExecutableType)">ViewpointAdapter</a></code></span></div>
 <div class="block">Viewpoint-adapts a method invocation. Takes an unsubstituted method invocation type and
- performs the viewpoint adaptation in place, modifying the parameter.</div>
+ performs the viewpoint adaptation in place, modifying the parameter. The type variables of
+ the class stay in place: <code>AnnotatedTypes#asMemberOf</code> substitutes the receiver's type
+ arguments for them afterwards.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ViewpointAdapter.html#viewpointAdaptMethod(org.checkerframework.framework.type.AnnotatedTypeMirror,javax.lang.model.element.ExecutableElement,org.checkerframework.framework.type.AnnotatedTypeMirror.AnnotatedExecutableType)">viewpointAdaptMethod</a></code>&nbsp;in interface&nbsp;<code><a href="ViewpointAdapter.html" title="interface in org.checkerframework.framework.type">ViewpointAdapter</a></code></dd>

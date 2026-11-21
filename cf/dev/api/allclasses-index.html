@@ -2101,7 +2101,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/checkerframework/framework/testchecker/elementdefault/ElementDefaultAnnotatedTypeFactory.html" title="class in org.checkerframework.framework.testchecker.elementdefault">ElementDefaultAnnotatedTypeFactory</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Calls <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a> directly on package <code>elementdefault.pkg</code>
- and on two of its classes, rather than through a written <code>@DefaultQualifier</code> annotation.</div>
+ and on two of its classes, and <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addPackageDefault(javax.lang.model.element.PackageElement,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation,boolean)"><code>QualifierDefaults.addPackageDefault(javax.lang.model.element.PackageElement, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation, boolean)</code></a> on package <code>
+ elementdefault.nonpropagating</code>, rather than through a written <code>@DefaultQualifier</code>
+ annotation.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab6"><a href="org/checkerframework/framework/testchecker/elementdefault/ElementDefaultBottom.html" title="annotation interface in org.checkerframework.framework.testchecker.elementdefault">ElementDefaultBottom</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab6">
@@ -2144,9 +2146,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Tests <a href="org/checkerframework/framework/util/defaults/QualifierDefaults.html#addElementDefault(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,org.checkerframework.framework.qual.TypeUseLocation)"><code>QualifierDefaults.addElementDefault(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, org.checkerframework.framework.qual.TypeUseLocation)</code></a>:
  that a default added on a package reaches that package's subpackages, the same way a written
- <code>@DefaultQualifier</code> would (eisop#2037), and that a default added on a class merges with
- written <code>@DefaultQualifier</code> annotations and with enclosing defaults no matter which
- defaults were queried, and thereby memoized, before it was added (eisop#2047).</div>
+ <code>@DefaultQualifier</code> would (eisop#2037), unless it is added by <code>addPackageDefault</code>
+ with <code>applyToSubpackages = false</code>, and that a default added on a class merges with written
+ <code>@DefaultQualifier</code> annotations and with enclosing defaults no matter which defaults were
+ queried, and thereby memoized, before it was added (eisop#2047).</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab6"><a href="org/checkerframework/framework/testchecker/elementdefault/ElementDefaultTop.html" title="annotation interface in org.checkerframework.framework.testchecker.elementdefault">ElementDefaultTop</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab6">
