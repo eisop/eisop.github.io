@@ -80,7 +80,7 @@ Custom pluggable types for Java
 <!--CUT STYLE book--><!--CUT DEF chapter 1 --><div class="center">
 <img src="CFLogo.png">
 </div><table class="title"><tr><td style="padding:1ex"><h1 class="titlemain">The Checker Framework Manual: <br>
-Custom pluggable types for Java</h1><h3 class="titlerest"><a href="https://eisop.github.io/"><span style="font-family:monospace">https://eisop.github.io/</span></a></h3><h3 class="titlerest">Version 3.55.1-eisop1 (20 Nov 2026)</h3></td></tr>
+Custom pluggable types for Java</h1><h3 class="titlerest"><a href="https://eisop.github.io/"><span style="font-family:monospace">https://eisop.github.io/</span></a></h3><h3 class="titlerest">Version 3.55.1-eisop1 (21 Nov 2026)</h3></td></tr>
 </table><p><span style="font-weight:bold">For the impatient:</span>
 Section <a href="#installation">1.3</a>
 describes how to <span style="font-weight:bold">install and use</span> pluggable type-checkers.</p><p>This manual is also available in <a href="https://eisop.github.io/cf/manual/checker-framework-manual.pdf">PDF</a>.</p><!--TOC chapter id="sec1" Contents-->
@@ -6738,8 +6738,8 @@ Instead of using the Property File Checker, we use a specialized checker,
 giving us more precise documentation of the intended use of <span style="font-family:monospace">String</span>s.</p><p>The single annotation used by this checker is
 <a href="../api/org/checkerframework/checker/compilermsgs/qual/CompilerMessageKey.html"><span style="font-family:monospace">@CompilerMessageKey</span></a>.
 The Checker Framework is completely annotated;
-for example, class <span style="font-family:monospace">org.checkerframework.framework.source.Result</span>
-uses <span style="font-family:monospace">@CompilerMessageKey</span> in methods <span style="font-family:monospace">failure</span> and <span style="font-family:monospace">warning</span>.
+for example, class <span style="font-family:monospace">org.checkerframework.framework.source.SourceChecker</span>
+uses <span style="font-family:monospace">@CompilerMessageKey</span> in methods <span style="font-family:monospace">reportError</span> and <span style="font-family:monospace">reportWarning</span>.
 For most users of the Checker Framework there will be no need to annotate any
 <span style="font-family:monospace">String</span>s, as the checker looks up all <span style="font-family:monospace">String</span> literals and adds
 annotations as appropriate.</p><p>The Compiler Message Key Checker can be invoked by running the following
@@ -12450,7 +12450,7 @@ File Utilities project</a>.</p><p>Its arguments are a directory containing ajava
 containing Java files. The <span style="font-family:monospace">checker.jar</span> file must be in the classpath.
 Here is an example invocation:
 </p><pre class="verbatim">  java -cp $CHECKERFRAMEWORK/checker/dist/checker.jar \
-    org.checkerframework.framework.ajava.InsertAjavaAnnoations \
+    org.checkerframework.framework.ajava.InsertAjavaAnnotations \
     &lt;path-to-ajava-files&gt; &lt;path-to-java-files&gt;
 </pre>
 <!--TOC section id="libraries-troubleshooting" Troubleshooting/debugging annotated libraries-->

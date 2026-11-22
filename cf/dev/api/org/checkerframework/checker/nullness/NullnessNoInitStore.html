@@ -86,7 +86,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class NullnessNoInitStore" class="title">Class NullnessNoInitStore</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance"><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">org.checkerframework.framework.flow.CFAbstractStore</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;
+<div class="inheritance"><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">org.checkerframework.framework.flow.CFAbstractStore</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;
 <div class="inheritance">org.checkerframework.checker.nullness.NullnessNoInitStore</div>
 </div>
 </div>
@@ -97,9 +97,10 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">NullnessNoInitStore</span>
-<span class="extends-implements">extends <a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</span></div>
-<div class="block">In addition to the base class behavior, tracks whether <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/NonNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>NonNull</code></a> or <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a> (or not known to be either), and tracks which queue or deque
- receiver expressions are known to be non-empty.</div>
+<span class="extends-implements">extends <a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</span></div>
+<div class="block">In addition to the base class behavior, tracks whether the current invocation is known to
+ instantiate <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> as <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a>, and tracks which queue or deque receiver
+ expressions are known to be non-empty.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -144,7 +145,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Create a NullnessStore (copy constructor).</div>
 </div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(org.checkerframework.framework.flow.CFAbstractAnalysis,boolean)" class="member-name-link">NullnessNoInitStore</a><wbr>(<a href="../../framework/flow/CFAbstractAnalysis.html" title="class in org.checkerframework.framework.flow">CFAbstractAnalysis</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?&gt;&nbsp;analysis,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(org.checkerframework.framework.flow.CFAbstractAnalysis,boolean)" class="member-name-link">NullnessNoInitStore</a><wbr>(<a href="../../framework/flow/CFAbstractAnalysis.html" title="class in org.checkerframework.framework.flow">CFAbstractAnalysis</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?&gt;&nbsp;analysis,
  boolean&nbsp;sequentialSemantics)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Create a NullnessStore.</div>
@@ -172,69 +173,60 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#internalVisualize(org.checkerframework.dataflow.cfg.visualize.CFGVisualizer)" class="member-name-link">internalVisualize</a><wbr>(<a href="../../dataflow/cfg/visualize/CFGVisualizer.html" title="interface in org.checkerframework.dataflow.cfg.visualize">CFGVisualizer</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?&gt;&nbsp;viz)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#internalVisualize(org.checkerframework.dataflow.cfg.visualize.CFGVisualizer)" class="member-name-link">internalVisualize</a><wbr>(<a href="../../dataflow/cfg/visualize/CFGVisualizer.html" title="interface in org.checkerframework.dataflow.cfg.visualize">CFGVisualizer</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?&gt;&nbsp;viz)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a representation of the internal information of this Store to visualizer <code>viz</code>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPolyNullNonNull()" class="member-name-link">isPolyNullNonNull</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPolyNullNull()" class="member-name-link">isPolyNullNull</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns true if, at this point, <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/NonNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>NonNull</code></a>.</div>
+<div class="block">Returns true if, at this point, the current invocation is known to instantiate <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> as <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPolyNullNull()" class="member-name-link">isPolyNullNull</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isQueueNonEmpty(org.checkerframework.dataflow.expression.JavaExpression)" class="member-name-link">isQueueNonEmpty</a><wbr>(<a href="../../dataflow/expression/JavaExpression.html" title="class in org.checkerframework.dataflow.expression">JavaExpression</a>&nbsp;receiver)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns true if, at this point, <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a>.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isQueueNonEmpty(org.checkerframework.dataflow.expression.JavaExpression)" class="member-name-link">isQueueNonEmpty</a><wbr>(<a href="../../dataflow/expression/JavaExpression.html" title="class in org.checkerframework.dataflow.expression">JavaExpression</a>&nbsp;receiver)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns true if the receiver is known to be a non-empty queue.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#leastUpperBound(org.checkerframework.checker.nullness.NullnessNoInitStore)" class="member-name-link">leastUpperBound</a><wbr>(<a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&nbsp;other)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#leastUpperBound(org.checkerframework.checker.nullness.NullnessNoInitStore)" class="member-name-link">leastUpperBound</a><wbr>(<a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&nbsp;other)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Computes the least upper bound (LUB) of this store and another store.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#markQueueAsNonEmpty(org.checkerframework.dataflow.expression.JavaExpression)" class="member-name-link">markQueueAsNonEmpty</a><wbr>(<a href="../../dataflow/expression/JavaExpression.html" title="class in org.checkerframework.dataflow.expression">JavaExpression</a>&nbsp;receiver)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#markQueueAsNonEmpty(org.checkerframework.dataflow.expression.JavaExpression)" class="member-name-link">markQueueAsNonEmpty</a><wbr>(<a href="../../dataflow/expression/JavaExpression.html" title="class in org.checkerframework.dataflow.expression">JavaExpression</a>&nbsp;receiver)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Marks the receiver as a queue known to be non-empty.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#newFieldValueAfterMethodCall(org.checkerframework.dataflow.expression.FieldAccess,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,org.checkerframework.checker.nullness.NullnessNoInitValue)" class="member-name-link">newFieldValueAfterMethodCall</a><wbr>(<a href="../../dataflow/expression/FieldAccess.html" title="class in org.checkerframework.dataflow.expression">FieldAccess</a>&nbsp;fieldAccess,
- <a href="../../framework/type/GenericAnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">GenericAnnotatedTypeFactory</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?,<wbr>?&gt;&nbsp;atypeFactory,
- <a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#newFieldValueAfterMethodCall(org.checkerframework.dataflow.expression.FieldAccess,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,org.checkerframework.framework.flow.CFValue)" class="member-name-link">newFieldValueAfterMethodCall</a><wbr>(<a href="../../dataflow/expression/FieldAccess.html" title="class in org.checkerframework.dataflow.expression">FieldAccess</a>&nbsp;fieldAccess,
+ <a href="../../framework/type/GenericAnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">GenericAnnotatedTypeFactory</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?,<wbr>?&gt;&nbsp;atypeFactory,
+ <a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the new value of a field after a method call, or <code>null</code> if the field should be
  removed from the store.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPolyNullNonNull(boolean)" class="member-name-link">setPolyNullNonNull</a><wbr>(boolean&nbsp;isPolyNullNonNull)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Set the value of whether, at this point, <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/NonNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>NonNull</code></a>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPolyNullNull(boolean)" class="member-name-link">setPolyNullNull</a><wbr>(boolean&nbsp;isPolyNullNull)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Set the value of whether, at this point, <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a>.</div>
+<div class="block">Sets whether, at this point, the current invocation is known to instantiate <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a>
+ as <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#supersetOf(org.checkerframework.framework.flow.CFAbstractStore)" class="member-name-link">supersetOf</a><wbr>(<a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;&nbsp;o)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#supersetOf(org.checkerframework.framework.flow.CFAbstractStore)" class="member-name-link">supersetOf</a><wbr>(<a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;&nbsp;o)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns true iff this <a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow"><code>CFAbstractStore</code></a> contains a superset of the map entries of the
  argument <a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow"><code>CFAbstractStore</code></a>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateForAssignment(org.checkerframework.dataflow.cfg.node.Node,org.checkerframework.checker.nullness.NullnessNoInitValue)" class="member-name-link">updateForAssignment</a><wbr>(<a href="../../dataflow/cfg/node/Node.html" title="class in org.checkerframework.dataflow.cfg.node">Node</a>&nbsp;n,
- <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual">@Nullable</a> <a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>&nbsp;val)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateForAssignment(org.checkerframework.dataflow.cfg.node.Node,org.checkerframework.framework.flow.CFValue)" class="member-name-link">updateForAssignment</a><wbr>(<a href="../../dataflow/cfg/node/Node.html" title="class in org.checkerframework.dataflow.cfg.node">Node</a>&nbsp;n,
+ <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual">@Nullable</a> <a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>&nbsp;val)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Update the information in the store by considering an assignment with target <code>n</code>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateForMethodCall(org.checkerframework.dataflow.cfg.node.MethodInvocationNode,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,org.checkerframework.checker.nullness.NullnessNoInitValue)" class="member-name-link">updateForMethodCall</a><wbr>(<a href="../../dataflow/cfg/node/MethodInvocationNode.html" title="class in org.checkerframework.dataflow.cfg.node">MethodInvocationNode</a>&nbsp;methodInvocationNode,
- <a href="../../framework/type/GenericAnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">GenericAnnotatedTypeFactory</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?,<wbr>?&gt;&nbsp;atypeFactory,
- <a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>&nbsp;val)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateForMethodCall(org.checkerframework.dataflow.cfg.node.MethodInvocationNode,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,org.checkerframework.framework.flow.CFValue)" class="member-name-link">updateForMethodCall</a><wbr>(<a href="../../dataflow/cfg/node/MethodInvocationNode.html" title="class in org.checkerframework.dataflow.cfg.node">MethodInvocationNode</a>&nbsp;methodInvocationNode,
+ <a href="../../framework/type/GenericAnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">GenericAnnotatedTypeFactory</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?,<wbr>?&gt;&nbsp;atypeFactory,
+ <a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>&nbsp;val)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Remove any information that might not be valid any more after a method call, and add
  information guaranteed by the method.</div>
@@ -282,7 +274,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(org.checkerframework.framework.flow.CFAbstractAnalysis,boolean)">
 <h3>NullnessNoInitStore</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">NullnessNoInitStore</span><wbr><span class="parameters">(<a href="../../framework/flow/CFAbstractAnalysis.html" title="class in org.checkerframework.framework.flow">CFAbstractAnalysis</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?&gt;&nbsp;analysis,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">NullnessNoInitStore</span><wbr><span class="parameters">(<a href="../../framework/flow/CFAbstractAnalysis.html" title="class in org.checkerframework.framework.flow">CFAbstractAnalysis</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?&gt;&nbsp;analysis,
  boolean&nbsp;sequentialSemantics)</span></div>
 <div class="block">Create a NullnessStore.</div>
 <dl class="notes">
@@ -337,15 +329,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="updateForAssignment(org.checkerframework.dataflow.cfg.node.Node,org.checkerframework.checker.nullness.NullnessNoInitValue)">
+<section class="detail" id="updateForAssignment(org.checkerframework.dataflow.cfg.node.Node,org.checkerframework.framework.flow.CFValue)">
 <h3>updateForAssignment</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateForAssignment</span><wbr><span class="parameters">(<a href="../../dataflow/cfg/node/Node.html" title="class in org.checkerframework.dataflow.cfg.node">Node</a>&nbsp;n,
- <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual">@Nullable</a> <a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>&nbsp;val)</span></div>
+ <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual">@Nullable</a> <a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>&nbsp;val)</span></div>
 <div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html#updateForAssignment(org.checkerframework.dataflow.cfg.node.Node,V)">CFAbstractStore</a></code></span></div>
 <div class="block">Update the information in the store by considering an assignment with target <code>n</code>.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="../../framework/flow/CFAbstractStore.html#updateForAssignment(org.checkerframework.dataflow.cfg.node.Node,V)">updateForAssignment</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
+<dd><code><a href="../../framework/flow/CFAbstractStore.html#updateForAssignment(org.checkerframework.dataflow.cfg.node.Node,V)">updateForAssignment</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>n</code> - the left-hand side of an assignment</dd>
 <dd><code>val</code> - the right-hand value of an assignment</dd>
@@ -353,11 +345,11 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="updateForMethodCall(org.checkerframework.dataflow.cfg.node.MethodInvocationNode,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,org.checkerframework.checker.nullness.NullnessNoInitValue)">
+<section class="detail" id="updateForMethodCall(org.checkerframework.dataflow.cfg.node.MethodInvocationNode,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,org.checkerframework.framework.flow.CFValue)">
 <h3>updateForMethodCall</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateForMethodCall</span><wbr><span class="parameters">(<a href="../../dataflow/cfg/node/MethodInvocationNode.html" title="class in org.checkerframework.dataflow.cfg.node">MethodInvocationNode</a>&nbsp;methodInvocationNode,
- <a href="../../framework/type/GenericAnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">GenericAnnotatedTypeFactory</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?,<wbr>?&gt;&nbsp;atypeFactory,
- <a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>&nbsp;val)</span></div>
+ <a href="../../framework/type/GenericAnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">GenericAnnotatedTypeFactory</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?,<wbr>?&gt;&nbsp;atypeFactory,
+ <a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>&nbsp;val)</span></div>
 <div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html#updateForMethodCall(org.checkerframework.dataflow.cfg.node.MethodInvocationNode,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,V)">CFAbstractStore</a></code></span></div>
 <div class="block">Remove any information that might not be valid any more after a method call, and add
  information guaranteed by the method.
@@ -377,7 +369,7 @@ loadScripts(document, 'script');</script>
  <code>val</code> in the store. Contracts may store a fact about a call that is not pure.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="../../framework/flow/CFAbstractStore.html#updateForMethodCall(org.checkerframework.dataflow.cfg.node.MethodInvocationNode,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,V)">updateForMethodCall</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
+<dd><code><a href="../../framework/flow/CFAbstractStore.html#updateForMethodCall(org.checkerframework.dataflow.cfg.node.MethodInvocationNode,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,V)">updateForMethodCall</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>methodInvocationNode</code> - method whose information is being updated</dd>
 <dd><code>atypeFactory</code> - the type factory of the associated checker</dd>
@@ -386,11 +378,11 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="newFieldValueAfterMethodCall(org.checkerframework.dataflow.expression.FieldAccess,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,org.checkerframework.checker.nullness.NullnessNoInitValue)">
+<section class="detail" id="newFieldValueAfterMethodCall(org.checkerframework.dataflow.expression.FieldAccess,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,org.checkerframework.framework.flow.CFValue)">
 <h3>newFieldValueAfterMethodCall</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a></span>&nbsp;<span class="element-name">newFieldValueAfterMethodCall</span><wbr><span class="parameters">(<a href="../../dataflow/expression/FieldAccess.html" title="class in org.checkerframework.dataflow.expression">FieldAccess</a>&nbsp;fieldAccess,
- <a href="../../framework/type/GenericAnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">GenericAnnotatedTypeFactory</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?,<wbr>?&gt;&nbsp;atypeFactory,
- <a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>&nbsp;value)</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a></span>&nbsp;<span class="element-name">newFieldValueAfterMethodCall</span><wbr><span class="parameters">(<a href="../../dataflow/expression/FieldAccess.html" title="class in org.checkerframework.dataflow.expression">FieldAccess</a>&nbsp;fieldAccess,
+ <a href="../../framework/type/GenericAnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">GenericAnnotatedTypeFactory</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?,<wbr>?&gt;&nbsp;atypeFactory,
+ <a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>&nbsp;value)</span></div>
 <div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html#newFieldValueAfterMethodCall(org.checkerframework.dataflow.expression.FieldAccess,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,V)">CFAbstractStore</a></code></span></div>
 <div class="block">Returns the new value of a field after a method call, or <code>null</code> if the field should be
  removed from the store.
@@ -400,7 +392,7 @@ loadScripts(document, 'script');</script>
  (see <a href="../../framework/flow/CFAbstractStore.html#newMonotonicFieldValueAfterMethodCall(org.checkerframework.dataflow.expression.FieldAccess,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,V)"><code>CFAbstractStore.newMonotonicFieldValueAfterMethodCall(FieldAccess, GenericAnnotatedTypeFactory, CFAbstractValue)</code></a>). Otherwise, it is removed from the store.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="../../framework/flow/CFAbstractStore.html#newFieldValueAfterMethodCall(org.checkerframework.dataflow.expression.FieldAccess,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,V)">newFieldValueAfterMethodCall</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
+<dd><code><a href="../../framework/flow/CFAbstractStore.html#newFieldValueAfterMethodCall(org.checkerframework.dataflow.expression.FieldAccess,org.checkerframework.framework.type.GenericAnnotatedTypeFactory,V)">newFieldValueAfterMethodCall</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>fieldAccess</code> - the field whose value to update</dd>
 <dd><code>atypeFactory</code> - AnnotatedTypeFactory of the associated checker</dd>
@@ -422,7 +414,7 @@ loadScripts(document, 'script');</script>
 <dt>Specified by:</dt>
 <dd><code><a href="../../dataflow/analysis/Store.html#leastUpperBound(S)">leastUpperBound</a></code>&nbsp;in interface&nbsp;<code><a href="../../dataflow/analysis/Store.html" title="interface in org.checkerframework.dataflow.analysis">Store</a>&lt;<a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="../../framework/flow/CFAbstractStore.html#leastUpperBound(S)">leastUpperBound</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
+<dd><code><a href="../../framework/flow/CFAbstractStore.html#leastUpperBound(S)">leastUpperBound</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>other</code> - the store to merge with this one</dd>
 <dt>Returns:</dt>
@@ -433,7 +425,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="supersetOf(org.checkerframework.framework.flow.CFAbstractStore)">
 <h3>supersetOf</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">supersetOf</span><wbr><span class="parameters">(<a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;&nbsp;o)</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">supersetOf</span><wbr><span class="parameters">(<a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;&nbsp;o)</span></div>
 <div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html#supersetOf(org.checkerframework.framework.flow.CFAbstractStore)">CFAbstractStore</a></code></span></div>
 <div class="block">Returns true iff this <a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow"><code>CFAbstractStore</code></a> contains a superset of the map entries of the
  argument <a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow"><code>CFAbstractStore</code></a>. Note that we test the entry keys and values by Java
@@ -441,7 +433,7 @@ loadScripts(document, 'script');</script>
  equals predicate.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="../../framework/flow/CFAbstractStore.html#supersetOf(org.checkerframework.framework.flow.CFAbstractStore)">supersetOf</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
+<dd><code><a href="../../framework/flow/CFAbstractStore.html#supersetOf(org.checkerframework.framework.flow.CFAbstractStore)">supersetOf</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>o</code> - the other store</dd>
 <dt>Returns:</dt>
@@ -452,12 +444,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="internalVisualize(org.checkerframework.dataflow.cfg.visualize.CFGVisualizer)">
 <h3>internalVisualize</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">internalVisualize</span><wbr><span class="parameters">(<a href="../../dataflow/cfg/visualize/CFGVisualizer.html" title="interface in org.checkerframework.dataflow.cfg.visualize">CFGVisualizer</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?&gt;&nbsp;viz)</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">internalVisualize</span><wbr><span class="parameters">(<a href="../../dataflow/cfg/visualize/CFGVisualizer.html" title="interface in org.checkerframework.dataflow.cfg.visualize">CFGVisualizer</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>,<wbr>?&gt;&nbsp;viz)</span></div>
 <div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html#internalVisualize(org.checkerframework.dataflow.cfg.visualize.CFGVisualizer)">CFAbstractStore</a></code></span></div>
 <div class="block">Adds a representation of the internal information of this Store to visualizer <code>viz</code>.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="../../framework/flow/CFAbstractStore.html#internalVisualize(org.checkerframework.dataflow.cfg.visualize.CFGVisualizer)">internalVisualize</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
+<dd><code><a href="../../framework/flow/CFAbstractStore.html#internalVisualize(org.checkerframework.dataflow.cfg.visualize.CFGVisualizer)">internalVisualize</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>viz</code> - the visualizer</dd>
 <dt>Returns:</dt>
@@ -466,35 +458,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="isPolyNullNonNull()">
-<h3>isPolyNullNonNull</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isPolyNullNonNull</span>()</div>
-<div class="block">Returns true if, at this point, <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/NonNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>NonNull</code></a>.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>true if, at this point, <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/NonNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>NonNull</code></a></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setPolyNullNonNull(boolean)">
-<h3>setPolyNullNonNull</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPolyNullNonNull</span><wbr><span class="parameters">(boolean&nbsp;isPolyNullNonNull)</span></div>
-<div class="block">Set the value of whether, at this point, <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/NonNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>NonNull</code></a>.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>isPolyNullNonNull</code> - whether, at this point, <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/NonNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>NonNull</code></a></dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="isPolyNullNull()">
 <h3>isPolyNullNull</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isPolyNullNull</span>()</div>
-<div class="block">Returns true if, at this point, <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a>.</div>
+<div class="block">Returns true if, at this point, the current invocation is known to instantiate <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> as <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>true if, at this point, <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a></dd>
+<dd>true if, at this point, the current invocation is known to instantiate <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> as <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a></dd>
 </dl>
 </section>
 </li>
@@ -502,10 +472,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setPolyNullNull(boolean)">
 <h3>setPolyNullNull</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPolyNullNull</span><wbr><span class="parameters">(boolean&nbsp;isPolyNullNull)</span></div>
-<div class="block">Set the value of whether, at this point, <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a>.</div>
+<div class="block">Sets whether, at this point, the current invocation is known to instantiate <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a>
+ as <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>isPolyNullNull</code> - whether, at this point, <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a></dd>
+<dd><code>isPolyNullNull</code> - whether, at this point, the current invocation is known to instantiate
+     <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> as <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a></dd>
 </dl>
 </section>
 </li>
@@ -519,7 +491,7 @@ loadScripts(document, 'script');</script>
 <dt>Specified by:</dt>
 <dd><code><a href="../../dataflow/analysis/Store.html#equals(java.lang.Object)">equals</a></code>&nbsp;in interface&nbsp;<code><a href="../../dataflow/analysis/Store.html" title="interface in org.checkerframework.dataflow.analysis">Store</a>&lt;<a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="../../framework/flow/CFAbstractStore.html#equals(java.lang.Object)">equals</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
+<dd><code><a href="../../framework/flow/CFAbstractStore.html#equals(java.lang.Object)">equals</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>o</code> - the object to compare against this</dd>
 <dt>Returns:</dt>
@@ -533,7 +505,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">hashCode</span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="../../framework/flow/CFAbstractStore.html#hashCode()">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
+<dd><code><a href="../../framework/flow/CFAbstractStore.html#hashCode()">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="../../framework/flow/CFAbstractStore.html" title="class in org.checkerframework.framework.flow">CFAbstractStore</a>&lt;<a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow">CFValue</a>,<wbr><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a>&gt;</code></dd>
 </dl>
 </section>
 </li>

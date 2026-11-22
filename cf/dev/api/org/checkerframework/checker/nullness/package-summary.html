@@ -144,8 +144,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="NullnessNoInitStore.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitStore</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">In addition to the base class behavior, tracks whether <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> is known to be <a href="qual/NonNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>NonNull</code></a> or <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a> (or not known to be either), and tracks which queue or deque
- receiver expressions are known to be non-empty.</div>
+<div class="block">In addition to the base class behavior, tracks whether the current invocation is known to
+ instantiate <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a> as <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a>, and tracks which queue or deque receiver
+ expressions are known to be non-empty.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="NullnessNoInitSubchecker.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitSubchecker</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
@@ -156,17 +157,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Transfer function for the non-null type system.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="NullnessNoInitValue.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitValue</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="NullnessNoInitVisitor.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitVisitor</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Behaves just like <a href="../../framework/flow/CFValue.html" title="class in org.checkerframework.framework.flow"><code>CFValue</code></a>, but additionally tracks whether at this point <a href="qual/PolyNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>PolyNull</code></a>
- is known to be <a href="qual/NonNull.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>NonNull</code></a> or <a href="qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual"><code>Nullable</code></a> (or not known to be either).</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="NullnessNoInitVisitor.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitVisitor</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">The visitor for the nullness type-system.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SystemGetPropertyHandler.html" title="class in org.checkerframework.checker.nullness">SystemGetPropertyHandler</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SystemGetPropertyHandler.html" title="class in org.checkerframework.checker.nullness">SystemGetPropertyHandler</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Utility class for handling <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/System.html#getProperty(java.lang.String)" title="class or interface in java.lang" class="external-link"><code>System.getProperty(String)</code></a> and related invocations.</div>
 </div>
 </div>
