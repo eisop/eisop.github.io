@@ -78,16 +78,26 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="BinaryStubFileGeneratorTest.html" title="class in org.checkerframework.framework.stubifier">BinaryStubFileGeneratorTest</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="BinaryStubFileGenerator.html" title="class in org.checkerframework.framework.stubifier">BinaryStubFileGenerator</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Tests for <code>BinaryStubFileGenerator</code>'s two modes (per-file siblings, and a whole-directory
+<div class="block">Build-time generator that pre-parses <code>.astub</code> files into the binary stub format read by
+ <code>org.checkerframework.framework.stub.BinaryStubReader</code>.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="BinaryStubFileGeneratorTest.html" title="class in org.checkerframework.framework.stubifier">BinaryStubFileGeneratorTest</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Tests for <a href="BinaryStubFileGenerator.html" title="class in org.checkerframework.framework.stubifier"><code>BinaryStubFileGenerator</code></a>'s two modes (per-file siblings, and a whole-directory
  <code>--bundle</code>), and for the source-fingerprint staleness detection that <a href="../stub/BinaryStubData.html#matchesSource(byte%5B%5D)"><code>BinaryStubData.matchesSource(byte[])</code></a> provides for a user-supplied <code>-Astubs</code> file (see <code>
  AnnotationFileElementTypes#commandLineBinaryStub</code>, which relies on it instead of comparing file
  modification times).</div>
 </div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Writes parsed stub compilation units into the compressed binary stub format read by <code>
+ org.checkerframework.framework.stub.BinaryStubReader</code>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="BinaryStubWriterTest.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriterTest</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Tests for <code>BinaryStubWriter</code>.</div>
+<div class="block">Tests for <a href="BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier"><code>BinaryStubWriter</code></a>.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="BinaryStubWriterTest.Enclosing.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriterTest.Enclosing</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
@@ -97,8 +107,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color class-summary class-summary-tab6">
 <div class="block">An annotation two levels deep, to exercise more than one nesting separator.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="JavaStubifierTest.html" title="class in org.checkerframework.framework.stubifier">JavaStubifierTest</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="JavaStubifier.html" title="class in org.checkerframework.framework.stubifier">JavaStubifier</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Rewrites Java source files, in place, into minimal stub files, and also generates the compressed
+ binary stub file (<a href="BinaryStubWriter.html#OUTPUT_FILENAME"><code>BinaryStubWriter.OUTPUT_FILENAME</code></a>) for the same directory from the same
+ parsed compilation units.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="JavaStubifierTest.html" title="class in org.checkerframework.framework.stubifier">JavaStubifierTest</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Regression test for a bug where <code>JavaStubifier</code>'s <code>BinaryStubWriter</code> was held in a
  <code>private static final</code> field: since <code>main</code> can process several directories in one
  invocation, and a <code>BinaryStubWriter</code> accumulates every class passed to <code>process</code> in

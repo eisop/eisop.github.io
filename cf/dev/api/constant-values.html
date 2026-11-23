@@ -702,6 +702,87 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="block-list">
 <li>
+<div class="caption"><span>org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Constant Field</div>
+<div class="table-header col-last">Value</div>
+<div class="col-first even-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.BIN_SUFFIX">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#BIN_SUFFIX">BIN_SUFFIX</a></code></div>
+<div class="col-last even-row-color"><code>".bin.gz"</code></div>
+<div class="col-first odd-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.BUNDLE_MAGIC">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#BUNDLE_MAGIC">BUNDLE_MAGIC</a></code></div>
+<div class="col-last odd-row-color"><code>-817216446</code></div>
+<div class="col-first even-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.BUNDLE_SUFFIX">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#BUNDLE_SUFFIX">BUNDLE_SUFFIX</a></code></div>
+<div class="col-last even-row-color"><code>".astub.bin.gz"</code></div>
+<div class="col-first odd-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.BUNDLE_VERSION">public&nbsp;static&nbsp;final&nbsp;short</code></div>
+<div class="col-second odd-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#BUNDLE_VERSION">BUNDLE_VERSION</a></code></div>
+<div class="col-last odd-row-color"><code>1</code></div>
+<div class="col-first even-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.CF_COMMENT">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#CF_COMMENT">CF_COMMENT</a></code></div>
+<div class="col-last even-row-color"><code>"org.checkerframework.framework.qual.CFComment"</code></div>
+<div class="col-first odd-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.CONSTRUCTOR_SIG_PREFIX">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#CONSTRUCTOR_SIG_PREFIX">CONSTRUCTOR_SIG_PREFIX</a></code></div>
+<div class="col-last odd-row-color"><code>"&lt;init&gt;("</code></div>
+<div class="col-first even-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.KIND_ANNOTATION_TYPE">public&nbsp;static&nbsp;final&nbsp;byte</code></div>
+<div class="col-second even-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#KIND_ANNOTATION_TYPE">KIND_ANNOTATION_TYPE</a></code></div>
+<div class="col-last even-row-color"><code>0x2</code></div>
+<div class="col-first odd-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.KIND_CLASS_OR_INTERFACE">public&nbsp;static&nbsp;final&nbsp;byte</code></div>
+<div class="col-second odd-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#KIND_CLASS_OR_INTERFACE">KIND_CLASS_OR_INTERFACE</a></code></div>
+<div class="col-last odd-row-color"><code>0x0</code></div>
+<div class="col-first even-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.KIND_ENUM">public&nbsp;static&nbsp;final&nbsp;byte</code></div>
+<div class="col-second even-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#KIND_ENUM">KIND_ENUM</a></code></div>
+<div class="col-last even-row-color"><code>0x1</code></div>
+<div class="col-first odd-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.KIND_RECORD">public&nbsp;static&nbsp;final&nbsp;byte</code></div>
+<div class="col-second odd-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#KIND_RECORD">KIND_RECORD</a></code></div>
+<div class="col-last odd-row-color"><code>0x3</code></div>
+<div class="col-first even-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.MAGIC">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#MAGIC">MAGIC</a></code></div>
+<div class="col-last even-row-color"><code>-817216437</code></div>
+<div class="col-first odd-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.OUTPUT_FILENAME">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#OUTPUT_FILENAME">OUTPUT_FILENAME</a></code></div>
+<div class="col-last odd-row-color"><code>"annotated-jdk.bin.gz"</code></div>
+<div class="col-first even-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.TYPE_ANNO_UNBOUNDED_WILDCARD">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_ANNO_UNBOUNDED_WILDCARD">TYPE_ANNO_UNBOUNDED_WILDCARD</a></code></div>
+<div class="col-last even-row-color"><code>-2</code></div>
+<div class="col-first odd-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.TYPE_PATH_KIND_ARRAY">public&nbsp;static&nbsp;final&nbsp;byte</code></div>
+<div class="col-second odd-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_KIND_ARRAY">TYPE_PATH_KIND_ARRAY</a></code></div>
+<div class="col-last odd-row-color"><code>0x0</code></div>
+<div class="col-first even-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.TYPE_PATH_KIND_INNER_TYPE">public&nbsp;static&nbsp;final&nbsp;byte</code></div>
+<div class="col-second even-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_KIND_INNER_TYPE">TYPE_PATH_KIND_INNER_TYPE</a></code></div>
+<div class="col-last even-row-color"><code>0x1</code></div>
+<div class="col-first odd-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.TYPE_PATH_KIND_TYPE_ARGUMENT">public&nbsp;static&nbsp;final&nbsp;byte</code></div>
+<div class="col-second odd-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_KIND_TYPE_ARGUMENT">TYPE_PATH_KIND_TYPE_ARGUMENT</a></code></div>
+<div class="col-last odd-row-color"><code>0x3</code></div>
+<div class="col-first even-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.TYPE_PATH_KIND_WILDCARD">public&nbsp;static&nbsp;final&nbsp;byte</code></div>
+<div class="col-second even-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_KIND_WILDCARD">TYPE_PATH_KIND_WILDCARD</a></code></div>
+<div class="col-last even-row-color"><code>0x2</code></div>
+<div class="col-first odd-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.TYPE_PATH_WILDCARD_BOUND_EXTENDS">public&nbsp;static&nbsp;final&nbsp;byte</code></div>
+<div class="col-second odd-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_WILDCARD_BOUND_EXTENDS">TYPE_PATH_WILDCARD_BOUND_EXTENDS</a></code></div>
+<div class="col-last odd-row-color"><code>0x0</code></div>
+<div class="col-first even-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.TYPE_PATH_WILDCARD_BOUND_SUPER">public&nbsp;static&nbsp;final&nbsp;byte</code></div>
+<div class="col-second even-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_WILDCARD_BOUND_SUPER">TYPE_PATH_WILDCARD_BOUND_SUPER</a></code></div>
+<div class="col-last even-row-color"><code>0x1</code></div>
+<div class="col-first odd-row-color"><code id="org.checkerframework.framework.stubifier.BinaryStubWriter.VERSION">public&nbsp;static&nbsp;final&nbsp;short</code></div>
+<div class="col-second odd-row-color"><code><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#VERSION">VERSION</a></code></div>
+<div class="col-last odd-row-color"><code>4</code></div>
+</div>
+</li>
+<li>
+<div class="caption"><span>org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/JavaStubifier.html" title="class in org.checkerframework.framework.stubifier">JavaStubifier</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Constant Field</div>
+<div class="table-header col-last">Value</div>
+<div class="col-first even-row-color"><code id="org.checkerframework.framework.stubifier.JavaStubifier.SKIP_UNLOADABLE_ANNOTATIONS_FLAG">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="org/checkerframework/framework/stubifier/JavaStubifier.html#SKIP_UNLOADABLE_ANNOTATIONS_FLAG">SKIP_UNLOADABLE_ANNOTATIONS_FLAG</a></code></div>
+<div class="col-last even-row-color"><code>"--skipUnloadableAnnotations"</code></div>
+</div>
+</li>
+</ul>
+<ul class="block-list">
+<li>
 <div class="caption"><span>org.checkerframework.framework.test.<a href="org/checkerframework/framework/test/TestConfigurationBuilder.html" title="class in org.checkerframework.framework.test">TestConfigurationBuilder</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>

@@ -92,7 +92,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">BinaryStubWriterTest</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">Tests for <code>BinaryStubWriter</code>.</div>
+<div class="block">Tests for <a href="BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier"><code>BinaryStubWriter</code></a>.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -205,7 +205,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#implementerOutputDoesNotDependOnTheInterfaceBeingInTheSameWriter()" class="member-name-link">implementerOutputDoesNotDependOnTheInterfaceBeingInTheSameWriter</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">A multi-directory <code>JavaStubifier</code> run creates a fresh <code>BinaryStubWriter</code> per
+<div class="block">A multi-directory <a href="JavaStubifier.html" title="class in org.checkerframework.framework.stubifier"><code>JavaStubifier</code></a> run creates a fresh <a href="BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier"><code>BinaryStubWriter</code></a> per
  directory (see <code>JavaStubifier.process</code>), so an interface in one directory and its
  implementer in another are processed by different writers.</div>
 </div>
@@ -446,7 +446,7 @@ loadScripts(document, 'script');</script>
 <h3>implementerOutputDoesNotDependOnTheInterfaceBeingInTheSameWriter</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">implementerOutputDoesNotDependOnTheInterfaceBeingInTheSameWriter</span>()
                                                                       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block">A multi-directory <code>JavaStubifier</code> run creates a fresh <code>BinaryStubWriter</code> per
+<div class="block">A multi-directory <a href="JavaStubifier.html" title="class in org.checkerframework.framework.stubifier"><code>JavaStubifier</code></a> run creates a fresh <a href="BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier"><code>BinaryStubWriter</code></a> per
  directory (see <code>JavaStubifier.process</code>), so an interface in one directory and its
  implementer in another are processed by different writers. This pins that the split does not
  change the implementer's binary output: whether an unannotated method is retained as a
@@ -702,7 +702,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Regression test for an <code>EnclosedExpr</code> crash: redundant parentheses around an annotation
  value (e.g. <code>@SuppressWarnings(("unchecked"))</code>) are legal Java, but <code>writeValue</code>
  had no case for the parenthesized-expression AST node and fell through to its "unsupported
- annotation value" branch, throwing <code>IOException</code> -- which <code>BinaryStubWriter.processTypes(org.checkerframework.com.github.javaparser.ast.CompilationUnit)</code> rethrows as an uncaught <code>RuntimeException</code>, aborting the
+ annotation value" branch, throwing <code>IOException</code> -- which <code>BinaryStubWriter.processTypes(com.github.javaparser.ast.CompilationUnit)</code> rethrows as an uncaught <code>RuntimeException</code>, aborting the
  entire binary stub generation run over one such value anywhere in the source tree.</div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -720,7 +720,7 @@ loadScripts(document, 'script');</script>
  includes both <code>METHOD</code> and <code>TYPE_USE</code>) written in declaration-position before a
  method's return type is stored in <em>both</em> <code>MethodRecord.declAnnos</code> and <code>
  MethodRecord.returnTypeAnnos</code>, not just one -- matching the dual-storage pattern documented
- at <code>BinaryStubWriter.isTypeUseOnly(org.checkerframework.com.github.javaparser.ast.expr.AnnotationExpr)</code> and confirming a review claim that such annotations
+ at <code>BinaryStubWriter.isTypeUseOnly(com.github.javaparser.ast.expr.AnnotationExpr)</code> and confirming a review claim that such annotations
  are silently dropped for method return types does not reproduce against the current code.</div>
 <dl class="notes">
 <dt>Throws:</dt>

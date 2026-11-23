@@ -92,12 +92,12 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">BinaryStubFileGeneratorTest</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">Tests for <code>BinaryStubFileGenerator</code>'s two modes (per-file siblings, and a whole-directory
+<div class="block">Tests for <a href="BinaryStubFileGenerator.html" title="class in org.checkerframework.framework.stubifier"><code>BinaryStubFileGenerator</code></a>'s two modes (per-file siblings, and a whole-directory
  <code>--bundle</code>), and for the source-fingerprint staleness detection that <a href="../stub/BinaryStubData.html#matchesSource(byte%5B%5D)"><code>BinaryStubData.matchesSource(byte[])</code></a> provides for a user-supplied <code>-Astubs</code> file (see <code>
  AnnotationFileElementTypes#commandLineBinaryStub</code>, which relies on it instead of comparing file
  modification times).
 
- <p>These tests call <code>BinaryStubFileGenerator.main(java.lang.String[])</code> directly, so they exercise only its
+ <p>These tests call <a href="BinaryStubFileGenerator.html#main(java.lang.String%5B%5D)"><code>BinaryStubFileGenerator.main(java.lang.String[])</code></a> directly, so they exercise only its
  success paths: its usage-error and bundle-name-collision paths call <code>System.exit</code>, which
  would terminate the test JVM, and are intentionally not exercised here.</div>
 </section>
@@ -349,7 +349,7 @@ loadScripts(document, 'script');</script>
 <div class="block">A bare relative input root with no directory component (e.g. <code>"project-stubs"</code>, the
  exact form the manual's own <code>--bundle</code> example uses) must not crash: <code>
  Path#getParent()</code> is <code>null</code> for such a path, which <code>Files.createTempFile</code> rejects
- with a <code>NullPointerException</code> unless the path is first made absolute. <code>BinaryStubFileGenerator.main(java.lang.String[])</code> resolves relative arguments against the process's current
+ with a <code>NullPointerException</code> unless the path is first made absolute. <a href="BinaryStubFileGenerator.html#main(java.lang.String%5B%5D)"><code>BinaryStubFileGenerator.main(java.lang.String[])</code></a> resolves relative arguments against the process's current
  working directory, which cannot be changed within this JVM once started, so this runs the
  generator in a genuinely separate process with a controlled working directory, passing bare
  relative names exactly as a user would from within that directory.</div>

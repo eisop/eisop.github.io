@@ -34,12 +34,14 @@ generated) files:
 
 The annotated JDK and built-in stub files are distributed as pre-parsed binary files, so checker
 startup no longer runs JavaParser. A missing or stale binary stub falls back to text parsing with a
-warning (suppressible via `-AsuppressWarnings=text.parsing`); `-AmergeStubsWithSource`,
+warning (suppressible via `-AsuppressWarnings=text.parsing` for a missing one and
+`-AsuppressWarnings=stale.binary.stub` for a stale one); `-AmergeStubsWithSource`,
 `-AstubWarnIfNotFound`, and `-AstubDebug` use text parsing. `BinaryStubFileGenerator` pre-parses a
 custom `-Astubs` file, directory (`--bundle`), or jar; `JavaStubifier`, which generates the
 annotated JDK's stub files, names the source file on failure and has a new
-`--skipUnloadableAnnotations` flag. See the manual's "Using a binary (pre-parsed) stub file"
-section.
+`--skipUnloadableAnnotations` flag. Both tools are in the `framework` artifact as well as in
+`checker.jar`, so a checker that depends only on `framework` can build its own binary stub files.
+See the manual's "Using a binary (pre-parsed) stub file" section.
 
 Runs under JDK 27 and JDK 28 early-access builds.
 
@@ -309,8 +311,9 @@ Command-line option additions and changes:
   `default.qualifier.prohibited.location`.
 - Checker-prefixed options (e.g. `-ANullnessChecker_lint=...`) are inherited
   by subcheckers; more specific options take precedence.
-- Invalid option arguments (e.g. malformed regex) now produce compiler errors
-  instead of stack traces.
+- Invalid option arguments (e.g. malformed regex), and `-AaliasedTypeAnnos`,
+  `-AaliasedDeclAnnos`, or `-Aflowdotdir` given without a value, now produce
+  compiler errors instead of stack traces.
 - `-AqualDirs` (Subtyping and Fenum Checkers) and `-AunitsDirs` split on the
   platform's path separator, so they accept Windows paths such as `D:/quals`;
   the Fenum Checker had split `-AqualDirs` on commas.

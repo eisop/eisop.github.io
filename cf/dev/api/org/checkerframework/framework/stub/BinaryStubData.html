@@ -121,7 +121,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <ul class="tag-list">
 <li><a href="BinaryStubReader.html" title="class in org.checkerframework.framework.stub"><code>BinaryStubReader</code></a></li>
-<li><code>BinaryStubWriter</code></li>
+<li><a href="../stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier"><code>BinaryStubWriter</code></a></li>
 </ul>
 </dd>
 </dl>
@@ -344,9 +344,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="MAGIC">
 <h3>MAGIC</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">MAGIC</span></div>
-<div class="block">Magic number identifying the Checker Framework binary stub format. The value is defined once
- in <code>BinaryStubWriter.MAGIC</code> and referenced here (the constant is inlined at compile
- time, so there is no runtime dependency on the stubifier).</div>
+<div class="block">Magic number identifying the Checker Framework binary stub format. Defined once in <a href="../stubifier/BinaryStubWriter.html#MAGIC"><code>BinaryStubWriter.MAGIC</code></a>.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -361,7 +359,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="VERSION">
 <h3>VERSION</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">VERSION</span></div>
-<div class="block">Format version of the binary stub file. Defined once in <code>BinaryStubWriter.VERSION</code>.</div>
+<div class="block">Format version of the binary stub file. Defined once in <a href="../stubifier/BinaryStubWriter.html#VERSION"><code>BinaryStubWriter.VERSION</code></a>.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -377,7 +375,7 @@ loadScripts(document, 'script');</script>
 <h3>BIN_SUFFIX</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">BIN_SUFFIX</span></div>
 <div class="block">File-name suffix appended to a source stub file's name to name its binary form (e.g. <code>
- jdk.astub</code> → <code>jdk.astub.bin.gz</code>). Defined once in <code>BinaryStubWriter.BIN_SUFFIX</code>.</div>
+ jdk.astub</code> → <code>jdk.astub.bin.gz</code>). Defined once in <a href="../stubifier/BinaryStubWriter.html#BIN_SUFFIX"><code>BinaryStubWriter.BIN_SUFFIX</code></a>.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -392,7 +390,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="FILENAME">
 <h3>FILENAME</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">FILENAME</span></div>
-<div class="block">File name of the binary stub file. Defined once in <code>BinaryStubWriter.OUTPUT_FILENAME</code>.</div>
+<div class="block">File name of the binary stub file. Defined once in <a href="../stubifier/BinaryStubWriter.html#OUTPUT_FILENAME"><code>BinaryStubWriter.OUTPUT_FILENAME</code></a>.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -408,7 +406,7 @@ loadScripts(document, 'script');</script>
 <h3>CONSTRUCTOR_SIG_PREFIX</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CONSTRUCTOR_SIG_PREFIX</span></div>
 <div class="block">Prefix of the simple signature of a constructor, as <code>ElementUtils.getSimpleSignature</code>
- writes it: <code>&lt;init&gt;(...)</code>. Defined once in <code>BinaryStubWriter.CONSTRUCTOR_SIG_PREFIX</code>.</div>
+ writes it: <code>&lt;init&gt;(...)</code>. Defined once in <a href="../stubifier/BinaryStubWriter.html#CONSTRUCTOR_SIG_PREFIX"><code>BinaryStubWriter.CONSTRUCTOR_SIG_PREFIX</code></a>.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -424,7 +422,7 @@ loadScripts(document, 'script');</script>
 <h3>CF_COMMENT</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CF_COMMENT</span></div>
 <div class="block">Fully-qualified name of <code>CFComment</code>, which is never written to the binary format.
- Defined once in <code>BinaryStubWriter.CF_COMMENT</code>.
+ Defined once in <a href="../stubifier/BinaryStubWriter.html#CF_COMMENT"><code>BinaryStubWriter.CF_COMMENT</code></a>.
 
  <p>Re-exported here so that <code>BinaryStubDiffChecker</code>, which must filter the same
  annotation out of the text-parsed side, can name it without depending on the stubifier source

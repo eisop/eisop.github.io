@@ -3912,6 +3912,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">File-name suffix appended to a source stub file's name to name its binary form (e.g.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#BIN_SUFFIX" class="member-name-link">BIN_SUFFIX</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">File-name suffix appended to a source stub file's name to name its binary form (e.g.</div>
+</dd>
 <dt><a href="org/checkerframework/checker/signature/SignatureAnnotatedTypeFactory.html#BINARY_NAME" class="member-name-link">BINARY_NAME</a> - Variable in class org.checkerframework.checker.signature.<a href="org/checkerframework/checker/signature/SignatureAnnotatedTypeFactory.html" title="class in org.checkerframework.checker.signature">SignatureAnnotatedTypeFactory</a></dt>
 <dd>
 <div class="block">The @<a href="org/checkerframework/checker/signature/qual/BinaryName.html" title="annotation interface in org.checkerframework.checker.signature.qual"><code>BinaryName</code></a> annotation.</div>
@@ -4067,9 +4071,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Test-only differential checker for the binary stub path.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubFileGenerator.html" class="type-name-link" title="class in org.checkerframework.framework.stubifier">BinaryStubFileGenerator</a> - Class in <a href="org/checkerframework/framework/stubifier/package-summary.html">org.checkerframework.framework.stubifier</a></dt>
+<dd>
+<div class="block">Build-time generator that pre-parses <code>.astub</code> files into the binary stub format read by
+ <code>org.checkerframework.framework.stub.BinaryStubReader</code>.</div>
+</dd>
 <dt><a href="org/checkerframework/framework/stubifier/BinaryStubFileGeneratorTest.html" class="type-name-link" title="class in org.checkerframework.framework.stubifier">BinaryStubFileGeneratorTest</a> - Class in <a href="org/checkerframework/framework/stubifier/package-summary.html">org.checkerframework.framework.stubifier</a></dt>
 <dd>
-<div class="block">Tests for <code>BinaryStubFileGenerator</code>'s two modes (per-file siblings, and a whole-directory
+<div class="block">Tests for <a href="org/checkerframework/framework/stubifier/BinaryStubFileGenerator.html" title="class in org.checkerframework.framework.stubifier"><code>BinaryStubFileGenerator</code></a>'s two modes (per-file siblings, and a whole-directory
  <code>--bundle</code>), and for the source-fingerprint staleness detection that <a href="org/checkerframework/framework/stub/BinaryStubData.html#matchesSource(byte%5B%5D)"><code>BinaryStubData.matchesSource(byte[])</code></a> provides for a user-supplied <code>-Astubs</code> file (see <code>
  AnnotationFileElementTypes#commandLineBinaryStub</code>, which relies on it instead of comparing file
  modification times).</div>
@@ -4101,9 +4110,26 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/checkerframework/framework/stub/BinaryStubTypeShapesTest.html#%3Cinit%3E()" class="member-name-link">BinaryStubTypeShapesTest()</a> - Constructor for class org.checkerframework.framework.stub.<a href="org/checkerframework/framework/stub/BinaryStubTypeShapesTest.html" title="class in org.checkerframework.framework.stub">BinaryStubTypeShapesTest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" class="type-name-link" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a> - Class in <a href="org/checkerframework/framework/stubifier/package-summary.html">org.checkerframework.framework.stubifier</a></dt>
+<dd>
+<div class="block">Writes parsed stub compilation units into the compressed binary stub format read by <code>
+ org.checkerframework.framework.stub.BinaryStubReader</code>.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#%3Cinit%3E()" class="member-name-link">BinaryStubWriter()</a> - Constructor for class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Creates a writer for a built-in stub file, which keeps every member record.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#%3Cinit%3E(boolean)" class="member-name-link">BinaryStubWriter(boolean)</a> - Constructor for class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Creates a writer that fails on an unloadable annotation; see <a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#%3Cinit%3E(boolean,boolean)"><code>BinaryStubWriter(boolean, boolean)</code></a>.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#%3Cinit%3E(boolean,boolean)" class="member-name-link">BinaryStubWriter(boolean, boolean)</a> - Constructor for class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Creates a writer.</div>
+</dd>
 <dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriterTest.html" class="type-name-link" title="class in org.checkerframework.framework.stubifier">BinaryStubWriterTest</a> - Class in <a href="org/checkerframework/framework/stubifier/package-summary.html">org.checkerframework.framework.stubifier</a></dt>
 <dd>
-<div class="block">Tests for <code>BinaryStubWriter</code>.</div>
+<div class="block">Tests for <a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier"><code>BinaryStubWriter</code></a>.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriterTest.html#%3Cinit%3E()" class="member-name-link">BinaryStubWriterTest()</a> - Constructor for class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriterTest.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriterTest</a></dt>
 <dd>&nbsp;</dd>
@@ -4741,6 +4767,22 @@ loadScripts(document, 'script');</script>
  BinaryStubReader</code> marks each matched member with <code>@FromStubFile</code>, and a member with no
  record is never matched.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#BUNDLE_MAGIC" class="member-name-link">BUNDLE_MAGIC</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Magic number identifying a binary stub <em>bundle</em>: a container of several per-file
+ binary stubs for a whole <code>-Astubs</code> directory, written by <code>
+ BinaryStubFileGenerator</code>'s <code>--bundle</code> mode and read by <code>
+ org.checkerframework.framework.stub.BinaryStubBundle</code>.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#BUNDLE_SUFFIX" class="member-name-link">BUNDLE_SUFFIX</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">File-name suffix appended to a source stub <em>directory</em>'s name to name the bundle
+ covering it (e.g.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#BUNDLE_VERSION" class="member-name-link">BUNDLE_VERSION</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Format version of the binary stub bundle container.</div>
+</dd>
 <dt><a href="org/checkerframework/framework/stubifier/BinaryStubFileGeneratorTest.html#bundleModeCombinesEveryFile()" class="member-name-link">bundleModeCombinesEveryFile()</a> - Method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubFileGeneratorTest.html" title="class in org.checkerframework.framework.stubifier">BinaryStubFileGeneratorTest</a></dt>
 <dd>
 <div class="block"><code>--bundle</code> mode combines every <code>.astub</code> file under the directory, including one
@@ -5267,6 +5309,11 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/checkerframework/framework/stub/BinaryStubData.html#CF_COMMENT" class="member-name-link">CF_COMMENT</a> - Static variable in class org.checkerframework.framework.stub.<a href="org/checkerframework/framework/stub/BinaryStubData.html" title="class in org.checkerframework.framework.stub">BinaryStubData</a></dt>
 <dd>
 <div class="block">Fully-qualified name of <code>CFComment</code>, which is never written to the binary format.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#CF_COMMENT" class="member-name-link">CF_COMMENT</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Fully-qualified name of <code>org.checkerframework.framework.qual.CFComment</code>, which is never
+ written to the binary format; see <code>BinaryStubWriter.AnnotationPool.addAnnotation(com.github.javaparser.ast.expr.AnnotationExpr, com.github.javaparser.ast.CompilationUnit, org.checkerframework.framework.stubifier.BinaryStubWriter)</code>.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/flow/CFAbstractAnalysis.html" class="type-name-link" title="class in org.checkerframework.framework.flow">CFAbstractAnalysis&lt;V,<wbr>S,<wbr>T&gt;</a> - Class in <a href="org/checkerframework/framework/flow/package-summary.html">org.checkerframework.framework.flow</a></dt>
 <dd>
@@ -7767,6 +7814,12 @@ loadScripts(document, 'script');</script>
 <div class="block">Prefix of the simple signature of a constructor, as <code>ElementUtils.getSimpleSignature</code>
  writes it: <code>&lt;init&gt;(...)</code>.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#CONSTRUCTOR_SIG_PREFIX" class="member-name-link">CONSTRUCTOR_SIG_PREFIX</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Prefix of the simple signature of a constructor, as <code>
+ org.checkerframework.javacutil.ElementUtils#getSimpleSignature</code> writes it: <code>
+ &lt;init&gt;(...)</code>.</div>
+</dd>
 <dt><a href="org/checkerframework/javacutil/ResolverTest.html#constructorCallEndsRun()" class="member-name-link">constructorCallEndsRun()</a> - Method in class org.checkerframework.javacutil.<a href="org/checkerframework/javacutil/ResolverTest.html" title="class in org.checkerframework.javacutil">ResolverTest</a></dt>
 <dd>
 <div class="block">A <code>this(...)</code> call ends a constructor prologue, so it is not part of the run of
@@ -9822,6 +9875,12 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Construct a Default object.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/JavaStubifier.html#DEFAULT_LANGUAGE_LEVEL" class="member-name-link">DEFAULT_LANGUAGE_LEVEL</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/JavaStubifier.html" title="class in org.checkerframework.framework.stubifier">JavaStubifier</a></dt>
+<dd>
+<div class="block">The language level used to parse the annotated JDK sources (by this class), the built-in
+ <code>.astub</code> files (by <a href="org/checkerframework/framework/stubifier/BinaryStubFileGenerator.html" title="class in org.checkerframework.framework.stubifier"><code>BinaryStubFileGenerator</code></a>), and stub and Java files at checker
+ runtime (<code>JavaParserUtil.DEFAULT_LANGUAGE_LEVEL</code> is this constant).</div>
+</dd>
 <dt><a href="org/checkerframework/framework/util/JavaParserUtil.html#DEFAULT_LANGUAGE_LEVEL" class="member-name-link">DEFAULT_LANGUAGE_LEVEL</a> - Static variable in class org.checkerframework.framework.util.<a href="org/checkerframework/framework/util/JavaParserUtil.html" title="class in org.checkerframework.framework.util">JavaParserUtil</a></dt>
 <dd>
 <div class="block">The Language Level to use when parsing if a specific level isn't applied.</div>
@@ -10433,6 +10492,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">This method returns a list of AnnotatedTypeMirrors where the Java type of each ATM is an
  immediate supertype (class or interface) of the Java type of this.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/JavaStubifier.html#dirnameToPath(java.lang.String)" class="member-name-link">dirnameToPath(String)</a> - Static method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/JavaStubifier.html" title="class in org.checkerframework.framework.stubifier">JavaStubifier</a></dt>
+<dd>
+<div class="block">Converts a directory name to a path.</div>
 </dd>
 <dt><a href="org/checkerframework/checker/calledmethods/CalledMethodsChecker.html#DISABLE_BUILDER_FRAMEWORK_SUPPORTS" class="member-name-link">DISABLE_BUILDER_FRAMEWORK_SUPPORTS</a> - Static variable in class org.checkerframework.checker.calledmethods.<a href="org/checkerframework/checker/calledmethods/CalledMethodsChecker.html" title="class in org.checkerframework.checker.calledmethods">CalledMethodsChecker</a></dt>
 <dd>
@@ -20966,7 +21029,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriterTest.html#implementerOutputDoesNotDependOnTheInterfaceBeingInTheSameWriter()" class="member-name-link">implementerOutputDoesNotDependOnTheInterfaceBeingInTheSameWriter()</a> - Method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriterTest.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriterTest</a></dt>
 <dd>
-<div class="block">A multi-directory <code>JavaStubifier</code> run creates a fresh <code>BinaryStubWriter</code> per
+<div class="block">A multi-directory <a href="org/checkerframework/framework/stubifier/JavaStubifier.html" title="class in org.checkerframework.framework.stubifier"><code>JavaStubifier</code></a> run creates a fresh <a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier"><code>BinaryStubWriter</code></a> per
  directory (see <code>JavaStubifier.process</code>), so an interface in one directory and its
  implementer in another are processed by different writers.</div>
 </dd>
@@ -23805,6 +23868,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns true if PDF output should be generated.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#isPlatformPackage(java.lang.String)" class="member-name-link">isPlatformPackage(String)</a> - Static method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Returns true if <code>name</code> is in a package that the Java platform declares.</div>
+</dd>
 <dt><a href="org/checkerframework/checker/guieffect/Effect.html#isPoly()" class="member-name-link">isPoly()</a> - Method in class org.checkerframework.checker.guieffect.<a href="org/checkerframework/checker/guieffect/Effect.html" title="class in org.checkerframework.checker.guieffect">Effect</a></dt>
 <dd>
 <div class="block">Returns true if this is PolyUIEffect.</div>
@@ -25110,6 +25177,12 @@ loadScripts(document, 'script');</script>
  <code>xjavap -s -verbose -annotations</code> and adds the annotations to an <a href="org/checkerframework/afu/scenelib/el/AScene.html" title="class in org.checkerframework.afu.scenelib.el"><code>AScene</code></a>, using the
  scene's <a href="org/checkerframework/afu/scenelib/AnnotationFactory.html" title="class in org.checkerframework.afu.scenelib"><code>AnnotationFactory</code></a> to build individual annotations.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/JavaStubifier.html" class="type-name-link" title="class in org.checkerframework.framework.stubifier">JavaStubifier</a> - Class in <a href="org/checkerframework/framework/stubifier/package-summary.html">org.checkerframework.framework.stubifier</a></dt>
+<dd>
+<div class="block">Rewrites Java source files, in place, into minimal stub files, and also generates the compressed
+ binary stub file (<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#OUTPUT_FILENAME"><code>BinaryStubWriter.OUTPUT_FILENAME</code></a>) for the same directory from the same
+ parsed compilation units.</div>
+</dd>
 <dt><a href="org/checkerframework/framework/stubifier/JavaStubifierTest.html" class="type-name-link" title="class in org.checkerframework.framework.stubifier">JavaStubifierTest</a> - Class in <a href="org/checkerframework/framework/stubifier/package-summary.html">org.checkerframework.framework.stubifier</a></dt>
 <dd>
 <div class="block">Regression test for a bug where <code>JavaStubifier</code>'s <code>BinaryStubWriter</code> was held in a
@@ -25369,6 +25442,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block"><a href="org/checkerframework/framework/stub/BinaryStubData.ClassRecord.html#kind"><code>BinaryStubData.ClassRecord.kind</code></a> value for an annotation-type declaration.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#KIND_ANNOTATION_TYPE" class="member-name-link">KIND_ANNOTATION_TYPE</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block"><code>ClassRecord.kind</code> value for an annotation-type declaration.</div>
+</dd>
 <dt><a href="org/checkerframework/framework/stub/BinaryStubData.TypePathStep.html#KIND_ARRAY" class="member-name-link">KIND_ARRAY</a> - Static variable in class org.checkerframework.framework.stub.<a href="org/checkerframework/framework/stub/BinaryStubData.TypePathStep.html" title="class in org.checkerframework.framework.stub">BinaryStubData.TypePathStep</a></dt>
 <dd>
 <div class="block">Constant for an array component path step (JVMS §4.7.20.2: 0).</div>
@@ -25378,9 +25455,18 @@ loadScripts(document, 'script');</script>
 <div class="block"><a href="org/checkerframework/framework/stub/BinaryStubData.ClassRecord.html#kind"><code>BinaryStubData.ClassRecord.kind</code></a> value for a class or interface declaration: both <code>ElementKind.CLASS</code>
  and <code>ElementKind.INTERFACE</code> map to this constant.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#KIND_CLASS_OR_INTERFACE" class="member-name-link">KIND_CLASS_OR_INTERFACE</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block"><code>ClassRecord.kind</code> value for a class or interface declaration: both <code>
+ ElementKind.CLASS</code> and <code>ElementKind.INTERFACE</code> map to this constant.</div>
+</dd>
 <dt><a href="org/checkerframework/framework/stub/BinaryStubData.ClassRecord.html#KIND_ENUM" class="member-name-link">KIND_ENUM</a> - Static variable in class org.checkerframework.framework.stub.<a href="org/checkerframework/framework/stub/BinaryStubData.ClassRecord.html" title="class in org.checkerframework.framework.stub">BinaryStubData.ClassRecord</a></dt>
 <dd>
 <div class="block"><a href="org/checkerframework/framework/stub/BinaryStubData.ClassRecord.html#kind"><code>BinaryStubData.ClassRecord.kind</code></a> value for an enum declaration.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#KIND_ENUM" class="member-name-link">KIND_ENUM</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block"><code>ClassRecord.kind</code> value for an enum declaration.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/stub/BinaryStubData.TypePathStep.html#KIND_INNER_TYPE" class="member-name-link">KIND_INNER_TYPE</a> - Static variable in class org.checkerframework.framework.stub.<a href="org/checkerframework/framework/stub/BinaryStubData.TypePathStep.html" title="class in org.checkerframework.framework.stub">BinaryStubData.TypePathStep</a></dt>
 <dd>
@@ -25389,6 +25475,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/checkerframework/framework/stub/BinaryStubData.ClassRecord.html#KIND_RECORD" class="member-name-link">KIND_RECORD</a> - Static variable in class org.checkerframework.framework.stub.<a href="org/checkerframework/framework/stub/BinaryStubData.ClassRecord.html" title="class in org.checkerframework.framework.stub">BinaryStubData.ClassRecord</a></dt>
 <dd>
 <div class="block"><a href="org/checkerframework/framework/stub/BinaryStubData.ClassRecord.html#kind"><code>BinaryStubData.ClassRecord.kind</code></a> value for a record declaration.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#KIND_RECORD" class="member-name-link">KIND_RECORD</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block"><code>ClassRecord.kind</code> value for a record declaration.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/stub/BinaryStubData.TypePathStep.html#KIND_TYPE_ARGUMENT" class="member-name-link">KIND_TYPE_ARGUMENT</a> - Static variable in class org.checkerframework.framework.stub.<a href="org/checkerframework/framework/stub/BinaryStubData.TypePathStep.html" title="class in org.checkerframework.framework.stub">BinaryStubData.TypePathStep</a></dt>
 <dd>
@@ -26523,6 +26613,11 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Magic number identifying the Checker Framework binary stub format.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#MAGIC" class="member-name-link">MAGIC</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Magic number identifying the Checker Framework binary stub format (<code>CF</code> + <code>JDK</code>:
+ 0xCF non-ASCII marker byte, <code>'J'</code> 0x4A, <code>'D'</code> 0x44, <code>'K'</code> 0x4B).</div>
+</dd>
 <dt><a href="busyexpr/BusyExpression.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class busyexpr.<a href="busyexpr/BusyExpression.html" title="class in busyexpr">BusyExpression</a></dt>
 <dd>
 <div class="block">The main method expects to be run in dataflow/tests/busy-expression directory.</div>
@@ -26612,6 +26707,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/checkerframework/framework/stub/StubGenerator.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class org.checkerframework.framework.stub.<a href="org/checkerframework/framework/stub/StubGenerator.html" title="class in org.checkerframework.framework.stub">StubGenerator</a></dt>
 <dd>
 <div class="block">The main entry point to StubGenerator.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubFileGenerator.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubFileGenerator.html" title="class in org.checkerframework.framework.stubifier">BinaryStubFileGenerator</a></dt>
+<dd>
+<div class="block">The main entry point; see the class documentation for the two modes.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/JavaStubifier.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/JavaStubifier.html" title="class in org.checkerframework.framework.stubifier">JavaStubifier</a></dt>
+<dd>
+<div class="block">Processes each provided command-line argument; see class documentation for details.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/util/CheckerMain.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class org.checkerframework.framework.util.<a href="org/checkerframework/framework/util/CheckerMain.html" title="class in org.checkerframework.framework.util">CheckerMain</a></dt>
 <dd>
@@ -27922,6 +28025,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">NewScanner scans the source tree and determines the index of a given new, where the i^th index
  corresponds to the i^th new, using 0-based indexing.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/JavaStubifier.html#newStubParserConfiguration(boolean)" class="member-name-link">newStubParserConfiguration(boolean)</a> - Static method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/JavaStubifier.html" title="class in org.checkerframework.framework.stubifier">JavaStubifier</a></dt>
+<dd>
+<div class="block">Returns a new configuration for parsing a stub file.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/test/diagnostics/JavaDiagnosticReader.html#next()" class="member-name-link">next()</a> - Method in class org.checkerframework.framework.test.diagnostics.<a href="org/checkerframework/framework/test/diagnostics/JavaDiagnosticReader.html" title="class in org.checkerframework.framework.test.diagnostics">JavaDiagnosticReader</a></dt>
 <dd>&nbsp;</dd>
@@ -29560,6 +29667,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">The OutOfMemoryError type.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#OUTPUT_FILENAME" class="member-name-link">OUTPUT_FILENAME</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">File name of the binary stub output file.</div>
+</dd>
 <dt><a href="org/checkerframework/dataflow/analysis/BackwardAnalysisImpl.html#outStores" class="member-name-link">outStores</a> - Variable in class org.checkerframework.dataflow.analysis.<a href="org/checkerframework/dataflow/analysis/BackwardAnalysisImpl.html" title="class in org.checkerframework.dataflow.analysis">BackwardAnalysisImpl</a></dt>
 <dd>
 <div class="block">Out stores after every basic block (assumed to be 'no information' if not present).</div>
@@ -30682,6 +30793,11 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">A probe that reaches the end of the table continues at its first entry.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#process(com.github.javaparser.ast.CompilationUnit)" class="member-name-link">process(CompilationUnit)</a> - Method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Processes a single compilation unit, extracting annotations for its classes, methods, and
+ fields.</div>
+</dd>
 <dt><a href="org/checkerframework/framework/util/visualize/AbstractTypeInformationPresenter.html#process(com.sun.source.tree.ClassTree,com.sun.source.util.TreePath)" class="member-name-link">process(ClassTree, TreePath)</a> - Method in class org.checkerframework.framework.util.visualize.<a href="org/checkerframework/framework/util/visualize/AbstractTypeInformationPresenter.html" title="class in org.checkerframework.framework.util.visualize">AbstractTypeInformationPresenter</a></dt>
 <dd>
 <div class="block">The entry point for presenting type information of trees in the given class.</div>
@@ -31380,6 +31496,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/checkerframework/framework/ajava/JointVisitorWithDefaultAction.html#processReturn(com.sun.source.tree.ReturnTree,com.github.javaparser.ast.stmt.ReturnStmt)" class="member-name-link">processReturn(ReturnTree, ReturnStmt)</a> - Method in class org.checkerframework.framework.ajava.<a href="org/checkerframework/framework/ajava/JointVisitorWithDefaultAction.html" title="class in org.checkerframework.framework.ajava">JointVisitorWithDefaultAction</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#processStubUnit(java.util.List)" class="member-name-link">processStubUnit(List&lt;CompilationUnit&gt;)</a> - Method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Processes the compilation units of one stub file.</div>
+</dd>
 <dt><a href="org/checkerframework/framework/ajava/DefaultJointVisitor.html#processSwitch(com.sun.source.tree.SwitchTree,com.github.javaparser.ast.stmt.SwitchStmt)" class="member-name-link">processSwitch(SwitchTree, SwitchStmt)</a> - Method in class org.checkerframework.framework.ajava.<a href="org/checkerframework/framework/ajava/DefaultJointVisitor.html" title="class in org.checkerframework.framework.ajava">DefaultJointVisitor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/checkerframework/framework/ajava/JointJavacJavaParserVisitor.html#processSwitch(com.sun.source.tree.SwitchTree,com.github.javaparser.ast.stmt.SwitchStmt)" class="member-name-link">processSwitch(SwitchTree, SwitchStmt)</a> - Method in class org.checkerframework.framework.ajava.<a href="org/checkerframework/framework/ajava/JointJavacJavaParserVisitor.html" title="class in org.checkerframework.framework.ajava">JointJavacJavaParserVisitor</a></dt>
@@ -32112,6 +32232,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Reads the annotations from the class file indicated by the ClassReader and inserts them into
  <code>scene</code>.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubFileGenerator.html#readAllBytes(java.io.InputStream)" class="member-name-link">readAllBytes(InputStream)</a> - Static method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubFileGenerator.html" title="class in org.checkerframework.framework.stubifier">BinaryStubFileGenerator</a></dt>
+<dd>
+<div class="block">Reads all of <code>in</code>'s remaining bytes.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/test/diagnostics/JavaDiagnosticReader.html#readDiagnosticFiles(java.lang.Iterable)" class="member-name-link">readDiagnosticFiles(Iterable&lt;? extends File&gt;)</a> - Static method in class org.checkerframework.framework.test.diagnostics.<a href="org/checkerframework/framework/test/diagnostics/JavaDiagnosticReader.html" title="class in org.checkerframework.framework.test.diagnostics">JavaDiagnosticReader</a></dt>
 <dd>
@@ -35124,6 +35248,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the source files of <code>this</code>.</div>
 </dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#setSourceFingerprint(byte%5B%5D)" class="member-name-link">setSourceFingerprint(byte[])</a> - Method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Records the source <code>.astub</code> file this writer's output is generated from, so <a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#writeTo(java.io.File)"><code>BinaryStubWriter.writeTo(java.io.File)</code></a> embeds a fingerprint that a reader can use to detect a stale binary.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#setSourceName(java.lang.String)" class="member-name-link">setSourceName(String)</a> - Method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Sets the name of the stub file being written, for diagnostics; see <code>BinaryStubWriter.sourceName</code>.</div>
+</dd>
 <dt><a href="org/checkerframework/dataflow/cfg/block/SingleSuccessorBlockImpl.html#setSuccessor(org.checkerframework.dataflow.cfg.block.BlockImpl)" class="member-name-link">setSuccessor(BlockImpl)</a> - Method in class org.checkerframework.dataflow.cfg.block.<a href="org/checkerframework/dataflow/cfg/block/SingleSuccessorBlockImpl.html" title="class in org.checkerframework.dataflow.cfg.block">SingleSuccessorBlockImpl</a></dt>
 <dd>
 <div class="block">Set a basic block as the successor of this block.</div>
@@ -35290,6 +35422,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/checkerframework/framework/type/AnnotatedTypeFactory.html#setVisitorTreePath(com.sun.source.util.TreePath)" class="member-name-link">setVisitorTreePath(TreePath)</a> - Method in class org.checkerframework.framework.type.<a href="org/checkerframework/framework/type/AnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">AnnotatedTypeFactory</a></dt>
 <dd>
 <div class="block">Sets the path to the tree that an external "visitor" is visiting.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#sha256(byte%5B%5D)" class="member-name-link">sha256(byte[])</a> - Static method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Computes the SHA-256 digest of <code>bytes</code>.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/type/AnnotatedTypeMirror.AnnotatedArrayType.html#shallowCopy()" class="member-name-link">shallowCopy()</a> - Method in class org.checkerframework.framework.type.<a href="org/checkerframework/framework/type/AnnotatedTypeMirror.AnnotatedArrayType.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror.AnnotatedArrayType</a></dt>
 <dd>&nbsp;</dd>
@@ -35915,6 +36051,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/checkerframework/javacutil/AnnotationMirrorSet.html#size()" class="member-name-link">size()</a> - Method in class org.checkerframework.javacutil.<a href="org/checkerframework/javacutil/AnnotationMirrorSet.html" title="class in org.checkerframework.javacutil">AnnotationMirrorSet</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/checkerframework/framework/stubifier/JavaStubifier.html#SKIP_UNLOADABLE_ANNOTATIONS_FLAG" class="member-name-link">SKIP_UNLOADABLE_ANNOTATIONS_FLAG</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/JavaStubifier.html" title="class in org.checkerframework.framework.stubifier">JavaStubifier</a></dt>
+<dd>
+<div class="block">Command-line flag that makes an unloadable annotation a dropped-and-warned event rather than
+ a fatal error.</div>
+</dd>
 <dt><a href="org/checkerframework/checker/optional/OptionalImplVisitor.html#skipBlocks(com.sun.source.tree.StatementTree)" class="member-name-link">skipBlocks(StatementTree)</a> - Static method in class org.checkerframework.checker.optional.<a href="org/checkerframework/checker/optional/OptionalImplVisitor.html" title="class in org.checkerframework.checker.optional">OptionalImplVisitor</a></dt>
 <dd>
 <div class="block">If the given tree is a block tree with a single element, return the enclosed non-block
@@ -35964,7 +36105,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/checkerframework/framework/stubifier/JavaStubifierTest.html#skipUnloadableAnnotationsFlagOmitsAnnotationAndSucceeds()" class="member-name-link">skipUnloadableAnnotationsFlagOmitsAnnotationAndSucceeds()</a> - Method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/JavaStubifierTest.html" title="class in org.checkerframework.framework.stubifier">JavaStubifierTest</a></dt>
 <dd>
-<div class="block">With <code>JavaStubifier.SKIP_UNLOADABLE_ANNOTATIONS_FLAG</code>, the same input succeeds instead:
+<div class="block">With <a href="org/checkerframework/framework/stubifier/JavaStubifier.html#SKIP_UNLOADABLE_ANNOTATIONS_FLAG"><code>JavaStubifier.SKIP_UNLOADABLE_ANNOTATIONS_FLAG</code></a>, the same input succeeds instead:
  the unloadable annotation is dropped from the binary stub output (so the field ends up with
  no annotations, and the annotated-JDK writer then omits its record entirely, per <a href="org/checkerframework/framework/stubifier/BinaryStubWriterTest.html#jdkWriterDemotesUnannotatedMethodRecords()"><code>BinaryStubWriterTest.jdkWriterDemotesUnannotatedMethodRecords()</code></a>'s analogous case for methods),
  and a warning naming the annotation and the file is printed to stderr.</div>
@@ -39120,6 +39261,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/checkerframework/afu/scenelib/io/ASTPath.html#TYPE_ALTERNATIVE" class="member-name-link">TYPE_ALTERNATIVE</a> - Static variable in class org.checkerframework.afu.scenelib.io.<a href="org/checkerframework/afu/scenelib/io/ASTPath.html" title="class in org.checkerframework.afu.scenelib.io">ASTPath</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_ANNO_UNBOUNDED_WILDCARD" class="member-name-link">TYPE_ANNO_UNBOUNDED_WILDCARD</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Annotation-pool index that makes a type annotation a <em>marker</em>: it carries no
+ annotation, and its type path locates a plain wildcard <code>?</code>, one without a bound or an
+ annotation.</div>
+</dd>
 <dt><a href="org/checkerframework/afu/annotator/find/Criterion.Kind.html#TYPE_ARGUMENT" class="member-name-link">TYPE_ARGUMENT</a> - Enum constant in enum class org.checkerframework.afu.annotator.find.<a href="org/checkerframework/afu/annotator/find/Criterion.Kind.html" title="enum class in org.checkerframework.afu.annotator.find">Criterion.Kind</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/checkerframework/afu/scenelib/io/ASTPath.html#TYPE_ARGUMENT" class="member-name-link">TYPE_ARGUMENT</a> - Static variable in class org.checkerframework.afu.scenelib.io.<a href="org/checkerframework/afu/scenelib/io/ASTPath.html" title="class in org.checkerframework.afu.scenelib.io">ASTPath</a></dt>
@@ -39141,6 +39288,32 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/checkerframework/afu/scenelib/io/ASTPath.html#TYPE_PARAMETER" class="member-name-link">TYPE_PARAMETER</a> - Static variable in class org.checkerframework.afu.scenelib.io.<a href="org/checkerframework/afu/scenelib/io/ASTPath.html" title="class in org.checkerframework.afu.scenelib.io">ASTPath</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_KIND_ARRAY" class="member-name-link">TYPE_PATH_KIND_ARRAY</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Constant for an array component path step (JVMS §4.7.20.2: 0).</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_KIND_INNER_TYPE" class="member-name-link">TYPE_PATH_KIND_INNER_TYPE</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Constant for a nested type path step (JVMS §4.7.20.2: 1).</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_KIND_TYPE_ARGUMENT" class="member-name-link">TYPE_PATH_KIND_TYPE_ARGUMENT</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Constant for a type argument path step (JVMS §4.7.20.2: 3).</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_KIND_WILDCARD" class="member-name-link">TYPE_PATH_KIND_WILDCARD</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Constant for a wildcard bound path step (JVMS §4.7.20.2: 2).</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_WILDCARD_BOUND_EXTENDS" class="member-name-link">TYPE_PATH_WILDCARD_BOUND_EXTENDS</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">For <a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_KIND_WILDCARD"><code>BinaryStubWriter.TYPE_PATH_KIND_WILDCARD</code></a>, repurposed <code>type_argument_index</code> indicating an
+ extends bound.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_WILDCARD_BOUND_SUPER" class="member-name-link">TYPE_PATH_WILDCARD_BOUND_SUPER</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">For <a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#TYPE_PATH_KIND_WILDCARD"><code>BinaryStubWriter.TYPE_PATH_KIND_WILDCARD</code></a>, repurposed <code>type_argument_index</code> indicating a
+ super bound.</div>
+</dd>
 <dt><a href="org/checkerframework/framework/qual/TypeUseLocation.html#TYPE_VARIABLE_USE" class="member-name-link">TYPE_VARIABLE_USE</a> - Enum constant in enum class org.checkerframework.framework.qual.<a href="org/checkerframework/framework/qual/TypeUseLocation.html" title="enum class in org.checkerframework.framework.qual">TypeUseLocation</a></dt>
 <dd>
 <div class="block">Apply default annotations to unannotated type variable uses that are not top-level local
@@ -41992,6 +42165,10 @@ the order they are declared.</div>
 <div class="block">Format version of the bundle container.</div>
 </dd>
 <dt><a href="org/checkerframework/framework/stub/BinaryStubData.html#VERSION" class="member-name-link">VERSION</a> - Static variable in class org.checkerframework.framework.stub.<a href="org/checkerframework/framework/stub/BinaryStubData.html" title="class in org.checkerframework.framework.stub">BinaryStubData</a></dt>
+<dd>
+<div class="block">Format version of the binary stub file.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#VERSION" class="member-name-link">VERSION</a> - Static variable in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
 <dd>
 <div class="block">Format version of the binary stub file.</div>
 </dd>
@@ -45893,6 +46070,16 @@ the order they are declared.</div>
 <dt><a href="org/checkerframework/framework/test/TestUtilities.html#writeTestConfiguration(java.io.File,org.checkerframework.framework.test.TestConfiguration)" class="member-name-link">writeTestConfiguration(File, TestConfiguration)</a> - Static method in class org.checkerframework.framework.test.<a href="org/checkerframework/framework/test/TestUtilities.html" title="class in org.checkerframework.framework.test">TestUtilities</a></dt>
 <dd>
 <div class="block">Append a test configuration to the end of a file.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#writeTo(java.io.File)" class="member-name-link">writeTo(File)</a> - Method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Writes the accumulated class records and constant pool to the specified file in a compressed
+ binary format.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#writeTo(java.io.OutputStream)" class="member-name-link">writeTo(OutputStream)</a> - Method in class org.checkerframework.framework.stubifier.<a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html" title="class in org.checkerframework.framework.stubifier">BinaryStubWriter</a></dt>
+<dd>
+<div class="block">Writes the accumulated class records and constant pool to the given stream in a compressed
+ binary format, exactly as <a href="org/checkerframework/framework/stubifier/BinaryStubWriter.html#writeTo(java.io.File)"><code>BinaryStubWriter.writeTo(File)</code></a> does.</div>
 </dd>
 <dt><a href="org/checkerframework/checker/signedness/util/SignednessUtil.html#writeUnsigned(java.io.RandomAccessFile,byte%5B%5D,int,int)" class="member-name-link">writeUnsigned(RandomAccessFile, byte[], int, int)</a> - Static method in class org.checkerframework.checker.signedness.util.<a href="org/checkerframework/checker/signedness/util/SignednessUtil.html" title="class in org.checkerframework.checker.signedness.util">SignednessUtil</a></dt>
 <dd>
