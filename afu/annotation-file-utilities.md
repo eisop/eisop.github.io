@@ -64,23 +64,23 @@ Installation
 
 The following instructions assume either a Linux or Windows system using a command-line environment.
 
-The current release is Annotation File Utilities version 3.49.5, April 26, 2026.
+The current release is Annotation File Utilities version 3.55.1, November 24, 2026.
 
-1.  Download [annotation-tools-3.49.5-eisop1.zip](/afu/annotation-tools-3.49.5-eisop1.zip).
-2.  Unpack the distribution zipfile, which creates a directory named `annotation-tools-3.49.5-eisop1`.
+1.  Download [annotation-file-utilities-3.55.1-eisop1.zip](/afu/annotation-file-utilities-3.55.1-eisop1.zip).
+2.  Unpack the distribution zipfile, which creates a directory named `annotation-file-utilities-3.55.1-eisop1`.
     
-        unzip annotation-tools-3.49.5-eisop1.zip
+        unzip annotation-file-utilities-3.55.1-eisop1.zip
     
 3.  Add the `annotation-file-utilities/bin` directory to your path.
     *   For **Unix** (including Linux and MacOS), add the directory to your PATH environment variable. If your shell is sh or bash, add to your `~/.bashrc` or `~/.bash_profile` file:
         
-            export PATH=${PATH}:/path/to/annotation-tools-3.49.5-eisop1/annotation-file-utilities/bin
+            export PATH=${PATH}:/path/to/annotation-file-utilities-3.55.1-eisop1/annotation-file-utilities/bin
         
     *   For **Windows**, add the directory to your `PATH` system variable by going to
         
              Control Panel -> System -> Advanced -> Environment Variables 
         
-        From there, find the `PATH` variable under “System variables” and append to it the directory `_path\to_\annotation-tools-3.49.5-eisop1\annotation-file-utilities\bin`.
+        From there, find the `PATH` variable under “System variables” and append to it the directory `_path\to_\annotation-file-utilities-3.55.1-eisop1\annotation-file-utilities\bin`.
 
 ### Building from source
 
