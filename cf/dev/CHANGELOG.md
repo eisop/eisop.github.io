@@ -95,6 +95,9 @@ Type-checking and subtyping improvements:
   bound, and the type arguments of either bound. Previously only the qualifier
   on the extends bound was compared, so `Box<List<? super String>>` accepted a
   `Box<List<? super @Nullable String>>`.
+- The variable of a type pattern nested in a record pattern, such as `s` in
+  `o instanceof Box(String s)`, is refined to the qualifiers of the record
+  component instead of those of the `instanceof` operand.
 - `-AcheckCastElementType` now requires array components to be invariant in
   array casts and `instanceof` binding patterns, closing an unsoundness:
   array components are mutable and qualifiers are not reified. It no longer
@@ -265,6 +268,9 @@ Nullness Checker improvements:
   record component, such as `String b` or `var b` in `o instanceof P(String a,
   String b)`, matches null. Its variable now has the nullness of the record
   component, and `@Nullable` on it is no longer reported as `instanceof.nullable`.
+  A record pattern that does not write a generic record's type arguments, such
+  as `g instanceof G(String t)`, takes them, and their nullness, from the type
+  of the value it is matched against.
 - `nullness.on.outer` is reported once, not twice, for an annotation within a
   declaration's type, such as `Outer.@Nullable Inner.Deep f`.
 - `dereference.of.nullable` is reported at the member select or `new`
@@ -406,6 +412,10 @@ The development version of the web site, <https://eisop.github.io/cf/dev/>, has 
 Javadoc, and the zip files of master, built nightly from a master that passed CI.
 
 ### Implementation details
+
+New `AnnotatedTypes#getRecordComponentType` returns the record component type of a binding
+variable whose type pattern is nested in a record pattern, and
+`AnnotatedTypes#getNullMatchingComponentType` returns it only if that pattern matches null.
 
 Where the Nullness Checker knows that the current invocation instantiates `@PolyNull` as
 `@Nullable`, `NullnessNoInitTransfer` gives `@Nullable` dataflow values the `@PolyNull` form,
@@ -931,6 +941,7 @@ eisop#2633,
 eisop#2640,
 eisop#2641,
 eisop#2642,
+eisop#2651,
 eisop#2655,
 eisop#2662,
 typetools#399,

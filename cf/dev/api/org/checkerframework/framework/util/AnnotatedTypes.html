@@ -282,6 +282,22 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns the depth of the array type of the provided array.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../../checker/nullness/qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual">@Nullable</a> <a href="../type/AnnotatedTypeMirror.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getNullMatchingComponentType(org.checkerframework.framework.type.AnnotatedTypeFactory,com.sun.source.tree.VariableTree)" class="member-name-link">getNullMatchingComponentType</a><wbr>(<a href="../type/AnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">AnnotatedTypeFactory</a>&nbsp;atypeFactory,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.compiler/com/sun/source/tree/VariableTree.html" title="class or interface in com.sun.source.tree" class="external-link">VariableTree</a>&nbsp;bindingVariable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">If <code>bindingVariable</code> is the variable of a type pattern that is nested in a record
+ pattern and that matches null, returns the type of the record component that the pattern is
+ matched against.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../../checker/nullness/qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual">@Nullable</a> <a href="../type/AnnotatedTypeMirror.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRecordComponentType(org.checkerframework.framework.type.AnnotatedTypeFactory,com.sun.source.tree.VariableTree)" class="member-name-link">getRecordComponentType</a><wbr>(<a href="../type/AnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">AnnotatedTypeFactory</a>&nbsp;atypeFactory,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.compiler/com/sun/source/tree/VariableTree.html" title="class or interface in com.sun.source.tree" class="external-link">VariableTree</a>&nbsp;bindingVariable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">If <code>bindingVariable</code> is the variable of a type pattern that is nested in a record
+ pattern, returns the type of the record component that the pattern is matched against,
+ whether or not the pattern matches null.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../type/AnnotatedTypeMirror.AnnotatedDeclaredType.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror.AnnotatedDeclaredType</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getSuperTypes(org.checkerframework.framework.type.AnnotatedTypeMirror.AnnotatedDeclaredType)" class="member-name-link">getSuperTypes</a><wbr>(<a href="../type/AnnotatedTypeMirror.AnnotatedDeclaredType.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror.AnnotatedDeclaredType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -621,6 +637,62 @@ loadScripts(document, 'script');</script>
 <dd>
 <ul class="tag-list-long">
 <li><a href="#asMemberOf(javax.lang.model.util.Types,org.checkerframework.framework.type.AnnotatedTypeFactory,org.checkerframework.framework.type.AnnotatedTypeMirror,javax.lang.model.element.Element)"><code>asMemberOf(Types, AnnotatedTypeFactory, AnnotatedTypeMirror, Element)</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getNullMatchingComponentType(org.checkerframework.framework.type.AnnotatedTypeFactory,com.sun.source.tree.VariableTree)">
+<h3>getNullMatchingComponentType</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../../checker/nullness/qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual">@Nullable</a> <a href="../type/AnnotatedTypeMirror.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror</a></span>&nbsp;<span class="element-name">getNullMatchingComponentType</span><wbr><span class="parameters">(<a href="../type/AnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">AnnotatedTypeFactory</a>&nbsp;atypeFactory,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.compiler/com/sun/source/tree/VariableTree.html" title="class or interface in com.sun.source.tree" class="external-link">VariableTree</a>&nbsp;bindingVariable)</span></div>
+<div class="block">If <code>bindingVariable</code> is the variable of a type pattern that is nested in a record
+ pattern and that matches null, returns the type of the record component that the pattern is
+ matched against. Otherwise, returns null.
+
+ <p>A nested type pattern that is unconditional for the type of its record component, such as
+ <code>String b</code> or <code>var b</code> for a component of type <code>String</code>, matches every value
+ of the component, including null (JLS 14.30.1 and 14.30.2). A nested type pattern that is not
+ unconditional, and a type pattern that is not nested in a record pattern, does not match
+ null.
+
+ <p>If the record pattern does not write the record's type arguments, as in <code>o
+ instanceof Box(String s)</code>, they are inferred from the type of the value that the record
+ pattern is matched against (JLS 18.5.5), and so is the component type returned here.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>atypeFactory</code> - the type factory</dd>
+<dd><code>bindingVariable</code> - the declaration of a variable</dd>
+<dt>Returns:</dt>
+<dd>the type of the record component that <code>bindingVariable</code> is bound to, if the
+     pattern that declares it matches null; otherwise null</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRecordComponentType(org.checkerframework.framework.type.AnnotatedTypeFactory,com.sun.source.tree.VariableTree)">
+<h3>getRecordComponentType</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../../checker/nullness/qual/Nullable.html" title="annotation interface in org.checkerframework.checker.nullness.qual">@Nullable</a> <a href="../type/AnnotatedTypeMirror.html" title="class in org.checkerframework.framework.type">AnnotatedTypeMirror</a></span>&nbsp;<span class="element-name">getRecordComponentType</span><wbr><span class="parameters">(<a href="../type/AnnotatedTypeFactory.html" title="class in org.checkerframework.framework.type">AnnotatedTypeFactory</a>&nbsp;atypeFactory,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.compiler/com/sun/source/tree/VariableTree.html" title="class or interface in com.sun.source.tree" class="external-link">VariableTree</a>&nbsp;bindingVariable)</span></div>
+<div class="block">If <code>bindingVariable</code> is the variable of a type pattern that is nested in a record
+ pattern, returns the type of the record component that the pattern is matched against,
+ whether or not the pattern matches null. Otherwise, returns null.
+
+ <p>If the record pattern does not write the record's type arguments, as in <code>o
+ instanceof Box(String s)</code>, they are inferred from the type of the value that the record
+ pattern is matched against (JLS 18.5.5), and so is the component type returned here.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>atypeFactory</code> - the type factory</dd>
+<dd><code>bindingVariable</code> - the declaration of a variable</dd>
+<dt>Returns:</dt>
+<dd>the type of the record component that <code>bindingVariable</code> is bound to, if the
+     pattern that declares it is nested in a record pattern; otherwise null</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#getNullMatchingComponentType(org.checkerframework.framework.type.AnnotatedTypeFactory,com.sun.source.tree.VariableTree)"><code>getNullMatchingComponentType(org.checkerframework.framework.type.AnnotatedTypeFactory, com.sun.source.tree.VariableTree)</code></a></li>
 </ul>
 </dd>
 </dl>

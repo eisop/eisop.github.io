@@ -16988,7 +16988,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the reasons why the method is not side-effect-free.</div>
 </dd>
-<dt><a href="org/checkerframework/checker/nullness/NullnessNoInitAnnotatedTypeFactory.html#getNullMatchingComponentType(com.sun.source.tree.VariableTree)" class="member-name-link">getNullMatchingComponentType(VariableTree)</a> - Method in class org.checkerframework.checker.nullness.<a href="org/checkerframework/checker/nullness/NullnessNoInitAnnotatedTypeFactory.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitAnnotatedTypeFactory</a></dt>
+<dt><a href="org/checkerframework/framework/util/AnnotatedTypes.html#getNullMatchingComponentType(org.checkerframework.framework.type.AnnotatedTypeFactory,com.sun.source.tree.VariableTree)" class="member-name-link">getNullMatchingComponentType(AnnotatedTypeFactory, VariableTree)</a> - Static method in class org.checkerframework.framework.util.<a href="org/checkerframework/framework/util/AnnotatedTypes.html" title="class in org.checkerframework.framework.util">AnnotatedTypes</a></dt>
 <dd>
 <div class="block">If <code>bindingVariable</code> is the variable of a type pattern that is nested in a record
  pattern and that matches null, returns the type of the record component that the pattern is
@@ -17595,6 +17595,12 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/checkerframework/javacutil/ElementUtils.html#getRecordComponents(javax.lang.model.element.TypeElement)" class="member-name-link">getRecordComponents(TypeElement)</a> - Static method in class org.checkerframework.javacutil.<a href="org/checkerframework/javacutil/ElementUtils.html" title="class in org.checkerframework.javacutil">ElementUtils</a></dt>
 <dd>
 <div class="block">Calls getRecordComponents on the given TypeElement.</div>
+</dd>
+<dt><a href="org/checkerframework/framework/util/AnnotatedTypes.html#getRecordComponentType(org.checkerframework.framework.type.AnnotatedTypeFactory,com.sun.source.tree.VariableTree)" class="member-name-link">getRecordComponentType(AnnotatedTypeFactory, VariableTree)</a> - Static method in class org.checkerframework.framework.util.<a href="org/checkerframework/framework/util/AnnotatedTypes.html" title="class in org.checkerframework.framework.util">AnnotatedTypes</a></dt>
+<dd>
+<div class="block">If <code>bindingVariable</code> is the variable of a type pattern that is nested in a record
+ pattern, returns the type of the record component that the pattern is matched against,
+ whether or not the pattern matches null.</div>
 </dd>
 <dt><a href="org/checkerframework/dataflow/cfg/node/InstanceOfNode.html#getRefType()" class="member-name-link">getRefType()</a> - Method in class org.checkerframework.dataflow.cfg.node.<a href="org/checkerframework/dataflow/cfg/node/InstanceOfNode.html" title="class in org.checkerframework.dataflow.cfg.node">InstanceOfNode</a></dt>
 <dd>
@@ -43857,7 +43863,6 @@ the order they are declared.</div>
 <dt><a href="org/checkerframework/checker/nullness/NullnessNoInitTransfer.html#visitInstanceOf(org.checkerframework.dataflow.cfg.node.InstanceOfNode,org.checkerframework.dataflow.analysis.TransferInput)" class="member-name-link">visitInstanceOf(InstanceOfNode, TransferInput&lt;CFValue, NullnessNoInitStore&gt;)</a> - Method in class org.checkerframework.checker.nullness.<a href="org/checkerframework/checker/nullness/NullnessNoInitTransfer.html" title="class in org.checkerframework.checker.nullness">NullnessNoInitTransfer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/checkerframework/framework/flow/CFAbstractTransfer.html#visitInstanceOf(org.checkerframework.dataflow.cfg.node.InstanceOfNode,org.checkerframework.dataflow.analysis.TransferInput)" class="member-name-link">visitInstanceOf(InstanceOfNode, TransferInput&lt;V, S&gt;)</a> - Method in class org.checkerframework.framework.flow.<a href="org/checkerframework/framework/flow/CFAbstractTransfer.html" title="class in org.checkerframework.framework.flow">CFAbstractTransfer</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="org/checkerframework/dataflow/cfg/node/AbstractNodeVisitor.html#visitInstanceOf(org.checkerframework.dataflow.cfg.node.InstanceOfNode,P)" class="member-name-link">visitInstanceOf(InstanceOfNode, P)</a> - Method in class org.checkerframework.dataflow.cfg.node.<a href="org/checkerframework/dataflow/cfg/node/AbstractNodeVisitor.html" title="class in org.checkerframework.dataflow.cfg.node">AbstractNodeVisitor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/checkerframework/dataflow/cfg/node/NodeVisitor.html#visitInstanceOf(org.checkerframework.dataflow.cfg.node.InstanceOfNode,P)" class="member-name-link">visitInstanceOf(InstanceOfNode, P)</a> - Method in interface org.checkerframework.dataflow.cfg.node.<a href="org/checkerframework/dataflow/cfg/node/NodeVisitor.html" title="interface in org.checkerframework.dataflow.cfg.node">NodeVisitor</a></dt>
