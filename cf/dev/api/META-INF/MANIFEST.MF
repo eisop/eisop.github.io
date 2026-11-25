@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Implementation-Version: 3.55.1-eisop1
+Implementation-Version: 3.55.1-eisop2
 Implementation-URL: https://eisop.github.io/
 Automatic-Module-Name: org.checkerframework.checker
 Bundle-License: (GPL-2.0-only WITH Classpath-exception-2.0)

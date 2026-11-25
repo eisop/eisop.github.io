@@ -80,7 +80,7 @@ Custom pluggable types for Java
 <!--CUT STYLE book--><!--CUT DEF chapter 1 --><div class="center">
 <img src="CFLogo.png">
 </div><table class="title"><tr><td style="padding:1ex"><h1 class="titlemain">The Checker Framework Manual: <br>
-Custom pluggable types for Java</h1><h3 class="titlerest"><a href="https://eisop.github.io/"><span style="font-family:monospace">https://eisop.github.io/</span></a></h3><h3 class="titlerest">Version 3.55.1-eisop1 (23 Nov 2026)</h3></td></tr>
+Custom pluggable types for Java</h1><h3 class="titlerest"><a href="https://eisop.github.io/"><span style="font-family:monospace">https://eisop.github.io/</span></a></h3><h3 class="titlerest">Version 3.55.1-eisop2 (24 Nov 2026)</h3></td></tr>
 </table><p><span style="font-weight:bold">For the impatient:</span>
 Section <a href="#installation">1.3</a>
 describes how to <span style="font-weight:bold">install and use</span> pluggable type-checkers.</p><p>This manual is also available in <a href="https://eisop.github.io/cf/manual/checker-framework-manual.pdf">PDF</a>.</p><!--TOC chapter id="sec1" Contents-->
@@ -559,7 +559,7 @@ integration built from it (Section <a href="#development-jars">40.3.1</a>).
 You must have a JDK (version 8 or later) installed.</p><p>The installation process has two required steps and one
 optional step.
 </p><ol class="enumerate" type=1><li class="li-enumerate">Download the Checker Framework distribution:
-<a href="https://eisop.github.io/cf/checker-framework-3.55.1-eisop1.zip"><span style="font-family:monospace">https://eisop.github.io/cf/checker-framework-3.55.1-eisop1.zip</span></a><p>For example, on Unix you can run: <span style="font-family:monospace">wget https://eisop.github.io/cf/checker-framework-3.55.1-eisop1.zip</span></p></li><li class="li-enumerate">Unzip it to create a <span style="font-family:monospace">checker-framework-3.55.1-eisop1</span> directory.<p>For example, on Unix you can run: <span style="font-family:monospace">unzip checker-framework-3.55.1-eisop1.zip</span></p></li><li class="li-enumerate"><a id="installation-configure-step"></a>Configure your IDE, build system, or command shell to include the Checker
+<a href="https://eisop.github.io/cf/checker-framework-3.55.1-eisop2.zip"><span style="font-family:monospace">https://eisop.github.io/cf/checker-framework-3.55.1-eisop2.zip</span></a><p>For example, on Unix you can run: <span style="font-family:monospace">wget https://eisop.github.io/cf/checker-framework-3.55.1-eisop2.zip</span></p></li><li class="li-enumerate">Unzip it to create a <span style="font-family:monospace">checker-framework-3.55.1-eisop2</span> directory.<p>For example, on Unix you can run: <span style="font-family:monospace">unzip checker-framework-3.55.1-eisop2.zip</span></p></li><li class="li-enumerate"><a id="installation-configure-step"></a>Configure your IDE, build system, or command shell to include the Checker
 Framework on the classpath. Choose the appropriate section of
 Chapter <a href="#external-tools">38</a>.</li></ol><p>Now you are ready to start using the checkers.</p><p>We recommend that you work through the
 <a href="https://eisop.github.io/cf/tutorial/">Checker
@@ -14363,7 +14363,7 @@ compatibility to <span style="font-family:monospace">JavaVersion.VERSION_1_8</sp
 </div></li><li class="li-enumerate">Declare the Checker Framework dependencies:<div style="font-size:small;">
 <pre class="verbatim">dependencies {
     ... existing dependencies...
-    ext.checkerFrameworkVersion = "3.55.1-eisop1"
+    ext.checkerFrameworkVersion = "3.55.1-eisop2"
     implementation "io.github.eisop:checker-qual-android:${checkerFrameworkVersion}"
     // or if you use no annotations in source code the above line could be
     // compileOnly "io.github.eisop:checker-qual-android:${checkerFrameworkVersion}"
@@ -14413,7 +14413,7 @@ compatibility to <span style="font-family:monospace">JavaVersion.VERSION_1_8</sp
 </pre></li><li class="li-enumerate">Declare the Checker Framework dependencies:<div style="font-size:small;">
 <pre class="verbatim">dependencies {
     ... existing dependencies...
-    ext.checkerFrameworkVersion = "3.55.1-eisop1"
+    ext.checkerFrameworkVersion = "3.55.1-eisop2"
     implementation "io.github.eisop:checker-qual-android:${checkerFrameworkVersion}"
     // or if you use no annotations in source code the above line could be
     // compileOnly "io.github.eisop:checker-qual-android:${checkerFrameworkVersion}"
@@ -14492,13 +14492,13 @@ You only need to follow the instructions to use Error Prone javac on
 that page, not the instructions to enable Error Prone.</p><p>Here is an example <span style="font-family:monospace">BUCK</span> build
 file showing how to enable the Checker Framework:</p><pre class="verbatim">prebuilt_jar(
     name = 'checker-framework',
-    binary_jar = 'checker-3.55.1-eisop1.jar',
+    binary_jar = 'checker-3.55.1-eisop2.jar',
     visibility = [ 'PUBLIC' ]
 )
 
 prebuilt_jar(
     name = 'checker-qual',
-    binary_jar = 'checker-qual-3.55.1-eisop1.jar',
+    binary_jar = 'checker-qual-3.55.1-eisop2.jar',
     visibility = [ 'PUBLIC' ]
 )
 
@@ -14541,13 +14541,13 @@ line. You can use any
 one of them. However, if you are using the Windows command shell, you must
 use the last one.
 Adjust the pathnames if you have installed the Checker Framework somewhere
-other than <span style="font-family:monospace">$</span><span style="font-family:monospace">HOME</span><span style="font-family:monospace">/checker-framework-3.55.1-eisop1/</span>.</p><ul class="itemize"><li class="li-itemize">Option 1:
+other than <span style="font-family:monospace">$</span><span style="font-family:monospace">HOME</span><span style="font-family:monospace">/checker-framework-3.55.1-eisop2/</span>.</p><ul class="itemize"><li class="li-itemize">Option 1:
 Add directory
-<span style="font-family:monospace">.../checker-framework-3.55.1-eisop1/checker/bin</span> to your path, <em>before</em> any other
+<span style="font-family:monospace">.../checker-framework-3.55.1-eisop2/checker/bin</span> to your path, <em>before</em> any other
 directory that contains a <span style="font-family:monospace">javac</span> executable.<p>If you are
 using the bash shell, a way to do this is to add the following to your
 <code class="verb">~/.profile</code> (or alternately <code class="verb">~/.bash_profile</code> or <code class="verb">~/.bashrc</code>) file:
-</p><pre class="verbatim">  export CHECKERFRAMEWORK=${HOME}/checker-framework-3.55.1-eisop1
+</p><pre class="verbatim">  export CHECKERFRAMEWORK=${HOME}/checker-framework-3.55.1-eisop2
   export PATH=${CHECKERFRAMEWORK}/checker/bin:${PATH}
 </pre><p>After editing the file, log out and back in to ensure that the environment variable
 setting takes effect.</p></li><li class="li-itemize">
@@ -14559,7 +14559,7 @@ whenever this document tells you to run <span style="font-family:monospace">java
 <span style="font-family:monospace">javacheck</span>. Here is the syntax for your
 <code class="verb">~/.bashrc</code>, <code class="verb">~/.profile</code>, or <code class="verb">~/.bash_profile</code>
 file:
-</p><pre class="verbatim">  export CHECKERFRAMEWORK=${HOME}/checker-framework-3.55.1-eisop1
+</p><pre class="verbatim">  export CHECKERFRAMEWORK=${HOME}/checker-framework-3.55.1-eisop2
   alias javacheck='$CHECKERFRAMEWORK/checker/bin/javac'
 </pre><p>After editing the file, log out and back in to ensure that the environment variable
 setting and alias take effect.</p></li><li class="li-itemize">Option 3:
@@ -14568,11 +14568,11 @@ run <span style="font-family:monospace">checker.jar</span> via <span style="font
 </pre><p>You can simplify the above command by introducing an alias
 <span style="font-family:monospace">javacheck</span>. Then, whenever this document tells you to run
 <span style="font-family:monospace">javac</span>, instead run <span style="font-family:monospace">javacheck</span>. For example:</p><pre class="verbatim">  # Unix
-  export CHECKERFRAMEWORK=${HOME}/checker-framework-3.55.1-eisop1
+  export CHECKERFRAMEWORK=${HOME}/checker-framework-3.55.1-eisop2
   alias javacheck='java -jar "$CHECKERFRAMEWORK/checker/dist/checker.jar"'
 
   # Windows
-  set CHECKERFRAMEWORK = C:\Program Files\checker-framework-3.55.1-eisop1\
+  set CHECKERFRAMEWORK = C:\Program Files\checker-framework-3.55.1-eisop2\
   doskey javacheck=java -jar "%CHECKERFRAMEWORK%\checker\dist\checker.jar" $*
 </pre><p>(Explanation for advanced users:
 More generally, anywhere that you would use <span style="font-family:monospace">javac.jar</span>, you can substitute
@@ -14586,9 +14586,9 @@ Section <a href="#javac-wrapper">38.6</a>.</p><p>This
 section assumes you have downloaded the Checker Framework release zip and set
 the environment variable <span style="font-family:monospace">CHECKERFRAMEWORK</span> to point to the unzipped directory.
 Alternately, you can get all of the jars mentioned in this section from Maven Central:</p><ul class="itemize"><li class="li-itemize"><span style="font-family:monospace">javac.jar</span>: <a href="https://central.sonatype.com/artifact/com.google.errorprone/javac/9%2B181-r4173-1/jar"><span style="font-family:monospace">https://central.sonatype.com/artifact/com.google.errorprone/javac/9%2B181-r4173-1/jar</span></a>
-</li><li class="li-itemize"><span style="font-family:monospace">checker-qual.jar</span>: <a href="https://repo1.maven.org/maven2/io/github/eisop/checker-qual/3.55.1-eisop1/checker-qual-3.55.1-eisop1.jar"><span style="font-family:monospace">https://repo1.maven.org/maven2/io/github/eisop/checker-qual/3.55.1-eisop1/checker-qual-3.55.1-eisop1.jar</span></a>
-</li><li class="li-itemize"><span style="font-family:monospace">checker-util.jar</span>: <a href="https://repo1.maven.org/maven2/io/github/eisop/checker-util/3.55.1-eisop1/checker-util-3.55.1-eisop1.jar"><span style="font-family:monospace">https://repo1.maven.org/maven2/io/github/eisop/checker-util/3.55.1-eisop1/checker-util-3.55.1-eisop1.jar</span></a>
-</li><li class="li-itemize"><span style="font-family:monospace">checker.jar</span>: <a href="https://repo1.maven.org/maven2/io/github/eisop/checker/3.55.1-eisop1/checker-3.55.1-eisop1-all.jar"><span style="font-family:monospace">https://repo1.maven.org/maven2/io/github/eisop/checker/3.55.1-eisop1/checker-3.55.1-eisop1-all.jar</span></a>
+</li><li class="li-itemize"><span style="font-family:monospace">checker-qual.jar</span>: <a href="https://repo1.maven.org/maven2/io/github/eisop/checker-qual/3.55.1-eisop2/checker-qual-3.55.1-eisop2.jar"><span style="font-family:monospace">https://repo1.maven.org/maven2/io/github/eisop/checker-qual/3.55.1-eisop2/checker-qual-3.55.1-eisop2.jar</span></a>
+</li><li class="li-itemize"><span style="font-family:monospace">checker-util.jar</span>: <a href="https://repo1.maven.org/maven2/io/github/eisop/checker-util/3.55.1-eisop2/checker-util-3.55.1-eisop2.jar"><span style="font-family:monospace">https://repo1.maven.org/maven2/io/github/eisop/checker-util/3.55.1-eisop2/checker-util-3.55.1-eisop2.jar</span></a>
+</li><li class="li-itemize"><span style="font-family:monospace">checker.jar</span>: <a href="https://repo1.maven.org/maven2/io/github/eisop/checker/3.55.1-eisop2/checker-3.55.1-eisop2-all.jar"><span style="font-family:monospace">https://repo1.maven.org/maven2/io/github/eisop/checker/3.55.1-eisop2/checker-3.55.1-eisop2-all.jar</span></a>
 </li></ul><p>Note the <span style="font-family:monospace">-all</span> classifier on that last URL. On Maven Central,
 <span style="font-family:monospace">checker-</span><span style="font-family:monospace"><em>version</em></span><span style="font-family:monospace">-all.jar</span> is the self-contained jar, and it is the one
 that corresponds to <span style="font-family:monospace">checker/dist/checker.jar</span> in the release zip. The plain
@@ -14744,9 +14744,9 @@ requires JDK 21 or later.</p>
 run all on Error Prone’s annotation processor path. The plugin loads each selected checker
 by name, so any Checker Framework checker on the path can be run.</p><p>The plugin is published to Maven Central as <span style="font-family:monospace">io.github.eisop:framework-errorprone</span>,
 with the same version as the other Checker Framework artifacts; replace <span style="font-family:monospace">VERSION</span> below
-with that version (currently 3.55.1-eisop1). The plugin’s POM does not bring in Error
+with that version (currently 3.55.1-eisop2). The plugin’s POM does not bring in Error
 Prone; the plugin runs with the <span style="font-family:monospace">error_prone_core</span> on the same path. It is built and
-tested with Error Prone 2.52.0, the version in the example below.</p><p>For example, with the
+tested with Error Prone 2.53.0, the version in the example below.</p><p>For example, with the
 <a href="https://github.com/tbroyer/gradle-errorprone-plugin">Gradle Error Prone plugin</a>, add
 to your <span style="font-family:monospace">build.gradle</span> file:
 </p><pre class="verbatim">plugins {
@@ -14759,7 +14759,7 @@ dependencies {
     compileOnly     "io.github.eisop:checker-qual:VERSION"
 
     // Error Prone, the eisopcf plugin, and the checkers to run.
-    errorprone      "com.google.errorprone:error_prone_core:2.52.0"
+    errorprone      "com.google.errorprone:error_prone_core:2.53.0"
     errorprone      "io.github.eisop:framework-errorprone:VERSION"
     errorprone      "io.github.eisop:checker:VERSION"
 }
@@ -14922,7 +14922,7 @@ checkerFramework {
 
 ext {
     versions = [
-        eisopVersion: '3.55.1-eisop1',
+        eisopVersion: '3.55.1-eisop2',
     ]
 }
 
@@ -15051,7 +15051,7 @@ existing <span style="font-family:monospace">&lt;dependencies&gt;</span> section
     &lt;dependency&gt;
       &lt;groupId&gt;io.github.eisop&lt;/groupId&gt;
       &lt;artifactId&gt;checker-qual&lt;/artifactId&gt;
-      &lt;version&gt;3.55.1-eisop1&lt;/version&gt;
+      &lt;version&gt;3.55.1-eisop2&lt;/version&gt;
     &lt;/dependency&gt;
   &lt;/dependencies&gt;
 </pre><p>Periodically update to the most recent version, to obtain the
@@ -15086,7 +15086,7 @@ or comment it out.</p><div style="font-size:small;">
                 &lt;path&gt;
                   &lt;groupId&gt;io.github.eisop&lt;/groupId&gt;
                   &lt;artifactId&gt;checker&lt;/artifactId&gt;
-                  &lt;version&gt;3.55.1-eisop1&lt;/version&gt;
+                  &lt;version&gt;3.55.1-eisop2&lt;/version&gt;
                 &lt;/path&gt;
               &lt;/annotationProcessorPaths&gt;
               &lt;annotationProcessors&gt;
@@ -15213,7 +15213,7 @@ disable animal sniffer by modifying your POM file’s properties:</p><div style=
 <h3 id="maven-locally-built" class="subsection">38.14.1 Maven, with a locally-built version of the Checker Framework <a href="#maven-locally-built"><img src="chainlink.svg" width="10" height="10"></a></h3><!--SEC END --><p>To use a locally-built version of the Checker Framework, first run:</p><pre>
 ./gradlew publishToMavenLocal
 </pre><p>Then use the Maven instructions, but modify the version number for the
-Checker Framework artifacts. Instead of <span style="font-family:monospace">3.55.1-eisop1</span>, use the
+Checker Framework artifacts. Instead of <span style="font-family:monospace">3.55.1-eisop2</span>, use the
 version number that is output when you run <span style="font-family:monospace">./gradlew version</span>.</p>
 <!--TOC subsection id="maven-troubleshooting" Maven troubleshooting-->
 <h3 id="maven-troubleshooting" class="subsection">38.14.2 Maven troubleshooting <a href="#maven-troubleshooting"><img src="chainlink.svg" width="10" height="10"></a></h3><!--SEC END --><p>If you get an error like “module jdk.compiler does not export
