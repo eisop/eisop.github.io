@@ -3,9 +3,12 @@
 <!-- markdownlint-disable no-duplicate-heading -->
 <!-- pyml disable no-duplicate-heading -->
 
-## Version 3.55.1-eisop2 (December ?, 2026)
+## Version 3.55.1-eisop2 (November 27, 2026)
 
 ### User-visible changes
+
+`-AprintGitProperties` prints only what the commit determines: the version, and the commit and its
+time.  It no longer prints who built the Checker Framework, on which machine, or the tags.
 
 ### Implementation details
 
